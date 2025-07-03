@@ -1,0 +1,107 @@
+/* Estilos generales para botones */
+.btn {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 4px;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  transition: background-color 0.3s ease;
+  font-size: 0.9rem;
+  color: white;
+}
+
+/* Botón editar: color naranja/amarillo */
+.btn-warning {
+  background-color: #f0ad4e;
+}
+
+.btn-warning:hover {
+  background-color: #ec971f;
+}
+
+/* Botón eliminar: color rojo */
+.btn-danger {
+  background-color: #d9534f;
+}
+
+.btn-danger:hover {
+  background-color: #c9302c;
+}
+
+/* Tamaño pequeño para los botones dentro de tabla */
+.btn-sm {
+  padding: 4px 8px;
+  font-size: 0.8rem;
+}
+
+/* Opcional: espaciado entre botones */
+td > a.btn {
+  margin-right: 6px;
+}
+/* Reset básico para botones */
+.btn {
+  padding: 6px 14px;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: background-color 0.25s ease, box-shadow 0.25s ease;
+  font-size: 1rem;
+  color: white;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  user-select: none;
+}
+
+/* Editar: amarillo-anaranjado */
+.btn-warning {
+  background-color: #f0ad4e;
+  box-shadow: 0 4px 10px rgba(240,173,78,0.4);
+}
+
+.btn-warning:hover,
+.btn-warning:focus {
+  background-color: #ec971f;
+  box-shadow: 0 6px 15px rgba(236,151,31,0.6);
+  outline: none;
+}
+
+/* Eliminar: rojo */
+.btn-danger {
+  background-color: #d9534f;
+  box-shadow: 0 4px 10px rgba(217,83,79,0.4);
+}
+
+.btn-danger:hover,
+.btn-danger:focus {
+  background-color: #c9302c;
+  box-shadow: 0 6px 15px rgba(201,48,44,0.6);
+  outline: none;
+}
+
+/* Tamaño pequeño */
+.btn-sm {
+  padding: 4px 10px;
+  font-size: 0.9rem;
+}
+
+/* Iconos con FontAwesome o SVG inline */
+.btn .icon {
+  display: inline-block;
+  font-size: 1.2rem;
+  line-height: 1;
+}
+
+/* Responsive: en pantallas muy pequeñas, botones apilados */
+@media (max-width: 400px) {
+  td > a.btn {
+    display: block;
+    width: 100%;
+    margin-bottom: 6px;
+  }
+}

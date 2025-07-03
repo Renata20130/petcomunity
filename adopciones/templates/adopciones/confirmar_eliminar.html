@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="form-container">
+    <h2>¿Eliminar publicación?</h2>
+    <p>¿Estás seguro de que deseas eliminar la publicación de <strong>{{ mascota.nombre }}</strong>?</p>
+
+    <form method="POST">
+        {% csrf_token %}
+        <button type="submit" class="btn-submit">Sí, eliminar</button>
+        <a href="{% url 'panel_clinica' %}" class="btn-cancel">Cancelar</a>
+    </form>
+</div>
+{% endblock %}

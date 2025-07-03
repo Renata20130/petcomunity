@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'accounts/css/registro.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <h2><span class="icon">👤</span> Crear cuenta</h2>
+    <form method="POST">
+        {% csrf_token %}
+        
+        {% for field in form %}
+        <div class="form-group">
+            {{ field.label_tag }}
+            {{ field }}
+            {% if field.errors %}
+                <ul class="errorlist">
+                    {% for error in field.errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+        {% endfor %}
+         <button type="submit" class="btn-submit">Registrar</button>
+</div>
+        
+    </form>
+    <div class="registro-tipos">
+    <p>¿Eres una clínica o una farmacia?</p>
+    <a href="{% url 'registro_clinica' %}" class="btn-secondary">Clínica</a>
+    <a href="{% url 'registro_farmacia' %}" class="btn-secondary">Farmacia</a>
+</div>
+
+{% endblock %}

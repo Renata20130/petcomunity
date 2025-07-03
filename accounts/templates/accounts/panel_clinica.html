@@ -1,0 +1,144 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'accounts/css/panel_clinica.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="panel-clinica">
+  <h2>👩‍⚕️ Panel de Clínica</h2>
+  <p class="bienvenida">Bienvenida, <strong>{{ request.user.username }}</strong></p>
+
+  <div class="acciones">
+    <a href="{% url 'publicar_adopcion' %}" class="btn-nueva">➕ Publicar nueva mascota</a>
+    <a href="{% url 'registrar_reserva' %}" class="btn-nueva">📅 Registrar nueva reserva</a>
+  </div>
+
+  <div class="panel-dos-columnas">
+    <!-- Columna izquierda: mascotas -->
+    <div class="columna">
+      
+      <h3>Mascotas publicadas en adopción</h3>
+      {% if mascotas %}
+        <div class="grid-mascotas">
+          {% for mascota in mascotas %}
+            <div class="tarjeta-mascota">
+              <a href="{% url 'detalle_mascota' mascota.id %}">
+                <img src="{{ mascota.imagen.url }}" alt="{{ mascota.nombre }}">
+              </a>
+              <div class="info">
+                <h4>{{ mascota.nombre }}</h4>
+                <p><strong>Especie:</strong> {{ mascota.especie }}</p>
+                <p><strong>Edad:</strong> {{ mascota.edad }} años</p>
+                <p><strong>Estado:</strong>
+                  <label class="switch">
+                    <input type="checkbox" data-id="{{ mascota.id }}" {% if mascota.estado == 'publicada' %}checked{% endif %}>
+                    <span class="slider"></span>
+                  </label>
+                </p>
+                <form action="{% url 'eliminar_adopcion' mascota.pk %}" method="POST" class="form-eliminar" onsubmit="return confirmarEliminacion();">
+                  {% csrf_token %}
+                  <button type="submit" class="btn-x" title="Eliminar publicación">✖</button>
+                </form>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      {% else %}
+        <p class="no-mascotas">No has publicado ninguna mascota aún.</p>
+      {% endif %}
+    </div>
+
+    <!-- Columna derecha: reservas -->
+    <div class="columna">
+      <h3>Reservas solicitadas por clientes</h3>
+      {% if reservas_pedidas %}
+        <div class="tabla-reservas">
+          <table>
+            <thead>
+              <tr>
+                <th>Tutor</th>
+                <th>Mascota</th>
+                <th>Fecha</th>
+                <th>Hora</th>
+                <th>Notas</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for reserva in reservas_pedidas %}
+                <tr>
+                  <td>{{ reserva.nombre_cliente }}</td>
+                  <td>{{ reserva.nombre_mascota }}</td>
+                  <td>{{ reserva.fecha }}</td>
+                  <td>{{ reserva.hora }}</td>
+                  <td>{{ reserva.motivo }}</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+            
+          </table>
+        </div>
+      {% else %}
+        <p class="no-reservas">No hay reservas solicitadas por clientes.</p>
+      {% endif %}
+
+      <h3 style="margin-top: 2rem;">Reservas realizadas por la clínica</h3>
+      {% if reservas %}
+      <table>
+        <thead>
+          <tr>
+            <th>Tutor</th>
+            <th>Mascota</th>
+            <th>Fecha</th>
+            <th>Hora</th>
+            <th>Notas</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for reserva in reservas %}
+            <tr>
+              <td>{{ reserva.nombre_cliente }}</td>
+              <td>{{ reserva.nombre_mascota }}</td>
+              <td>{{ reserva.fecha }}</td>
+              <td>{{ reserva.hora }}</td>
+              <td>{{ reserva.motivo }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      {% else %}
+      <p class="no-reservas">No hay reservas ingresadas.</p>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+<script>
+document.querySelectorAll('.switch input[type="checkbox"]').forEach(switchEl => {
+  switchEl.addEventListener('change', function() {
+    const id = this.dataset.id;
+    const csrfToken = '{{ csrf_token }}';
+    fetch("{% url 'cambiar_estado_mascota' %}", {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'X-CSRFToken': csrfToken
+      },
+      body: `id=${id}`
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (!data.success) {
+        alert('Error al cambiar estado');
+        this.checked = !this.checked;
+      }
+    });
+  });
+});
+
+function confirmarEliminacion() {
+  return confirm("¿Seguro que quieres eliminar esta publicación?");
+}
+</script>
+{% endblock %}

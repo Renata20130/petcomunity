@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/editar_adopcion.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <a href="{% url 'panel_clinica' %}" class="btn-back">← Volver al panel</a>
+    <h2>✏️ Editar publicación: {{ mascota.nombre }}</h2>
+    <form method="POST" enctype="multipart/form-data" novalidate>
+        {% csrf_token %}
+        
+        <!-- Campos normales excepto imagen -->
+        {% for field in form %}
+            {% if field.name != 'imagen' %}
+            <div class="form-group">
+                {{ field.label_tag }}
+                {{ field }}
+                {% if field.errors %}
+                    <ul class="errorlist">
+                        {% for error in field.errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+            {% endif %}
+        {% endfor %}
+        
+        <!-- Imagen con preview y botón de eliminar -->
+        <div class="form-group imagen-upload">
+            <label for="id_imagen">Imagen</label><br>
+            
+            {% if mascota.imagen %}
+            <div class="preview-img-wrapper">
+                <img src="{{ mascota.imagen.url }}" alt="Imagen actual" id="preview-img" width="150">
+                <button type="button" id="remove-img-btn" title="Quitar imagen">&times;</button>
+            </div>
+            {% endif %}
+            
+            {{ form.imagen }}
+        </div>
+
+        <button type="submit" class="btn-submit">Guardar cambios</button>
+    </form>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const removeBtn = document.getElementById('remove-img-btn');
+    const inputFile = document.getElementById('id_imagen');
+    const previewWrapper = document.querySelector('.preview-img-wrapper');
+
+    if(removeBtn) {
+      removeBtn.addEventListener('click', () => {
+        // Limpia el input file
+        inputFile.value = '';
+
+        // Oculta la imagen y el botón
+        if(previewWrapper) {
+          previewWrapper.style.display = 'none';
+        }
+      });
+    }
+});
+</script>
+
+{% endblock %}

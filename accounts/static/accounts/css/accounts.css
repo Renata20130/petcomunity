@@ -1,0 +1,68 @@
+ /* registro.css */
+.form-container {
+    max-width: 380px;
+    margin: 3rem auto;
+    background-color: white;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 18px rgba(0,0,0,0.12);
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.form-container h2 {
+    text-align: center;
+    margin-bottom: 1.8rem;
+    color: #0AA;
+}
+
+.form-group {
+    margin-bottom: 1.3rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.4rem;
+    font-weight: 600;
+    color: #333;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 0.65rem 0.85rem;
+    font-size: 0.95rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    transition: border 0.3s ease;
+}
+
+.form-group input:focus {
+    border-color: #0AA;
+    outline: none;
+    background-color: white;
+}
+
+.btn-submit {
+    width: 100%;
+    padding: 0.8rem;
+    font-size: 1rem;
+    background-color: #0AA;
+    border: none;
+    border-radius: 8px;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-submit:hover {
+    background-color: #088;
+}
+
+.errorlist {
+    color: red;
+    font-size: 0.85rem;
+    margin-top: 0.3rem;
+    list-style: none;
+    padding-left: 0;
+}
+

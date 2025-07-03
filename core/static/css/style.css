@@ -1,0 +1,136 @@
+/* base.css */
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #f8f9fa;
+    color: #333;
+}
+
+header {
+    background-color: #38a169;
+    padding: 1rem 2rem;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: white;
+}
+
+
+
+.btn {
+    background-color: #0AA;
+    color: white;
+    padding: 0.8rem 1.5rem;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: background-color 0.3s;
+    display: inline-block;
+}
+
+.btn:hover {
+    background-color: #088;
+}
+
+footer {
+    text-align: center;
+    padding: 1rem;
+    background-color: #e2e8f0;
+    color: #333;
+    margin-top: 3rem;
+}
+
+.menu-perfil {
+    position: relative;
+    display: inline-block;
+}
+
+
+.btn-perfil {
+    background: none;
+    border: none;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.submenu a {
+    padding: 10px 16px;
+    display: block;
+    text-decoration: none;
+    color: #333;
+}
+
+.submenu a:hover {
+    background-color: #f2f2f2;
+}
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+.nav-links li {
+  position: relative;
+}
+
+.nav-links li a {
+    text-decoration: none;
+    color: white;
+    font-weight: 600;
+    padding: 8px 12px;
+    border-radius: 6px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.nav-links li a:hover {
+    background-color: white;
+    color: #38a169; /* verde del header */
+}
+
+.menu-perfil:hover .submenu {
+  display: block;
+}
+
+.submenu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: white;
+    color: black;
+    min-width: 180px;
+    border-radius: 6px;
+    box-shadow: 0px 8px 16px rgba(0,0,0,0.1);
+    z-index: 1000;
+}
+
+
+.submenu li a {
+    color: #333;
+    padding: 10px 16px;
+    display: block;
+    text-decoration: none;
+}
+
+
+.submenu li a:hover {
+    background-color: #f2f2f2;
+}
+
+.menu-perfil-li {
+    position: relative;
+}
+
+.menu-perfil-li:hover .submenu {
+    display: block;
+}

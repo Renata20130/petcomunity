@@ -1,0 +1,153 @@
+.panel-farmacia {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: auto;
+}
+
+.panel-farmacia h2 {
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  color: #333;
+}
+
+.panel-farmacia .btn-primary {
+  background-color: #28a745;
+  color: white;
+  padding: 10px 18px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.panel-farmacia .btn-primary:hover {
+  background-color: #218838;
+}
+
+.productos-lista table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 2rem;
+  background-color: #fff;
+  box-shadow: 0 0 12px rgba(0,0,0,0.1);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.productos-lista thead {
+  background-color: #f8f9fa;
+}
+
+.productos-lista th,
+.productos-lista td {
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+  vertical-align: middle;
+}
+
+.productos-lista img {
+  border-radius: 10px;
+  max-width: 100px;
+  height: auto;
+  object-fit: cover;
+}
+
+.btn-sm {
+  padding: 6px 12px;
+  font-size: 0.9rem;
+  border-radius: 6px;
+  margin: 2px 0;
+  display: inline-block;
+  text-align: center;
+  text-decoration: none;
+  font-weight: 500;
+  transition: background-color 0.2s ease;
+}
+
+.btn-warning {
+  background-color: #ffc107;
+  color: #212529;
+  border: none;
+}
+
+.btn-warning:hover {
+  background-color: #e0a800;
+}
+
+.btn-danger {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+}
+
+.btn-danger:hover {
+  background-color: #c82333;
+}
+
+@media screen and (max-width: 768px) {
+  .productos-lista table,
+  .productos-lista thead,
+  .productos-lista tbody,
+  .productos-lista th,
+  .productos-lista td,
+  .productos-lista tr {
+    display: block;
+  }
+
+  .productos-lista tr {
+    margin-bottom: 1.5rem;
+    border: 1px solid #ccc;
+    padding: 1rem;
+    border-radius: 10px;
+  }
+
+  .productos-lista td {
+    text-align: right;
+    padding-left: 50%;
+    position: relative;
+  }
+
+  .productos-lista td::before {
+    content: attr(data-label);
+    position: absolute;
+    left: 1rem;
+    font-weight: bold;
+    text-align: left;
+  }
+
+  .productos-lista th {
+    display: none;
+  }
+}
+/* En productos/css/panel_farmacia.css */
+.panel-farmacia hr {
+  margin: 2rem 0;
+  border: none;
+  border-top: 1px solid #ccc;
+}
+
+.panel-farmacia table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 2rem;
+}
+
+.panel-farmacia table th, .panel-farmacia table td {
+  padding: 0.6rem 0.8rem;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+.panel-farmacia table thead {
+  background-color: #f0f0f0;
+}
+
+.panel-farmacia ul {
+  margin: 0;
+  padding-left: 1rem;
+}
+
+.panel-farmacia ul li {
+  list-style-type: disc;
+}

@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/publicar.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <a href="{% url 'panel_clinica' %}" class="btn-back"><span class="icon">←</span> Volver al panel</a>
+
+    <h2>🐾 Publicar Mascota en Adopción</h2>
+    <p>Campos en el form: {{ form.fields|length }}</p>
+    
+    <form method="POST" enctype="multipart/form-data" novalidate>
+        {% csrf_token %}
+      
+        {% for field in form %}
+            <div class="form-group">
+                {{ field.label_tag }}
+                {{ field }}
+                {% if field.errors %}
+                    <ul class="errorlist">
+                        {% for error in field.errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+        {% endfor %}
+        <button type="submit" class="btn-submit">Publicar</button>
+    </form> 
+
+</div>
+{% endblock %}

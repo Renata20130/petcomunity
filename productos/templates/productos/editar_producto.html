@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% load static %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'productos/css/editar_producto.css' %}">
+
+
+{% endblock %}
+{% block content %}
+<div class="editar-producto-container">
+    <div class="btn-volver-container">
+        <a href="{% url 'panel_farmacia' %}" class="btn btn-volver">← Volver al Panel de Farmacia</a>
+    </div>
+  <h2>Editar Producto</h2>
+  <form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <div class="btn-container">
+      <button type="submit" class="btn">Guardar Cambios</button>
+      <a href="{% url 'panel_farmacia' %}" class="btn btn-cancelar">Cancelar</a>
+    </div>
+  </form>
+</div>
+{% endblock %}

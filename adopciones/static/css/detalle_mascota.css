@@ -1,0 +1,35 @@
+.detalle-mascota {
+  max-width: 960px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 18px rgba(0,0,0,0.08);
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.btn-volver {
+  text-decoration: none;
+  color: #0AA;
+  margin-bottom: 1rem;
+  display: inline-block;
+}
+
+.contenido {
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.imagen-grande {
+  max-width: 400px;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  object-fit: cover;
+  width: 100%;
+}
+
+.info {
+  flex: 1;
+  font-size: 1.1rem;
+}

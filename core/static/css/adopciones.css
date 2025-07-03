@@ -1,0 +1,114 @@
+/* adopciones.css */
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f9f9f9;
+  margin: 0;
+  padding: 2rem;
+  color: #333;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: #2c3e50;
+}
+
+.grid-mascotas {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.tarjeta-mascota {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.tarjeta-mascota:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+.tarjeta-mascota img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-bottom: 1px solid #eee;
+}
+
+.info {
+  padding: 1rem;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.info h3 {
+  margin: 0 0 0.5rem;
+  font-size: 1.25rem;
+  color: #34495e;
+}
+
+.info p {
+  margin: 0.2rem 0;
+  flex-grow: 1;
+  color: #666;
+  font-size: 0.95rem;
+}
+
+.btn-ver {
+  align-self: flex-start;
+  background-color: #27ae60;
+  color: white;
+  padding: 0.4rem 0.8rem;
+  border-radius: 4px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+}
+
+.btn-ver:hover {
+  background-color: #219150;
+}
+
+@media (max-width: 600px) {
+  body {
+    padding: 1rem;
+  }
+
+  .tarjeta-mascota img {
+    height: 140px;
+  }
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+    main.adopciones {
+        flex-direction: column;
+    }
+
+    .lista-adopciones,
+    .formulario {
+        flex: 1 1 100%;
+        margin-right: 0;
+        position: static; /* para que el formulario deje de estar fijo */
+        max-height: none;
+        overflow: visible;
+        padding: 0 1rem;
+        box-shadow: none;
+    }
+
+    .formulario {
+        margin-top: 2rem;
+        border-radius: 10px;
+        background-color: #fff;
+    }
+}

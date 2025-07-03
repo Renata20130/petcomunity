@@ -1,0 +1,72 @@
+.formulario-producto {
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.formulario-producto h1 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 1.5rem;
+}
+
+.formulario-producto form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.formulario-producto label {
+  font-weight: 600;
+  margin-bottom: 0.2rem;
+}
+
+.formulario-producto input[type="text"],
+.formulario-producto input[type="number"],
+.formulario-producto input[type="file"],
+.formulario-producto textarea,
+.formulario-producto select {
+  padding: 0.6rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  width: 100%;
+  font-size: 1rem;
+}
+
+.formulario-producto button {
+  padding: 0.8rem;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.formulario-producto button:hover {
+  background-color: #45a049;
+}
+
+.btn-volver-container {
+  margin-bottom: 20px;
+}
+
+.btn-volver {
+  background-color: #95a5a6; /* gris suave */
+  color: white;
+  padding: 10px 18px;
+  border-radius: 5px;
+  text-decoration: none;
+  font-weight: 600;
+  display: inline-block;
+  transition: background-color 0.3s ease;
+}
+
+.btn-volver:hover {
+  background-color: #7f8c8d;
+}

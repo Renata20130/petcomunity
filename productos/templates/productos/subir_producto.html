@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% load static %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'productos/css/subir_producto.css' %}">
+
+
+{% endblock %}
+{% block content %}
+<div class="formulario-producto">
+  <div class="btn-volver-container">
+        <a href="{% url 'panel_farmacia' %}" class="btn btn-volver">← Volver al Panel de Farmacia</a>
+  </div>
+  <h2>🛒 Subir nuevo producto</h2>
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Guardar producto</button>
+  </form>
+</div>
+{% endblock %}

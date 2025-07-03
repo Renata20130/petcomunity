@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Clínicas | PetComunity{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/clinicas.css' %}">
+{% endblock %}
+
+{% block content %}
+<main>
+
+  <h1 style="text-align:center; color:#0AA; margin:2rem 0 1rem;">Clínicas Veterinarias</h1>
+  <p class="descripcion" style="text-align:center; max-width:600px; margin: 0 auto 2rem;">
+    Encuentra atención veterinaria confiable y cercana.
+  </p>
+
+  {% if messages %}
+    <ul class="messages">
+     {% for message in messages %}
+      <li class="{{ message.tags }}">{{ message }}</li>
+     {% endfor %}
+    </ul>
+  {% endif %}
+
+  <div class="clinicas">
+    <div class="lista-clinicas">
+      <div class="cards-container">
+        <div class="card">
+          
+          {% if clinicas %}
+            <div class="grid-clinicas">
+              {% for clinica in clinicas %}
+                <div class="card-clinica">
+                  {% if clinica.profile.foto %}
+                    <img src="{{ clinica.profile.foto.url }}" alt="Foto de {{ clinica.username }}">
+                  {% else %}
+                    <img src="{{ clinica.profile.imagen.url }}" alt="Imagen de {{ clinica.username }}">
+
+                  {% endif %}
+                  <h3>{{ clinica.username }}</h3>
+                  <p>{{ clinica.email }}</p>
+                </div>
+              {% endfor %}
+            </div>
+          {% else %}
+            <p>No hay clínicas registradas aún.</p>
+          {% endif %}
+          <a href="#" class="btn-clinica">Ver más <span>➔</span></a>
+        </div>
+        <!-- Puedes agregar más clínicas aquí -->
+      </div>
+    </div>
+
+    
+  </div>
+
+  <!-- Mapa -->
+  <section class="mapa-clinicas" style="margin: 2rem 0; max-width: 900px; margin-left:auto; margin-right:auto;">
+    <h2 style="text-align:center; color:#0AA; margin-bottom:1rem;">Ubicación de Clínicas</h2>
+    <iframe
+      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3329.1234567890!2d-70.6505555!3d-33.4567890!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9662cfabcd123456%3A0xabcdef1234567890!2sCl%C3%ADnica%20Animal%20Care!5e0!3m2!1ses!2scl!4v1651234567890!5m2!1ses!2scl"
+      width="100%"
+      height="350"
+      style="border:0;"
+      allowfullscreen=""
+      loading="lazy"
+      referrerpolicy="no-referrer-when-downgrade">
+    </iframe>
+  </section>
+
+</main>
+{% endblock %}

@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+{% block content %}
+  <div class="form-container">
+    <h2>Bienvenida, {{ request.user.username }} 👋</h2>
+    <p>Este es tu panel privado de {{ request.user.profile.get_tipo_display }}</p>
+  </div>
+{% endblock %}

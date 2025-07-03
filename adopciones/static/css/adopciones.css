@@ -1,0 +1,85 @@
+/* estilos para el panel de clínica */
+
+.panel-container {
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 1.5rem;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.panel-container h2 {
+  color: #0AA;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.table-mascotas {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+.table-mascotas th, .table-mascotas td {
+  border: 1px solid #ddd;
+  padding: 0.8rem 1rem;
+  text-align: left;
+  vertical-align: middle;
+}
+
+.table-mascotas th {
+  background-color: #0AA;
+  color: white;
+  font-weight: 600;
+}
+
+.table-mascotas tr:nth-child(even) {
+  background-color: #f7f9f8;
+}
+
+.btn {
+  background-color: #0AA;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+  display: inline-block;
+}
+
+.btn:hover {
+  background-color: #088;
+}
+
+.img-thumbnail {
+  max-width: 80px;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.btn-back {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 15px;
+  background-color: #0AA; /* color principal */
+  color: white;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1rem;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.btn-back:hover {
+  background-color: #088;
+  transform: translateX(-3px);
+}
+
+.btn-back .icon {
+  margin-right: 8px;
+  font-size: 1.2rem;
+}

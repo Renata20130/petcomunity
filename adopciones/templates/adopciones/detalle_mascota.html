@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/detalle_mascota.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="detalle-mascota">
+   <a href="{% url 'panel_clinica' %}" class="btn-back"><span class="icon">←</span> Volver al panel</a>
+    <div class="contenido">
+        <img src="{{ mascota.imagen.url }}" alt="{{ mascota.nombre }}" class="imagen-grande">
+        <div class="info">
+            <h2>{{ mascota.nombre }}</h2>
+            <p><strong>Especie:</strong> {{ mascota.especie }}</p>
+            <p><strong>Edad:</strong> {{ mascota.edad }} años</p>
+            <p><strong>Descripción:</strong></p>
+            <p>{{ mascota.descripcion }}</p>
+            <p><strong>Estado:</strong> {{ mascota.get_estado_display }}</p>
+
+            {% if es_duenio %}
+                <a href="{% url 'editar_mascota' mascota.id %}" class="btn-editar">Editar publicación</a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

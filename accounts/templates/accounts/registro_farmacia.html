@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'accounts/css/registro.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="form-container farmacia">
+    <a href="{% url 'registro' %}" class="btn-back">← Volver</a>
+    <h2><span class="icon">💊</span> Registro de Farmacia</h2>
+    <form method="POST" novalidate>
+        {% csrf_token %}
+
+        {% for field in form %}
+            <div class="form-group">
+                {{ field.label_tag }}
+                {{ field }}
+                {% if field.errors %}
+                    <ul class="errorlist">
+                        {% for error in field.errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+        {% endfor %}
+
+        <button type="submit" class="btn-submit">Registrarse</button>
+    </form>
+</div>
+{% endblock %}

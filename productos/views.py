@@ -1,0 +1,73 @@
+from django.shortcuts import render, redirect
+from .forms import ProductoForm
+from .models import Producto
+from django.contrib.auth.decorators import login_required
+from accounts.decorators import tipo_requerido
+from django.shortcuts import get_object_or_404
+from django.contrib import messages
+from pedidos.models import Pedido
+
+# Create your views here.
+
+def catalogo_productos(request):
+    return render(request, 'productos/catalogo.html')
+
+@login_required
+@tipo_requerido('farmacia')
+def subir_producto(request):
+    if request.method == 'POST':
+        form = ProductoForm(request.POST, request.FILES)
+        if form.is_valid():
+            producto = form.save(commit=False)
+            producto.farmacia = request.user
+            producto.save()
+            return redirect('panel_farmacia')  # o a una vista de lista de productos
+    else:
+        form = ProductoForm()
+    
+    return render(request, 'productos/subir_producto.html', {'form': form})
+
+@login_required
+@tipo_requerido('farmacia')
+def panel_farmacia(request):
+    productos = Producto.objects.filter(farmacia=request.user).order_by('-fecha_creacion')
+
+     # Filtrar pedidos que tengan productos de esta farmacia
+    pedidos = Pedido.objects.filter(
+        items__producto__farmacia=request.user
+    ).distinct().prefetch_related('items', 'cliente')
+
+    return render(request, 'productos/panel_farmacia.html', {
+        'productos': productos,
+        'pedidos': pedidos
+    })
+
+
+@login_required
+@tipo_requerido('farmacia')
+def editar_producto(request, producto_id):
+    producto = get_object_or_404(Producto, id=producto_id, farmacia=request.user)
+
+    if request.method == 'POST':
+        form = ProductoForm(request.POST, request.FILES, instance=producto)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Producto actualizado correctamente.')
+            return redirect('panel_farmacia')
+    else:
+        form = ProductoForm(instance=producto)
+
+    return render(request, 'productos/editar_producto.html', {'form': form, 'producto': producto})
+
+
+@login_required
+@tipo_requerido('farmacia')
+def eliminar_producto(request, producto_id):
+    producto = get_object_or_404(Producto, id=producto_id, farmacia=request.user)
+
+    if request.method == 'POST':
+        producto.delete()
+        messages.success(request, 'Producto eliminado correctamente.')
+        return redirect('panel_farmacia')
+
+    return render(request, 'productos/eliminar_producto.html', {'producto': producto})

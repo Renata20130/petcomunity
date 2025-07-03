@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Farmacias | PetComunity{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/farmacias.css' %}">
+{% endblock %}
+
+{% block content %}
+<main class="clinicas">
+  <h1>Farmacias Veterinarias</h1>
+  <p class="descripcion">Encuentra farmacias cercanas con productos confiables para tus mascotas.</p>
+
+  <div class="cards-container">
+    <div class="card">
+      <img src="{% static 'img/farmacia1.jpeg' %}" alt="Farmacia VetVida" />
+      <h3>Farmacia VetVida</h3>
+      <div class="card-info">
+        <p><strong>Horario:</strong> Lunes a Sábado, 9am - 7pm</p>
+        <p><strong>Teléfono:</strong> +56 9 1122 3344</p>
+        <p><strong>Dirección:</strong> Camino Central 123</p>
+      </div>
+      <a href="#" class="btn-clinica">Ver más <span>➔</span></a>
+    </div>
+
+    <!-- Puedes agregar más farmacias aquí -->
+  </div>
+</main>
+{% endblock %}

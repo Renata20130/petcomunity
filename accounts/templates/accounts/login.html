@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'accounts/css/login.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="login-wrapper">
+  <div class="form-container">
+    <h2>Iniciar Sesión</h2>
+    <form method="POST" novalidate>
+      {% csrf_token %}
+
+      <div class="form-group">
+        {{ form.username.label_tag }}
+        {{ form.username }}
+        {% if form.username.errors %}
+          <ul class="errorlist">
+            {% for error in form.username.errors %}
+              <li>{{ error }}</li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+      </div>
+
+      <div class="form-group password-group">
+        {{ form.password.label_tag }}
+        <div class="password-wrapper">
+          {{ form.password }}
+          <span id="togglePassword" class="eye-icon" title="Mostrar/Ocultar contraseña">👁️</span>
+        </div>
+        {% if form.password.errors %}
+          <ul class="errorlist">
+            {% for error in form.password.errors %}
+              <li>{{ error }}</li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+      </div>
+
+      <button type="submit" class="btn-submit">Entrar</button>
+    </form>
+  </div>
+</div>
+
+<script>
+  const togglePassword = document.querySelector('#togglePassword');
+  const passwordField = document.querySelector('input[name="password"]');
+
+  togglePassword.addEventListener('click', () => {
+    if (passwordField.type === 'password') {
+      passwordField.type = 'text';
+      togglePassword.textContent = '🙈';
+    } else {
+      passwordField.type = 'password';
+      togglePassword.textContent = '👁️';
+    }
+  });
+</script>
+{% endblock %}

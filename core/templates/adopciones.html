@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% load static %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/adopciones.css' %}">
+
+
+{% endblock %}
+
+{% block content %}
+<h2>🐾 Mascotas en Adopción</h2>
+
+<div class="grid-mascotas">
+  {% for mascota in mascotas %}
+    <div class="tarjeta-mascota">
+      <img src="{{ mascota.imagen.url }}" alt="{{ mascota.nombre }}">
+      <h3>{{ mascota.nombre }}</h3>
+      <p><strong>Especie:</strong> {{ mascota.especie }}</p>
+      <p><strong>Edad:</strong> {{ mascota.edad }} años</p>
+      <a href="{% url 'detalle_mascota' mascota.id %}">Ver más</a>
+    </div>
+  {% empty %}
+    <p>No hay mascotas publicadas aún.</p>
+  {% endfor %}
+</div>
+{% endblock %}

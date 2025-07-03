@@ -1,0 +1,126 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
+<link rel="stylesheet" href="{% static 'css/clinicas.css' %}">
+
+{% endblock %}
+
+{% block content %}
+<!-- Hero -->
+<section class="hero">
+    <h1>Bienvenido a PetComunity</h1>
+    <p>Conectamos mascotas, personas y veterinarias para una vida mejor 💖</p>
+    <a href="{% url 'adopciones' %}" class="btn">Ver Mascotas en Adopción</a>
+</section>
+
+<!-- Mascotas Destacadas -->
+<section class="destacados">
+    <h2>Mascotas en adopción</h2>
+  
+    <div id="carrusel" class="carousel-container">
+      <div class="carousel">
+        {% for mascota in mascotas_clinica %}
+      <div class="carousel-item">
+        <img src="{{ mascota.imagen.url }}" alt="{{ mascota.nombre }}">
+        <div class="info">
+          <h3>{{ mascota.nombre }}</h3>
+          <p>{{ mascota.especie }} - {{ mascota.edad }} años</p>
+          <a href="{% url 'detalle_mascota' mascota.id %}" class="btn-ver">Ver más</a>
+        </div>
+      </div>
+    {% endfor %}
+    {% for mascota in mascotas_clinica %}
+      <!-- Lo mismo para repetir los items y dar la ilusión de bucle -->
+      <div class="carousel-item">
+        <img src="{{ mascota.imagen.url }}" alt="{{ mascota.nombre }}">
+        <div class="info">
+          <h3>{{ mascota.nombre }}</h3>
+          <p>{{ mascota.especie }} - {{ mascota.edad }} años</p>
+          <a href="{% url 'detalle_mascota' mascota.id %}" class="btn-ver">Ver más</a>
+        </div>
+      </div>
+    {% endfor %}
+
+      </div>
+
+    </div>
+    
+</section>
+
+<!-- Clínicas -->
+<section class="clinicas-home">
+    <h2>🏥 Clínicas Veterinarias</h2>
+    <div class="cards-container clinicas-container">
+        {% if clinicas %}
+            {% for clinica in clinicas %}
+                <div class="card clinica-card">
+                    {% if clinica.profile.imagen %}
+                    
+                        <img src="{{ clinica.profile.imagen.url }}" alt="{{ clinica.username }}">
+                    {% else %}
+                        <img src="{% static 'img/default_clinica.jpg' %}" alt="Imagen por defecto">
+                    {% endif %}
+                    <h3>{{ clinica.username }}</h3>
+                    <p><strong>Horario:</strong> {{ clinica.profile.horario|default:"No disponible" }}</p>
+                    <p><strong>Teléfono:</strong> {{ clinica.profile.telefono|default:"No disponible" }}</p>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>No hay clínicas registradas aún.</p>
+        {% endif %}
+    </div>
+    <div class="btn-container">
+        <a href="{% url 'clinicas' %}" class="btn">Ver todas las clínicas</a>
+    </div>
+</section>
+
+<!-- Farmacias -->
+<section class="farmacias-home">
+    <h2>💊 Productos para Farmacias</h2>
+    <p>Si tienes una farmacia, registra y publica tus productos para llegar a más clientes.</p>
+    <div class="btn-container">
+        <a href="{% url 'farmacias' %}" class="btn">Acceder a Farmacias</a>
+    </div>
+</section>
+
+<!-- Testimonios -->
+<section class="testimonios-home">
+  <h2>Lo que dicen nuestros usuarios</h2>
+  <div class="testimonios-container">
+    <div class="testimonios-slider" id="testimoniosSlider">
+      <div class="testimonial">
+        “PetComunity me ayudó a encontrar la clínica perfecta para mi perro. ¡Muy recomendado!”
+        <span>- Ana P.</span>
+      </div>
+      <div class="testimonial">
+        “Gracias a esta plataforma adopté a Pelusa, y ahora tenemos una familia feliz.”
+        <span>- Alejandro G.</span>
+      </div>
+      <div class="testimonial">
+        “Subir mis productos a PetComunity fue muy fácil y ya tengo más clientes.”
+        <span>- Farmacia VetCare</span>
+      </div>
+    </div>
+
+    <button class="carousel-btn prev" onclick="moveSlide(-1)">‹</button>
+    <button class="carousel-btn next" onclick="moveSlide(1)">›</button>
+  </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+  const slider = document.getElementById('testimoniosSlider');
+  let currentIndex = 0;
+  const totalSlides = slider.children.length;
+
+  function moveSlide(direction) {
+    currentIndex += direction;
+    if (currentIndex < 0) currentIndex = totalSlides - 1;
+    if (currentIndex >= totalSlides) currentIndex = 0;
+    slider.style.transform = `translateX(-${currentIndex * 100}%)`;
+  }
+</script>
+{% endblock %}
