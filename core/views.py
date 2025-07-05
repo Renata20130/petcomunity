@@ -10,7 +10,9 @@ from adopciones.models import MascotaEnAdopcion
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from accounts.models import Profile  
-
+from productos.models import Producto
+from farmacias.models import Farmacia
+from django.db.models import Prefetch
 
 def adopciones(request):
     mascotas = MascotaEnAdopcion.objects.filter(
@@ -79,7 +81,18 @@ def home(request):
     )
     clinicas = User.objects.filter(profile__tipo='clinica')
 
+    productos = Producto.objects.filter(estado='publicado') 
+
     return render(request, 'home.html', {
         'mascotas_clinica': mascotas_clinica,
-        'clinicas': clinicas,  # <- ESTO es lo que te faltaba
+        'clinicas': clinicas, 
+        'productos': productos,
     })
+
+
+def productos_publicados(request):
+    productos = Producto.objects.filter(estado='publicado')
+    return render(request, 'core/productos_publicados.html', {'productos': productos})
+
+
+

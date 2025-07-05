@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'reservas/css/panel_reservas.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="panel-reservas">
+  <h2>📅 Reservas Recibidas</h2>
+  {% if reservas %}
+    <table>
+      <thead>
+        <tr>
+          <th>Cliente</th>
+          <th>Mascota</th>
+          <th>Fecha</th>
+          <th>Hora</th>
+          <th>Motivo</th>
+          <th>Estado</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for reserva in reservas %}
+        <tr class="{% if reserva.estado == 'aceptada' %}fila-aceptada{% elif reserva.estado == 'rechazada' %}fila-rechazada{% endif %}">
+            <td>{{ reserva.nombre_cliente }}</td>
+            <td>{{ reserva.nombre_mascota }}</td>
+            <td>{{ reserva.fecha }}</td>
+            <td>{{ reserva.hora }}</td>
+            <td>{{ reserva.motivo }}</td>
+            <td>{{ reserva.estado|capfirst }}</td>
+            
+            <td class="estado-icono">
+              {% if reserva.estado == "pendiente" %}
+                <a href="{% url 'reservas:cambiar_estado_reserva' reserva.id 'aceptada' %}" class="btn-icon aceptar-btn" title="Aceptar">✅</a>
+                <a href="{% url 'reservas:cambiar_estado_reserva' reserva.id 'rechazada' %}" class="btn-icon rechazar-btn" title="Rechazar">❌</a>
+              {% elif reserva.estado == "aceptada" %}
+                <span class="icono-estado aceptada">✔</span>
+              {% elif reserva.estado == "rechazada" %}
+                <span class="icono-estado rechazada">✖</span>
+              {% endif %}
+            </td>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p>No hay reservas registradas.</p>
+  {% endif %}
+</div>
+{% endblock %}

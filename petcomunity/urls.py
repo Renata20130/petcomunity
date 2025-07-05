@@ -30,6 +30,9 @@ urlpatterns = [
     path('reservas/', include('reservas.urls')),
     path('productos/', include('productos.urls')),
     path('pedidos/', include('pedidos.urls')),
+    path('farmacias/', include('farmacias.urls')),
+    path('pedidos/', include('pedidos.urls', namespace='pedidos')),
+    path('productos/', include('productos.urls')),
     
     
 

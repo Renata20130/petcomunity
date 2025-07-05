@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/productos_publicados.css' %}">
+{% endblock %}
+
+{% block content %}
+  <h1>Productos publicados</h1>
+
+  {% if productos %}
+    <ul class="productos-lista">
+      {% for producto in productos %}
+        <li>
+          {% if producto.imagen %}
+            <img src="{{ producto.imagen.url }}" alt="{{ producto.nombre }}">
+          {% endif %}
+          <div class="producto-nombre">{{ producto.nombre }}</div>
+          <div class="producto-precio">${{ producto.precio }}</div>
+          <div class="producto-farmacia">Farmacia: {{ producto.farmacia.username }}</div>
+          <!-- Botón para agregar al carrito -->
+            <form method="post" action="{% url 'pedidos:agregar_al_carrito' producto.id %}">
+              {% csrf_token %}
+              <!-- campos del formulario -->
+              <button type="submit">Añadir al carrito</button>
+            </form>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>No hay productos publicados.</p>
+  {% endif %}
+{% endblock %}

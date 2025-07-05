@@ -12,7 +12,8 @@
 
   <div class="acciones">
     <a href="{% url 'publicar_adopcion' %}" class="btn-nueva">➕ Publicar nueva mascota</a>
-    <a href="{% url 'registrar_reserva' %}" class="btn-nueva">📅 Registrar nueva reserva</a>
+    <a href="{% url 'panel_reservas_clinica' %}" class="btn">📆 Gestionar Reservas</a>
+
   </div>
 
   <div class="panel-dos-columnas">
@@ -48,9 +49,40 @@
       {% else %}
         <p class="no-mascotas">No has publicado ninguna mascota aún.</p>
       {% endif %}
+
+      <h2>📅 Reservas Recibidas</h2>
+    {% if reservas %}
+      <table>
+        <thead>
+          <tr>
+            <th>Cliente</th>
+            <th>Mascota</th>
+            <th>Fecha</th>
+            <th>Hora</th>
+            <th>Motivo</th>
+            <th>Estado</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for reserva in reservas %}
+          <tr>
+            <td>{{ reserva.nombre_cliente }}</td>
+            <td>{{ reserva.nombre_mascota }}</td>
+            <td>{{ reserva.fecha }}</td>
+            <td>{{ reserva.hora }}</td>
+            <td>{{ reserva.motivo }}</td>
+            <td>{{ reserva.estado|capfirst }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <p>No hay reservas aún.</p>
+    {% endif %}
+
     </div>
 
-    <!-- Columna derecha: reservas -->
+    <!-- Columna derecha: reservas 
     <div class="columna">
       <h3>Reservas solicitadas por clientes</h3>
       {% if reservas_pedidas %}
@@ -110,7 +142,7 @@
       {% else %}
       <p class="no-reservas">No hay reservas ingresadas.</p>
       {% endif %}
-    </div>
+    </div>-->
   </div>
 </div>
 

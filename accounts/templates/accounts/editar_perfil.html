@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'accounts/css/editar_perfil.css' %}">
+{% endblock %}
+
+{% block content %}
+<h2>Editar perfil</h2>
+<form method="POST">
+  {% csrf_token %}
+  <label>Nombre:</label><input type="text" name="first_name" value="{{ user.first_name }}"><br>
+  <label>Apellido:</label><input type="text" name="last_name" value="{{ user.last_name }}"><br>
+  <label>Email:</label><input type="email" name="email" value="{{ user.email }}"><br>
+  <button type="submit">Guardar cambios</button>
+</form>
+{% endblock %}

@@ -1,0 +1,61 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f9f9f9;
+  margin: 20px;
+  color: #333;
+}
+
+h1 {
+  color: #2c3e50;
+  margin-bottom: 20px;
+}
+
+ul.productos-lista {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 0;
+  list-style: none;
+  justify-content: center;
+}
+
+ul.productos-lista li {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 1px 5px rgba(0,0,0,0.1);
+  padding: 8px;
+  width: 140px;  /* menos ancho */
+  box-sizing: border-box;
+  text-align: center;
+  transition: transform 0.2s ease;
+}
+
+ul.productos-lista li:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 3px 6px rgba(0,0,0,0.12);
+}
+
+ul.productos-lista li img {
+  max-width: 100%;
+  height: 100px; /* imagen más pequeña */
+  object-fit: cover;
+  border-radius: 5px;
+  margin-bottom: 6px;
+}
+
+.producto-nombre {
+  font-weight: bold;
+  font-size: 1.1em;
+  margin-bottom: 5px;
+}
+
+.producto-precio {
+  color: #27ae60;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.producto-farmacia {
+  font-size: 0.9em;
+  color: #777;
+}

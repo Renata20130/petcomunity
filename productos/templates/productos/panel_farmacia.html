@@ -6,7 +6,7 @@
 {% block content %}
 <div class="panel-farmacia">
   <h2>🛍️ Panel de Farmacia</h2>
-  <a href="{% url 'subir_producto' %}" class="btn btn-primary">➕ Subir nuevo producto</a>
+  <a href="{% url 'productos:subir_producto' %}" class="btn btn-primary">➕ Subir nuevo producto</a>
 
   {% if productos %}
   <div class="productos-lista">
@@ -36,8 +36,8 @@
             <td>{{ producto.stock }}</td>
             <td>{{ producto.descripcion|default:"-" }}</td>
             <td>
-                <a href="{% url 'editar_producto' producto.id %}" class="btn btn-sm btn-warning">Editar</a>
-                <form action="{% url 'eliminar_producto' producto.id %}" method="POST" style="display:inline;" onsubmit="return confirmarEliminacion();">
+                <a href="{% url 'productos:editar_producto' producto.id %}" class="btn btn-sm btn-warning">Editar</a>
+                <form action="{% url 'productos:eliminar_producto' producto.id %}" method="POST" style="display:inline;" onsubmit="return confirmarEliminacion();">
                     {% csrf_token %}
                     <button type="submit" class="btn btn-sm btn-danger">Eliminar</button>
                 </form>

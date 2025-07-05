@@ -1,0 +1,137 @@
+.perfil-clinica-container {
+  max-width: 800px;
+  margin: 40px auto;
+  background-color: #ffffff;
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.perfil-card h2 {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #333;
+}
+
+.perfil-form label {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 5px;
+}
+
+.perfil-form input[type="text"],
+.perfil-form input[type="email"],
+.perfil-form input[type="file"],
+.perfil-form select,
+.perfil-form textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-sizing: border-box;
+}
+
+.perfil-form input[type="checkbox"] {
+  margin-left: 5px;
+}
+
+button[type="submit"] {
+  display: block;
+  background-color: #4CAF50;
+  color: white;
+  padding: 12px 20px;
+  margin: 20px auto 0;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+button[type="submit"]:hover {
+  background-color: #45a049;
+}
+
+.volver-link {
+  display: block;
+  text-align: center;
+  margin-top: 20px;
+  text-decoration: none;
+  color: #555;
+}
+
+.volver-link:hover {
+  color: #000;
+}
+
+.imagen-perfil {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.imagen-perfil img {
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  object-fit: cover;
+  cursor: pointer;
+  border: 3px solid #ccc;
+  transition: 0.3s ease;
+}
+
+.imagen-perfil img:hover {
+  border-color: #4CAF50;
+}
+
+.horario-formulario {
+  background-color: #f9f9f9;
+  border: 1px dashed #ccc;
+  padding: 15px;
+  margin-bottom: 15px;
+  border-radius: 10px;
+}
+
+.horario-formulario label {
+  font-weight: normal;
+  margin-right: 10px;
+}
+
+.horario-formulario input,
+.horario-formulario select {
+  width: auto;
+  margin-right: 10px;
+}
+
+@media (max-width: 600px) {
+  .perfil-clinica-container {
+    padding: 20px;
+  }
+
+  .imagen-perfil img {
+    width: 100px;
+    height: 100px;
+  }
+
+  .horario-formulario {
+    font-size: 14px;
+  }
+}
+
+
+.boton-agregar-dia {
+  margin-top: 10px;
+  margin-bottom: 20px;
+  padding: 8px 16px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.boton-agregar-dia:hover {
+  background-color: #45a049;
+}

@@ -44,7 +44,9 @@ INSTALLED_APPS = [
     'productos',
     'pedidos',
     'ventas',
- 
+    'clinicas',
+    'farmacias',
+    
     
 ]
 
@@ -146,3 +148,14 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 LANGUAGE_CODE = 'es'  # Español
 USE_I18N = True
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'vanniariict@gmail.com'
+EMAIL_HOST_PASSWORD = 'kgdg pdsh dedc vppc'
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+

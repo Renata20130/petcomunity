@@ -1,0 +1,126 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'accounts/css/editar_perfil_clinica.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="perfil-clinica-container">
+  <div class="perfil-card">
+    <h2>👩‍⚕️ Editar Perfil de Clínica</h2>
+
+    
+    <form method="post" enctype="multipart/form-data" class="perfil-form">
+      {% csrf_token %}
+
+      <div class="imagen-perfil">
+        <label for="id_imagen" title="Haz clic para cambiar la imagen">
+          <img id="preview-imagen" src="{{ user.profile.imagen.url }}" alt="Imagen de perfil">
+        </label>
+        {{ form.imagen.errors }}
+        <input id="id_imagen" type="file" name="imagen" style="display: none;">
+      </div>
+
+      <div class="campo-formulario">
+        <label for="id_first_name">Nombre</label>
+        {{ form.first_name }}
+      </div>
+
+      <div class="campo-formulario">
+        <label for="id_last_name">Apellido</label>
+        {{ form.last_name }}
+      </div>
+
+      <div class="campo-formulario">
+        <label for="id_email">Correo electrónico</label>
+        {{ form.email }}
+      </div>
+
+        <div class="campo-formulario">
+            <label for="id_telefono">Teléfono de contacto</label>
+            {{ form.telefono }}
+            {{ form.telefono.errors }}
+        </div>
+
+      <div class="campo-formulario">
+        {{ form.perfil_publicado.label_tag }}
+        {{ form.perfil_publicado }}
+      </div>
+       <hr>
+      <h3>🕒 Horarios de Atención</h3>
+
+      <div class="horarios-formset" id="formset-container">
+  {{ formset.management_form }}
+  {% for horario in formset %}
+    <div class="horario-item formset-form">
+      {{ horario.id }}   <!-- Agrega esto para que el campo id se envíe -->
+      <div class="campo-formulario">
+        {{ horario.dia.label_tag }} {{ horario.dia }}
+      </div>
+      <div class="campo-formulario">
+        {{ horario.hora_inicio.label_tag }} {{ horario.hora_inicio }}
+      </div>
+      <div class="campo-formulario">
+        {{ horario.hora_fin.label_tag }} {{ horario.hora_fin }}
+      </div>
+      <div class="campo-formulario">
+        {{ horario.DELETE }} Eliminar
+      </div>
+    </div>
+  {% endfor %}
+  
+</div>
+
+<button type="button" id="agregar-dia" class="boton-agregar-dia">➕ Agregar día</button>
+
+      <button type="submit">💾 Guardar cambios</button>
+    </form>
+
+    <a class="volver-link" href="{% url 'panel_clinica' %}">← Volver al panel</a>
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+  document.getElementById('id_imagen').addEventListener('change', function(event) {
+    const preview = document.getElementById('preview-imagen');
+    const file = event.target.files[0];
+
+    if (file) {
+      preview.src = URL.createObjectURL(file);
+    }
+  });
+</script>
+
+<script>
+  document.getElementById('agregar-dia').addEventListener('click', function () {
+    const container = document.getElementById('formset-container');
+    const totalForms = document.getElementById('id_form-TOTAL_FORMS');
+    const formCount = parseInt(totalForms.value);
+
+    const firstForm = document.querySelector('.formset-form');
+    const newForm = firstForm.cloneNode(true);
+
+    newForm.querySelectorAll('input, select').forEach(input => {
+      const name = input.name.replace(`form-0`, `form-${formCount}`);
+      const id = input.id.replace(`form-0`, `form-${formCount}`);
+
+      input.name = name;
+      input.id = id;
+
+      if (input.type === 'checkbox' || input.type === 'radio') {
+        input.checked = false;
+      } else {
+        input.value = '';
+      }
+    });
+
+    container.appendChild(newForm);
+    totalForms.value = formCount + 1;
+  });
+</script>
+
+
+{% endblock %}

@@ -1,0 +1,125 @@
+.carrito-section {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 30px;
+  background-color: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.carrito-section h2 {
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 28px;
+  color: #333;
+}
+
+.carrito-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 25px;
+}
+
+.carrito-table th,
+.carrito-table td {
+  padding: 12px 16px;
+  text-align: center;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.carrito-table th {
+  background-color: #f8f8f8;
+  color: #444;
+  font-weight: 600;
+}
+
+.carrito-table td {
+  color: #555;
+}
+
+.total-container {
+  text-align: right;
+  font-size: 18px;
+  margin-top: 20px;
+}
+
+.btn-agregar,
+.btn-restar,
+.btn-eliminar,
+.btn-finalizar {
+  padding: 6px 10px;
+  border: none;
+  border-radius: 6px;
+  margin: 0 4px;
+  text-decoration: none;
+  font-size: 14px;
+  transition: background-color 0.2s ease;
+}
+
+.btn-agregar {
+  background-color: #6edc8c;
+  color: white;
+}
+
+.btn-restar {
+  background-color: #ffd966;
+  color: #333;
+}
+
+.btn-eliminar {
+  background-color: #f25f5c;
+  color: white;
+}
+
+.btn-finalizar {
+  background-color: #4a90e2;
+  color: white;
+  padding: 10px 16px;
+  display: inline-block;
+  margin-top: 10px;
+  font-size: 16px;
+}
+
+.btn-agregar:hover {
+  background-color: #50b86c;
+}
+
+.btn-restar:hover {
+  background-color: #f0c040;
+}
+
+.btn-eliminar:hover {
+  background-color: #d94a47;
+}
+
+.btn-finalizar:hover {
+  background-color: #357ab8;
+}
+
+@media (max-width: 768px) {
+  .carrito-table thead {
+    display: none;
+  }
+
+  .carrito-table, .carrito-table tbody, .carrito-table tr, .carrito-table td {
+    display: block;
+    width: 100%;
+  }
+
+  .carrito-table tr {
+    margin-bottom: 15px;
+    border-bottom: 2px solid #eee;
+  }
+
+  .carrito-table td {
+    text-align: left;
+    padding: 10px;
+  }
+
+  .carrito-table td:before {
+    content: attr(data-label);
+    font-weight: bold;
+    display: block;
+  }
+}

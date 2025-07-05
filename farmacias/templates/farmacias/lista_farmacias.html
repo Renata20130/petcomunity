@@ -1,0 +1,32 @@
+
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>Farmacias y sus productos</h1>
+
+  {% if farmacias %}
+    {% for farmacia in farmacias %}
+      <h2>{{ farmacia.username }}</h2>
+      <p>Correo: {{ farmacia.email }}</p>
+      
+      <h3>Productos:</h3>
+      {% if farmacia.productos.all %}
+        <ul>
+          {% for producto in farmacia.productos.all %}
+            <li>
+              {{ producto.nombre }} - ${{ producto.precio }} - Stock: {{ producto.stock }}
+              {% if producto.imagen %}
+                <br><img src="{{ producto.imagen.url }}" alt="{{ producto.nombre }}" width="100">
+              {% endif %}
+            </li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <p>No tiene productos publicados.</p>
+      {% endif %}
+    {% endfor %}
+  {% else %}
+    <p>No hay farmacias registradas.</p>
+  {% endif %}
+
+{% endblock %}

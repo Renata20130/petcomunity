@@ -71,3 +71,12 @@ def eliminar_producto(request, producto_id):
         return redirect('panel_farmacia')
 
     return render(request, 'productos/eliminar_producto.html', {'producto': producto})
+
+def lista_productos(request):
+    productos = Producto.objects.all()
+    return render(request, 'productos/lista_productos.html', {'productos': productos})
+
+
+
+
+

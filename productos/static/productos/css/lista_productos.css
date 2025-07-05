@@ -1,0 +1,47 @@
+.productos-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.producto-item {
+  border: 1px solid #ddd;
+  padding: 12px;
+  border-radius: 10px;
+  background-color: #f9f9ff;
+  text-align: center;
+  transition: box-shadow 0.3s ease;
+}
+
+.producto-item:hover {
+  box-shadow: 0 0 10px rgba(100, 100, 255, 0.2);
+}
+
+.producto-item h3 {
+  color: #4f46e5;
+  margin: 10px 0 6px;
+}
+
+.producto-imagen {
+  max-width: 150px;
+  height: auto;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+.btn {
+  display: inline-block;
+  margin-top: 8px;
+  padding: 8px 16px;
+  background-color: #6366f1;
+  color: white;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+  background-color: #4f46e5;
+}

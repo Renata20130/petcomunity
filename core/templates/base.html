@@ -17,7 +17,7 @@
                 <!-- Estas páginas siempre visibles -->
                 <li><a href="{% url 'home' %}">Inicio</a></li>
                 <li><a href="{% url 'clinicas' %}">Clínicas</a></li>
-                <li><a href="{% url 'farmacias' %}">Farmacias</a></li>
+                <li><a href="{% url 'productos_publicados' %}">Productos</a></li>
                 <li><a href="{% url 'adopciones' %}">Adopciones</a></li>
                 <li><a href="{% url 'contacto' %}">Contacto</a></li>
 
@@ -27,16 +27,20 @@
                     <button class="btn-perfil">{{ request.user.get_username }} ⌄</button>
                     <ul class="submenu">
                         {% if request.user.profile.tipo == "clinica" %}
+                            <li><a href="{% url 'editar_perfil_clinica' %}">Mi perfil</a></li>
                             <li><a href="{% url 'panel_clinica' %}">Panel de Clínica</a></li>
                             <li><a href="{% url 'publicar_adopcion' %}">Publicar mascota</a></li>
-                            <li><a href="{% url 'registrar_reserva' %}">Registrar reserva</a></li>
+                           
                         {% elif request.user.profile.tipo == "cliente" %}
-                            <li><a href="#">Mis reservas</a></li>
-                            <li><a href="#">Mis mascotas</a></li>
+                            <li><a href="{% url 'panel_cliente' %}">Mi perfil</a></li>
+                            <li><a href="{% url 'reservas:cliente_pedir_hora' %}">Pedir hora</a></li>
+                            <li><a href="{% url 'pedidos:mis_pedidos' %}">Mis Pedidos</a></li>
+                            <li><a href="{% url 'pedidos:ver_carrito' %}">Carrito de compras</a></li>
+                            <li><a href="#">Adopciones</a></li>
                             {% elif request.user.profile.tipo == "farmacia" %}
-                            <li><a href="{% url 'panel_farmacia' %}">Panel de Farmacia</a></li>
+                            <li><a href="{% url 'productos:panel_farmacia' %}">Panel Farmacia</a></li>
                             <li><a href="#">Productos</a></li>
-                            <li><a href="#">Punto de Venta</a></li>
+                            <li><a href="{% url 'panel_farmacia' %}">Panel Pedidos Farmacia</a></li>
                         {% endif %}
                         <li><a href="{% url 'logout' %}">Cerrar sesión</a></li>
                         </ul>
@@ -57,7 +61,13 @@
     <footer>
         <p>&copy; 2025 PetComunity - Todos los derechos reservados</p>
     </footer>
-
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
    <script>
     document.addEventListener('DOMContentLoaded', function () {
         const btn = document.querySelector('.btn-perfil');
@@ -77,5 +87,6 @@
     </script>
 
     {% block extra_js %}{% endblock %}
+
 </body>
 </html>

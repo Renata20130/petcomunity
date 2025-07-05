@@ -71,3 +71,40 @@ class RegistroFarmaciaForm(UserCreationForm):
         if User.objects.filter(email=email).exists():
             raise forms.ValidationError("Este correo ya está registrado.")
         return email
+    
+class PerfilClinicaForm(forms.ModelForm):
+    first_name = forms.CharField(max_length=30, required=True, label='Nombre')
+    last_name = forms.CharField(max_length=30, required=True, label='Apellido')
+    email = forms.EmailField(required=True, label='Correo electrónico')
+    telefono = forms.CharField(max_length=20, required=True, label='Teléfono de contacto')
+
+    class Meta:
+        model = Profile
+        fields = ['perfil_publicado', 'imagen', 'telefono']
+
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop('user', None)
+        super().__init__(*args, **kwargs)
+        if user:
+            self.fields['first_name'].initial = user.first_name
+            self.fields['last_name'].initial = user.last_name
+            self.fields['email'].initial = user.email
+            self.fields['telefono'].initial = user.profile.telefono
+
+    def save(self, commit=True):
+        profile = super().save(commit=False)
+        user = self.instance.user
+        
+        print("Guardando teléfono:", self.cleaned_data.get('telefono'))  # <--- Depuración
+
+        user.first_name = self.cleaned_data['first_name']
+        user.last_name = self.cleaned_data['last_name']
+        user.email = self.cleaned_data['email']
+
+        profile.telefono = self.cleaned_data['telefono']
+
+        if commit:
+            user.save()
+            profile.save()
+            
+        return profile

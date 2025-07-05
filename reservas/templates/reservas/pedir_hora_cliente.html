@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'reservas/css/pedir_hora_cliente.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="form-reserva">
+    <h2>Solicita una hora en la clínica</h2>
+
+    {% if enviado %}
+        <div class="mensaje-exito">
+            ✅ Tu solicitud fue enviada correctamente. La clínica revisará tu reserva y te contactará pronto.
+        </div>
+    {% else %}
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Enviar solicitud</button>
+        </form>
+    {% endif %}
+
+</div>
+{% endblock %}

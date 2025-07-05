@@ -18,4 +18,5 @@ urlpatterns = [
     path('mascota/<int:mascota_id>/', views.detalle_mascota, name='detalle_mascota'),
 
     
+    
 ]

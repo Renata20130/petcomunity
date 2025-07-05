@@ -3,6 +3,13 @@ from django.contrib.auth.models import User
 from datetime import datetime
 
 class Reserva(models.Model):
+
+    ESTADOS = [
+    ('pendiente', 'Pendiente'),
+    ('aceptada', 'Aceptada'),
+    ('rechazada', 'Rechazada'),
+    ]
+
     clinica = models.ForeignKey(User, on_delete=models.CASCADE, related_name='reservas_recibidas')
     
     nombre_cliente = models.CharField(max_length=100, default='')
@@ -18,8 +25,13 @@ class Reserva(models.Model):
     motivo = models.TextField(blank=True)
     creada = models.DateTimeField(auto_now_add=True)
     
-    creada_por_clinica = models.BooleanField(default=False)  # <-- nuevo campo
+    creada_por_clinica = models.BooleanField(default=False)  
+  
+    estado = models.CharField(max_length=10, choices=ESTADOS, default='pendiente')  # <-- este es el nuevo campo
     
+    cliente = models.ForeignKey(User, on_delete=models.CASCADE, related_name='reservas', null=True, blank=True)
+
+
     class Meta:
         ordering = ['-fecha', '-hora']
 
