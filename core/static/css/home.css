@@ -1,296 +1,169 @@
-/* home.css */
+:root {
+  --primary: #0aa;
+  --secondary: #4f46e5;
+  --bg: #f9f9f9;
+  --text: #333;
+  --radius: 12px;
+  --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --font: 'Inter', sans-serif;
+}
+
+body {
+  font-family: var(--font);
+  background-color: var(--bg);
+  color: var(--text);
+  margin: 0;
+}
+
+.seccion {
+  max-width: 1500px;
+  margin: 4rem auto;
+  padding: 0 1rem;
+  text-align: left;
+}
+
+h2 {
+  font-size: 2rem;
+  color: #333;
+  margin-bottom: 2rem;
+}
+
 .hero {
-    text-align: center;
-    padding: 5rem 2rem;
-    background-color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1500px;
+  margin: 3rem auto;
+  padding: 3rem 2rem;
+  background: white;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.hero-content {
+  max-width: 60%;
 }
 
 .hero h1 {
-    font-size: 2.5rem;
-    margin-bottom: 1rem;
-    color: #0AA;
+  font-size: 2.8rem;
+  color: var(--text);
+}
+
+.hero span {
+  color: var(--primary);
 }
 
 .hero p {
-    font-size: 1.2rem;
-    margin-bottom: 2rem;
+  margin: 1rem 0 2rem;
+  font-size: 1.2rem;
 }
 
-.destacados {
-    max-width: 900px;
-    margin: 3rem auto;
-    padding: 0 1rem;
-    text-align: center;
+.hero img {
+  max-width: 300px;
 }
 
-.destacados h2 {
-    color: #0AA;
-    margin-bottom: 2rem;
+.btn-primary {
+  background: var(--secondary);
+  color: white;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-weight: bold;
+  text-decoration: none;
+  transition: background 0.3s ease;
 }
 
-.destacados-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 1.5rem;
+.btn-primary:hover {
+  background: #4338ca;
 }
 
-.destacado-card {
-    background: white;
-    border-radius: 10px;
-    box-shadow: 0 0 15px rgba(0,0,0,0.1);
-    padding: 1rem;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: 100%;
+.carousel-container {
+  overflow-x: auto;
+  padding-bottom: 1rem;
 }
 
-.destacado-card img {
-    width: 100%;
-    height: 180px;
-    object-fit: cover;
-    border-radius: 8px;
-}
-
-.destacado-card h3 {
-    color: #0AA;
-    margin-top: 1rem;
-}
-
-.farmacias-home {
-    max-width: 600px;
-    margin: 4rem auto;
-    padding: 0 1rem;
-    text-align: center;
-    font-size: 1.1rem;
-    color: #555;
-}
-
-.farmacias-home h2 {
-    color: #0AA;
-    margin-bottom: 1rem;
-}
-
-/* === Testimonios Carrusel === */
-.testimonios-home {
-    max-width: 700px;
-    margin: 4rem auto 6rem;
-    padding: 0 1rem;
-    text-align: center;
-}
-
-.testimonios-home h2 {
-    color: #0AA;
-    margin-bottom: 2rem;
-}
-
-.testimonios-container {
-  position: relative;
-  max-width: 700px;
-  margin: 0 auto;
-  overflow: hidden;
-  padding: 0 40px; /* espacio para botones */
-}
-
-.testimonios-slider {
+.carousel {
   display: flex;
-  transition: transform 0.5s ease-in-out;
+  gap: 1rem;
+  scroll-snap-type: x mandatory;
+}
+
+.carousel-item {
+  background: white;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  flex: 0 0 250px;
+  scroll-snap-align: start;
+  padding: 1rem;
+  text-align: center;
+}
+
+.carousel-item img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.btn-ver {
+  background: var(--primary);
+  color: white;
+  padding: 6px 12px;
+  border-radius: 6px;
+  margin-top: 0.5rem;
+  display: inline-block;
+  text-decoration: none;
+}
+
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+.card {
+  background: white;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 1.5rem;
+  text-align: center;
+}
+
+.card img {
+  width: 100%;
+  max-height: 180px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+}
+
+.center-btn {
+  margin-top: 2rem;
+}
+
+.testimonios {
+  background-color: #fff;
+  padding: 3rem 2rem;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.testimonial-slider {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
 }
 
 .testimonial {
-  min-width: 100%;
-  box-sizing: border-box;
-  padding: 1.5rem;
-  background: white;
-  border-radius: 10px;
-  box-shadow: 0 0 15px rgba(0,0,0,0.1);
   font-style: italic;
-  color: #333;
-  text-align: center;
+  background: #f5f5f5;
+  padding: 1.5rem;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
 }
 
 .testimonial span {
   display: block;
   margin-top: 1rem;
-  font-weight: 600;
-  color: #0AA;
-}
-
-/* Botones de navegación carrusel */
-.carousel-container {
-  width: 100%;
-  overflow: hidden;
-  position: relative;
-}
-
-.carousel {
-  display: flex;
-  width: max-content; /* ajusta al contenido */
-  animation: scrollCarousel 20s linear infinite;
-}
-.carousel::-webkit-scrollbar {
-  display: none;
-}
-
-.carousel-item {
-  flex: 0 0 auto;
-  scroll-snap-align: start;
-  background-color: #fff;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-  text-align: center;
-  width: 250px;
-  padding: 1rem;
-  margin-right: 10px;
-}
-
-.carousel-item img {
-  width: 250px;       /* ancho fijo */
-  height: 200px;      /* alto fijo */
-  object-fit: cover;  /* recorta y adapta la imagen para llenar el área sin deformar */
-  border-radius: 8px;
-}
-.carousel-item .info {
-  margin-top: 0.5rem;
-}
-
-.btn-ver {
-  display: inline-block;
-  margin-top: 0.5rem;
-  background-color: #59a96a;
-  color: white;
-  padding: 6px 12px;
-  border-radius: 6px;
-  text-decoration: none;
-  font-size: 14px;
-}
-
-.btn-ver:hover {
-  background-color: #4d8c5a;
-}
-
-
-
-/* Animación para que el carrusel se mueva de derecha a izquierda */
-@keyframes scrollCarousel {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(-50%);
-  }
-}
-
-/* Contenedor productos (farmacias) */
-.productos-section {
-  margin: 40px auto;
-  padding: 20px;
-  background-color: #fefefe;
-  border-radius: 12px;
-  max-width: 1100px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
-  font-family: 'Segoe UI', sans-serif;
-}
-
-/* Título */
-.productos-section h2 {
-  font-size: 1.8rem;
-  color: #333;
-  margin-bottom: 20px;
-  border-left: 5px solid #6366f1;
-  padding-left: 12px;
-  text-align: center;
-}
-
-/* Grilla de productos */
-.destacados-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 18px;
-  justify-items: center;
-}
-
-/* Tarjeta producto */
-.destacado-card {
-  background: white;
-  border-radius: 12px;
-  box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-  padding: 15px;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-  max-width: 210px;
-  cursor: pointer;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.destacado-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 10px 25px rgba(99, 102, 241, 0.25);
-}
-
-/* Imagen producto */
-.destacado-card img {
-  width: 100%;
-  max-height: 140px;
-  object-fit: contain;
-  border-radius: 10px;
-  margin-bottom: 12px;
-}
-
-/* Nombre producto */
-.destacado-card h3 {
-  color: #4f46e5;
-  margin-top: 0;
-  margin-bottom: 10px;
-  font-size: 1.1rem;
-}
-
-/* Precio */
-.destacado-card p {
-  font-size: 1rem;
-  color: #555;
-  margin: 0;
-  font-weight: 600;
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-  .destacados-container {
-    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-    gap: 14px;
-  }
-  .destacado-card {
-    max-width: 160px;
-    padding: 12px;
-  }
-  .destacado-card img {
-    max-height: 110px;
-  }
-  .destacado-card h3 {
-    font-size: 1rem;
-  }
-}
-
-@media (max-width: 480px) {
-  .destacados-container {
-    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-    gap: 10px;
-  }
-  .destacado-card {
-    max-width: 140px;
-    padding: 10px;
-  }
-  .destacado-card img {
-    max-height: 90px;
-  }
-  .destacado-card h3 {
-    font-size: 0.95rem;
-  }
-  .destacado-card p {
-    font-size: 0.9rem;
-  }
+  font-weight: bold;
+  color: var(--primary);
 }

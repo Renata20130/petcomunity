@@ -23,37 +23,36 @@
     </ul>
   {% endif %}
 
-  <div class="clinicas">
-    <div class="lista-clinicas">
-      <div class="cards-container">
-        <div class="card">
-          
-          {% if clinicas %}
-            <div class="grid-clinicas">
-              {% for clinica in clinicas %}
-                <div class="card-clinica">
-                  {% if clinica.profile.foto %}
-                    <img src="{{ clinica.profile.foto.url }}" alt="Foto de {{ clinica.username }}">
-                  {% else %}
-                    <img src="{{ clinica.profile.imagen.url }}" alt="Imagen de {{ clinica.username }}">
-
-                  {% endif %}
-                  <h3>{{ clinica.username }}</h3>
-                  <p>{{ clinica.email }}</p>
-                </div>
-              {% endfor %}
+<div class="clinicas">
+  <div class="lista-clinicas">
+    {% if clinicas %}
+      <div class="grid-clinicas">
+        {% for clinica in clinicas %}
+          <div class="card-clinica">
+            <div class="card-clinica-img">
+              {% if clinica.profile.foto %}
+                <img src="{{ clinica.profile.foto.url }}" alt="Foto de {{ clinica.username }}">
+              {% elif clinica.profile.imagen %}
+                <img src="{{ clinica.profile.imagen.url }}" alt="Imagen de {{ clinica.username }}">
+              {% else %}
+                <img src="{% static 'img/default-profile.png' %}" alt="Imagen genérica">
+              {% endif %}
             </div>
-          {% else %}
-            <p>No hay clínicas registradas aún.</p>
-          {% endif %}
-          <a href="#" class="btn-clinica">Ver más <span>➔</span></a>
-        </div>
-        <!-- Puedes agregar más clínicas aquí -->
+            <div class="card-clinica-info">
+              <h3>{{ clinica.first_name }} {{ clinica.last_name }}</h3>
+              <p><strong>Usuario:</strong> {{ clinica.username }}</p>
+              <p><strong>Email:</strong> {{ clinica.email }}</p>
+              <p><strong>Teléfono:</strong> {{ clinica.profile.telefono }}</p>
+            </div>
+          </div>
+        {% endfor %}
       </div>
-    </div>
-
-    
+    {% else %}
+      <p style="text-align:center;">No hay clínicas registradas aún.</p>
+    {% endif %}
   </div>
+</div>
+
 
   <!-- Mapa -->
   <section class="mapa-clinicas" style="margin: 2rem 0; max-width: 900px; margin-left:auto; margin-right:auto;">
