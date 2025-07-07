@@ -2,33 +2,51 @@
 {% load static %}
 
 {% block extra_css %}
+{# Carga login.css PRIMERO para los estilos de fondo y centrado general #}
+<link rel="stylesheet" href="{% static 'accounts/css/login.css' %}">
+{# Carga registro.css DESPUÉS para sobrescribir y añadir estilos específicos #}
 <link rel="stylesheet" href="{% static 'accounts/css/registro.css' %}">
 {% endblock %}
 
 {% block content %}
-<div class="form-container clinica">
-    <a href="{% url 'registro' %}" class="btn-back">← Volver</a>
-    <h2><span class="icon">🏥</span> Registro de Clínica</h2>
-    <form method="POST" novalidate>
-        {% csrf_token %}
+<div class="registro-wrapper"> {# Agrega el login-wrapper aquí #}
+    <div class="form-container clinica">
+        {# Opcional: Si quieres el logo y la mascota, los puedes añadir aquí. #}
+        {# Por ejemplo, el form-header que tenías en login.html #}
+        <div class="form-header">
+            <img src="{% static 'img/logo-petcommunity.png' %}" alt="Logo de tu Veterinaria" class="logo">
+            {# <p>La salud de tu mascota es nuestra prioridad</p> #}
+        </div>
 
-        {% for field in form %}
-            <div class="form-group">
-                {{ field.label_tag }}
-                {{ field }}
-                {% if field.errors %}
-                    <ul class="errorlist">
-                        {% for error in field.errors %}
-                            <li>{{ error }}</li>
-                        {% endfor %}
-                    </ul>
-                {% endif %}
-            </div>
-        {% endfor %}
+        <a href="{% url 'registro' %}" class="btn-back">← Volver</a>
+        <h2><span class="icon"></span> Registro de Clínica</h2>
+        <form method="POST" novalidate>
+            {% csrf_token %}
 
-        <button type="submit" class="btn-submit">Registrarse</button>
-    </form>
-    
+            {% if form.non_field_errors %}
+                <ul class="errorlist">
+                    {% for error in form.non_field_errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
 
-</div>
+            {% for field in form %}
+                <div class="form-group">
+                    {{ field.label_tag }}
+                    {{ field }}
+                    {% if field.errors %}
+                        <ul class="errorlist">
+                            {% for error in field.errors %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
+            {% endfor %}
+
+            <button type="submit" class="btn-submit">Registrarse</button>
+        </form>
+    </div>
+</div> {# Cierra el login-wrapper aquí #}
 {% endblock %}

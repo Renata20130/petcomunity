@@ -1,114 +1,255 @@
 /* adopciones.css */
 
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #f9f9f9;
-  margin: 0;
-  padding: 2rem;
-  color: #333;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f9f9f9;
+    color: #333;
 }
 
 h2 {
-  text-align: center;
-  margin-bottom: 1.5rem;
-  color: #2c3e50;
+    text-align: center;
+    margin-bottom: 1.5rem;
+    color: #2c3e50;
 }
+
+/* --- Nuevos Estilos para el Contenedor Principal (main-content-wrapper) --- */
+.main-content-wrapper {
+    display: flex;
+    gap: 1.5rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    align-items: flex-start;
+    position: relative;
+    /* Este padding solo afecta a los elementos DENTRO de main-content-wrapper,
+       protegiendo el espacio para el panel sin mover el header/footer. */
+    padding-right: 400px; /* Ancho fijo del panel (380px) + margen para el cierre + un poco de aire */
+    transition: padding-right 0.3s ease-out; /* Animación para el padding */
+}
+
+.main-content-wrapper.panel-inactive {
+    padding-right: 0; /* O un valor pequeño si no quieres que la cuadrícula se expanda tanto */
+}
+
 
 .grid-mascotas {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 1.5rem;
-  max-width: 1200px;
-  margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1.5rem;
+    flex-grow: 1; /* Permite que la cuadrícula ocupe el espacio disponible */
+    flex-shrink: 1;
+    min-width: 0;
+    /* El ancho de la cuadrícula se ajustará automáticamente debido al padding-right del wrapper */
 }
 
+
 .tarjeta-mascota {
-  background: white;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-  overflow: hidden;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  display: flex;
-  flex-direction: column;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    overflow: hidden;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, outline 0.2s ease; /* Añadido outline para selección */
+    display: flex;
+    flex-direction: column;
+    cursor: pointer; /* Indica que es clickeable */
 }
 
 .tarjeta-mascota:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
 }
 
+/* Estilo para la tarjeta seleccionada */
+.tarjeta-mascota.selected {
+    outline: 3px solid #27ae60; /* Borde verde para indicar selección */
+    box-shadow: 0 4px 12px rgba(39, 174, 96, 0.3); /* Sombra que complementa */
+}
+
+
 .tarjeta-mascota img {
-  width: 100%;
-  height: 180px;
-  object-fit: cover;
-  border-bottom: 1px solid #eee;
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-bottom: 1px solid #eee;
 }
 
 .info {
-  padding: 1rem;
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
+    padding: 1rem;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
 }
 
 .info h3 {
-  margin: 0 0 0.5rem;
-  font-size: 1.25rem;
-  color: #34495e;
+    margin: 0 0 0.5rem;
+    font-size: 1.25rem;
+    color: #34495e;
 }
 
 .info p {
-  margin: 0.2rem 0;
-  flex-grow: 1;
-  color: #666;
-  font-size: 0.95rem;
+    margin: 0.2rem 0;
+    flex-grow: 1;
+    color: #666;
+    font-size: 0.95rem;
 }
 
-.btn-ver {
-  align-self: flex-start;
-  background-color: #27ae60;
-  color: white;
-  padding: 0.4rem 0.8rem;
-  border-radius: 4px;
-  text-decoration: none;
-  font-weight: 600;
-  transition: background-color 0.3s ease;
+/* --- ESTILOS PARA EL PANEL LATERAL DE DETALLES --- */
+.panel-detalles {
+    background-color: #fefefe;
+    border-radius: 7px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    /* Posicionamiento fijo respecto al viewport, NO afecta otros elementos */
+    position: fixed;
+    top: 8rem; /* Distancia desde la parte superior del viewport */
+    right: -500px; /* Oculto fuera de la pantalla */
+    width: 380px; /* Ancho FIJO */
+    height: calc(80vh - 4rem); /* Altura casi completa del viewport */
+    overflow-y: auto; /* Scroll interno si el contenido es largo */
+    padding: 20px; /* Padding interno */
+    transition: right 0.3s ease-out; /* Animación de deslizamiento */
+    z-index: 999; /* Asegura que esté por encima de todo */
+    display: flex;
+    flex-direction: column;
 }
 
-.btn-ver:hover {
-  background-color: #219150;
+
+.panel-detalles.active {
+    right: 2rem; /* Posición visible desde la derecha */
+}
+
+.panel-header {
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.panel-header img {
+    /* --- CAMBIOS CLAVE AQUÍ --- */
+    width: 100%; /* Asegura que ocupe todo el ancho disponible del panel */
+    height: 200px; /* ¡Altura FIJA! Puedes ajustar este valor */
+    object-fit: cover; /* Recorta la imagen para cubrir el área, sin distorsionarla */
+    /* -------------------------- */
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+
+.panel-body {
+    padding: 0 5px; /* Un poco menos padding lateral */
+    overflow-y: auto; /* Scroll si el contenido es demasiado largo */
+    flex-grow: 1; /* Permite que ocupe el espacio restante */
+}
+
+.panel-body h3 {
+    text-align: center;
+    color: #34495e;
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+}
+
+.panel-body p {
+    margin-bottom: 0.5rem;
+    line-height: 1.5;
+}
+
+.panel-body p strong {
+    color: #555;
+}
+
+.btn-contacto {
+    display: block;
+    width: fit-content;
+    margin: 20px auto 0 auto;
+    background-color: #27ae60;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: 600;
+    text-align: center;
+    transition: background-color 0.3s ease;
+}
+
+.btn-contacto:hover {
+    background-color: #219150;
+}
+
+.cerrar-panel {
+    color: #aaa;
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.3s ease;
+    z-index: 10; /* Asegura que esté por encima del contenido del panel */
+    background-color: #fefefe; /* Para que no se vea el texto debajo */
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cerrar-panel:hover,
+.cerrar-panel:focus {
+    color: #333;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* --- Responsive Adaptación --- */
+@media (max-width: 992px) { /* Ajustar para tablets */
+    .main-content-wrapper {
+        flex-direction: column;
+        align-items: center;
+        /* Aseguramos que el padding derecho sea 0 en móvil, ya que el panel se va abajo */
+        padding-right: 0;
+    }
+
+    .main-content-wrapper.panel-inactive {
+        padding-right: 0;
+    }
+
+    .grid-mascotas {
+        width: 100%; /* Ocupa todo el ancho disponible */
+        max-width: 700px; /* Limita el ancho de la cuadrícula en pantallas medianas */
+    }
+
+    .panel-detalles {
+        /* En móvil, el panel se ancla a la parte inferior y no interfiere con header/footer */
+        position: fixed;
+        bottom: -80vh; /* Oculto por debajo */
+        left: 0;
+        right: 0;
+        width: 100%;
+        height: 80vh;
+        border-radius: 8px 8px 0 0;
+        box-shadow: 0 -4px 15px rgba(0,0,0,0.2);
+        transition: bottom 0.3s ease-out;
+        top: auto; /* Reseteamos top */
+    }
+
+    .panel-detalles.active {
+        bottom: 0; /* Visible desde la parte inferior */
+        right: 0;
+    }
+    
+    .cerrar-panel {
+        top: 10px; /* Reajusta posición del botón de cerrar */
+        right: 10px;
+    }
 }
 
 @media (max-width: 600px) {
-  body {
-    padding: 1rem;
-  }
-
-  .tarjeta-mascota img {
-    height: 140px;
-  }
-}
-
-/* Responsive */
-@media (max-width: 900px) {
-    main.adopciones {
-        flex-direction: column;
+    body {
+        padding: 1rem;
     }
 
-    .lista-adopciones,
-    .formulario {
-        flex: 1 1 100%;
-        margin-right: 0;
-        position: static; /* para que el formulario deje de estar fijo */
-        max-height: none;
-        overflow: visible;
-        padding: 0 1rem;
-        box-shadow: none;
+    .tarjeta-mascota img {
+        height: 140px;
     }
 
-    .formulario {
-        margin-top: 2rem;
-        border-radius: 10px;
-        background-color: #fff;
+    .panel-header img {
+        height: 180px;
     }
 }

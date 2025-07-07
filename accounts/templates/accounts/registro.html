@@ -2,37 +2,58 @@
 {% load static %}
 
 {% block extra_css %}
+{# Reutilizamos el mismo CSS de login para el estilo de la caja principal #}
+<link rel="stylesheet" href="{% static 'accounts/css/login.css' %}">
+{# Puedes tener un CSS específico para el registro si hay estilos adicionales #}
 <link rel="stylesheet" href="{% static 'accounts/css/registro.css' %}">
 {% endblock %}
 
 {% block content %}
-<div class="form-container">
-    <h2><span class="icon">👤</span> Crear cuenta</h2>
-    <form method="POST">
-        {% csrf_token %}
-        
-        {% for field in form %}
-        <div class="form-group">
-            {{ field.label_tag }}
-            {{ field }}
-            {% if field.errors %}
+{# Usamos el mismo envoltorio que el login para el fondo y centrado #}
+<div class="registro-wrapper"> 
+    <div class="form-container">
+        <div class="form-header">
+            <img src="{% static 'img/logo-petcommunity.png' %}" alt="Logo de tu Veterinaria" class="logo">
+            {# Puedes añadir el texto "La salud de tu mascota es nuestra prioridad" aquí si quieres #}
+        </div>
+
+        <h2><span class="icon"></span> Crear cuenta</h2>
+        <form method="POST" novalidate> {# Añadido novalidate #}
+            {% csrf_token %}
+            
+            {# Errores de formulario no de campo #}
+            {% if form.non_field_errors %}
                 <ul class="errorlist">
-                    {% for error in field.errors %}
+                    {% for error in form.non_field_errors %}
                         <li>{{ error }}</li>
                     {% endfor %}
                 </ul>
             {% endif %}
+
+            {% for field in form %}
+            <div class="form-group">
+                {{ field.label_tag }}
+                {{ field }}
+                {% if field.errors %}
+                    <ul class="errorlist">
+                        {% for error in field.errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+            {% endfor %}
+            
+            <button type="submit" class="btn-submit">Registrar</button>
+        </form>
+
+        {# Mueve el div de tipos de registro fuera del formulario pero dentro del form-container #}
+        <div class="registro-tipos">
+            <p>¿Eres una clínica o una farmacia?</p>
+            <a href="{% url 'registro_clinica' %}" class="btn-secondary">Clínica</a>
+            <a href="{% url 'registro_farmacia' %}" class="btn-secondary">Farmacia</a>
         </div>
-        {% endfor %}
-        
-         <button type="submit" class="btn-submit">Registrar</button>
-</div>
-        
-    </form>
-    <div class="registro-tipos">
-    <p>¿Eres una clínica o una farmacia?</p>
-    <a href="{% url 'registro_clinica' %}" class="btn-secondary">Clínica</a>
-    <a href="{% url 'registro_farmacia' %}" class="btn-secondary">Farmacia</a>
+    </div>
 </div>
 
 {% endblock %}

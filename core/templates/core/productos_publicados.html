@@ -1,33 +1,50 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load humanize %} 
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/productos_publicados.css' %}">
 {% endblock %}
 
 {% block content %}
-  <h1>Productos publicados</h1>
+   <h1>Catálogo de productos</h1>
 
-  {% if productos %}
-    <ul class="productos-lista">
-      {% for producto in productos %}
-        <li>
-          {% if producto.imagen %}
-            <img src="{{ producto.imagen.url }}" alt="{{ producto.nombre }}">
-          {% endif %}
-          <div class="producto-nombre">{{ producto.nombre }}</div>
-          <div class="producto-precio">${{ producto.precio }}</div>
-          <div class="producto-farmacia">Farmacia: {{ producto.farmacia.username }}</div>
-          <!-- Botón para agregar al carrito -->
-            <form method="post" action="{% url 'pedidos:agregar_al_carrito' producto.id %}">
-              {% csrf_token %}
-              <!-- campos del formulario -->
-              <button type="submit">Añadir al carrito</button>
+    <div class="top-controls">
+     <div class="search-bar">
+       <input type="text" id="search-input" placeholder="Buscar productos...">
+       <button id="search-button"><i class="fas fa-search"></i></button> {# Icono de búsqueda #}
+     </div>
+
+     <div class="category-filters">
+       <button class="filter-button active" data-category="todos">Todos</button>
+       <button class="filter-button" data-category="farmacia">Farmacia</button>
+       <button class="filter-button" data-category="veterinaria">Veterinaria</button>
+       <button class="filter-button" data-category="ofertas">Ofertas</button>
+     </div>
+   </div>
+
+   {% if productos %}
+     <ul class="productos-lista">
+       {% for producto in productos %}
+         <li class="producto-card"> {# Agregamos una clase para mayor especificidad en CSS #}
+           {% if producto.imagen %}
+             <img src="{{ producto.imagen.url }}" alt="{{ producto.nombre }}">
+            {% endif %}
+           <div class="producto-info"> {# Contenedor para texto #}
+              <div class="producto-nombre">{{ producto.nombre }}</div>
+              <div class="producto-farmacia">Farmacia: {{ producto.farmacia.username }}</div>
+              <div class="producto-precio">$ {{ producto.precio_clp }}</div>
+           </div>
+          <div class="producto-acciones"> {# Nuevo div para el botón #}
+           <form method="post" action="{% url 'pedidos:agregar_al_carrito' producto.id %}">
+             {% csrf_token %}
+             <button type="submit" class="btn-agregar-carrito">Añadir al carrito</button>
             </form>
-        </li>
-      {% endfor %}
-    </ul>
-  {% else %}
-    <p>No hay productos publicados.</p>
+           </div>
+         </li>
+       {% endfor %}
+     </ul>
+   {% else %}
+     <p>No hay productos publicados.</p>
   {% endif %}
 {% endblock %}

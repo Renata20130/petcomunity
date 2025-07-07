@@ -14,6 +14,9 @@ from productos.models import Producto
 from farmacias.models import Farmacia
 from django.db.models import Prefetch
 
+import locale
+
+
 def adopciones(request):
     mascotas = MascotaEnAdopcion.objects.filter(
         publicada_por__profile__tipo='clinica',
@@ -92,7 +95,50 @@ def home(request):
 
 def productos_publicados(request):
     productos = Producto.objects.filter(estado='publicado')
-    return render(request, 'core/productos_publicados.html', {'productos': productos})
+
+    # Configura la localización para Chile
+    # Es crucial que tu sistema tenga este locale instalado.
+    # En sistemas Linux/Mac, 'es_CL.UTF-8' es el más común.
+    # En Windows, puede ser 'Spanish_Chile.1252' o 'es_CL'.
+    # Si no funciona el primero, prueba otros o investiga el nombre exacto para tu OS.
+    try:
+        locale.setlocale(locale.LC_ALL, 'es_CL.UTF-8') # Opción preferida para Linux/Mac
+    except locale.Error:
+        try:
+            locale.setlocale(locale.LC_ALL, 'es_CL') # Otra opción para Linux/Mac
+        except locale.Error:
+            try:
+                locale.setlocale(locale.LC_ALL, 'Spanish_Chile.1252') # Opción común para Windows
+            except locale.Error:
+                print("Advertencia: No se pudo establecer un locale chileno específico. El formato de moneda podría no ser el esperado.")
+                locale.setlocale(locale.LC_ALL, '') # Fallback: usa el locale por defecto del sistema
 
 
+    productos_con_precio_formateado = []
+    for producto in productos:
+        # Asegúrate de que producto.precio sea un número (int o float)
+        # Si es un objeto Decimal, conviértelo a float para locale.format_string
+        try:
+            precio_flotante = float(producto.precio)
+        except (TypeError, ValueError):
+            precio_flotante = 0.0 # Valor por defecto si el precio no es un número válido
 
+        # Formatear el número con separador de miles (punto) y sin decimales
+        # %d es para enteros, grouping=True para los separadores de miles
+        precio_formateado = locale.format_string("%d", precio_flotante, grouping=True)
+
+        productos_con_precio_formateado.append({
+            'id': producto.id,
+            'nombre': producto.nombre,
+            'precio': producto.precio, # Mantener el original por si acaso
+            'precio_clp': precio_formateado, # Este es el campo que usaremos en la plantilla
+            'imagen': producto.imagen,
+            'farmacia': producto.farmacia, # Pasar el objeto completo si lo necesitas en la plantilla
+            # Asegúrate de pasar también tus campos para data-category en la plantilla
+            'es_farmacia': producto.es_farmacia if hasattr(producto, 'es_farmacia') else False,
+            'es_veterinaria': producto.es_veterinaria if hasattr(producto, 'es_veterinaria') else False,
+            'en_oferta': producto.en_oferta if hasattr(producto, 'en_oferta') else False,
+            # ... cualquier otro campo que necesites
+        })
+
+    return render(request, 'core/productos_publicados.html', {'productos': productos_con_precio_formateado})

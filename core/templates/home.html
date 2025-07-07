@@ -6,87 +6,99 @@
 {% endblock %}
 
 {% block content %}
-
-<!-- Hero -->
-<section class="hero">
-  <div class="hero-content">
-    <h1>🐾 Bienvenido a <span>PetComunity</span></h1>
-    <p>Adopta, cuida y conecta con clínicas veterinarias en un solo lugar.</p>
-    <a href="{% url 'adopciones' %}" class="btn-primary">Ver Mascotas</a>
-  </div>
-  <img src="{% static 'img/hero-mascota.png' %}" alt="Mascota feliz">
-</section>
-
-<!-- Mascotas -->
-<section class="seccion">
-  <h2>🐾 Mascotas en Adopción</h2>
-  <div class="carousel-container">
-    <div class="carousel">
-      {% for mascota in mascotas_clinica %}
-      <div class="carousel-item">
-        <img src="{{ mascota.imagen.url }}" alt="{{ mascota.nombre }}">
-        <h3>{{ mascota.nombre }}</h3>
-        <p>{{ mascota.especie }} - {{ mascota.edad }} años</p>
-        <a href="{% url 'detalle_mascota' mascota.id %}" class="btn-ver">Ver más</a>
+    <!-- Hero -->
+    <section class="hero">
+      <div class="hero-overlay">
+        <h1><span class="resaltado">PetComunity</span></h1>
+        <p class="subtexto">Adopta, cuida y conecta.</p>
+        <div class="hero-buttons">
+          <a href="{% url 'adopciones' %}" class="btn-primary">Ver Mascotas</a>
+          <a href="{% url 'clinicas' %}" class="btn-secondary">Reservar Hora</a>
+          <a href="#productos" class="btn-secondary">Comprar</a>
+        </div>
       </div>
-      {% endfor %}
-    </div>
-  </div>
-</section>
+    </section>
 
-<!-- Clínicas -->
-<section class="seccion">
-  <h2>🏥 Clínicas Veterinarias</h2>
-  <div class="cards-grid">
-    {% for clinica in clinicas %}
-    <div class="card">
-      {% if clinica.profile.imagen %}
-        <img src="{{ clinica.profile.imagen.url }}" alt="{{ clinica.username }}">
-      {% else %}
-        <img src="{% static 'img/default_clinica.jpg' %}" alt="Imagen por defecto">
-      {% endif %}
-      <h3>{{ clinica.username }}</h3>
-      <p><strong>Teléfono:</strong> {{ clinica.profile.telefono|default:"No disponible" }}</p>
-      <p><strong>Horarios:</strong></p>
-      <ul>
-        {% for horario in clinica.profile.horarios.all %}
-        <li>{{ horario.dia }}: {{ horario.hora_inicio|time:"H:i" }} - {{ horario.hora_fin|time:"H:i" }}</li>
-        {% empty %}
-        <li>No hay horarios.</li>
-        {% endfor %}
-      </ul>
-    </div>
-    {% endfor %}
-  </div>
-  <div class="center-btn">
-    <a href="{% url 'clinicas' %}" class="btn-primary">Ver todas</a>
-  </div>
-</section>
+    <!-- Mascotas -->
+    <section class="seccion-mascotas">
+      <h2 class="titulo-mascotas">Adopta</h2>
+      <div class="contenedor">
+        <div class="mascotas-iconos-grid">
+          
+          <a href="{% url 'adopciones' %}?especie=perro">
+            <img src="{% static 'img/perro-icono.png' %}" alt="Perros">
+            <h3>Perros</h3>
+          </a>
 
-<!-- Productos -->
-<section class="seccion">
-  <h2>🛒 Catálogo de productos</h2>
-  <div class="cards-grid">
-    {% for producto in productos %}
-    <div class="card">
-      {% if producto.imagen %}
-        <img src="{{ producto.imagen.url }}" alt="{{ producto.nombre }}">
-      {% endif %}
-      <h3>{{ producto.nombre }}</h3>
-      <p>${{ producto.precio }}</p>
-    </div>
-    {% endfor %}
-  </div>
-</section>
+          <a href="{% url 'adopciones' %}?especie=gato">
+            <img src="{% static 'img/gato-icono.png' %}" alt="Gatos">
+            <h3>Gatos</h3>
+          </a>
 
-<!-- Testimonios -->
-<section class="seccion testimonios">
-  <h2>Lo que dicen nuestros usuarios</h2>
-  <div class="testimonial-slider">
-    <div class="testimonial">“PetComunity me ayudó a encontrar la clínica perfecta para mi perro.” <span>- Ana P.</span></div>
-    <div class="testimonial">“Gracias a esta plataforma adopté a Pelusa. ¡Una familia feliz!” <span>- Alejandro G.</span></div>
-    <div class="testimonial">“Subir mis productos fue fácil y ya tengo más clientes.” <span>- Farmacia VetCare</span></div>
-  </div>
-</section>
+          
+          </div>
+        </div>
+      </section>
 
+    <!-- Clínicas -->
+    <section class="seccion-clinica">
+      <h2 class="titulo-clinica">Clínicas Veterinarias</h2>
+
+
+      <div class="contenedor-clinicas">
+          <div class="cards-grid-clinicas">
+            {% for clinica in clinicas %}
+            <div class="card">
+              {% if clinica.profile.imagen %}
+                <img src="{{ clinica.profile.imagen.url }}" alt="{{ clinica.username }}">
+              {% else %}
+                <img src="{% static 'img/default_clinica.jpg' %}" alt="Imagen por defecto">
+              {% endif %}
+              <h3>{{ clinica.username }}</h3>
+              <p><strong>Teléfono:</strong> {{ clinica.profile.telefono|default:"No disponible" }}</p>
+              <p><strong>Horarios:</strong></p>
+              <ul>
+                {% for horario in clinica.profile.horarios.all %}
+                <li>{{ horario.dia }}: {{ horario.hora_inicio|time:"H:i" }} - {{ horario.hora_fin|time:"H:i" }}</li>
+                {% empty %}
+                <li>No hay horarios.</li>
+                {% endfor %}
+              </ul>
+            </div>
+            {% endfor %}
+          </div>
+          <div class="columna-flecha">
+            <a href="{% url 'clinicas' %}" title="Ver todas las clínicas">
+              <i class="fas fa-arrow-right icono-flecha"></i>
+            </a>
+          </div>
+      </div>
+
+    </section>
+
+    <!-- Productos -->
+    <section class="seccion-productos">
+      <h2 class="titulo-productos">Catálogo de productos</h2>
+
+      <div class="contenedor-productos">
+        <div class="cards-grid-productos">
+          {% for producto in productos %}
+          <div class="card-producto">
+            {% if producto.imagen %}
+              <img src="{{ producto.imagen.url }}" alt="{{ producto.nombre }}">
+            {% endif %}
+            <h3>{{ producto.nombre }}</h3>
+            <p>${{ producto.precio }}</p>
+          </div>
+          {% endfor %}
+        </div>
+
+        <div class="columna-flecha">
+          <a href="{% url 'productos_publicados' %}" title="Ver todos los productos">
+            <i class="fas fa-arrow-right icono-flecha"></i>
+          </a>
+        </div>
+
+      </div>
+    </section>
 {% endblock %}

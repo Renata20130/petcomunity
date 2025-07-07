@@ -15,6 +15,8 @@ body {
   margin: 0;
 }
 
+
+
 .seccion {
   max-width: 1500px;
   margin: 4rem auto;
@@ -22,148 +24,390 @@ body {
   text-align: left;
 }
 
-h2 {
-  font-size: 2rem;
-  color: #333;
-  margin-bottom: 2rem;
-}
-
+/* hero */
 .hero {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  max-width: 1500px;
-  margin: 3rem auto;
-  padding: 3rem 2rem;
-  background: white;
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
+  background-image: url('../img/fondo_home.jpeg');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  width: 100%; 
+  height: 60vh;
+  position: relative;
+  margin: 0;
+  padding: 0; 
 }
 
-.hero-content {
-  max-width: 60%;
+.hero-overlay {
+  position: absolute;
+  top: 20px; 
+  right: 50px; 
+  padding: 30px 40px;
+  border-radius: 15px;
+  text-align: right;
 }
 
 .hero h1 {
-  font-size: 2.8rem;
-  color: var(--text);
+  color: #fff;
+  font-size: 4rem;
+  margin-bottom: 5px;
 }
 
-.hero span {
-  color: var(--primary);
+.resaltado {
+  font-family: 'Anton', sans-serif;
+  font-size: 5rem;
+  color: #A7EBDA;
+  font-weight: normal;
 }
 
-.hero p {
-  margin: 1rem 0 2rem;
-  font-size: 1.2rem;
+.subtexto {
+  font-family: 'Nunito', sans-serif;
+  font-weight: 300;
+  font-size: 1.5rem;
+  color: #F1FAEE;
+  margin-top: 0; 
 }
 
-.hero img {
-  max-width: 300px;
+.hero-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  justify-content: center;
 }
 
-.btn-primary {
-  background: var(--secondary);
+.btn-primary, .btn-secondary {
+  background-color: #FF5E5B;
   color: white;
   padding: 12px 24px;
   border-radius: 8px;
-  font-weight: bold;
   text-decoration: none;
-  transition: background 0.3s ease;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+}
+
+.btn-secondary {
+  background-color: #457B9D;
 }
 
 .btn-primary:hover {
-  background: #4338ca;
+  background-color: #e14e4b;
 }
 
-.carousel-container {
-  overflow-x: auto;
-  padding-bottom: 1rem;
+.btn-secondary:hover {
+  background-color: #356481;
 }
 
-.carousel {
-  display: flex;
-  gap: 1rem;
-  scroll-snap-type: x mandatory;
-}
 
-.carousel-item {
-  background: white;
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
-  flex: 0 0 250px;
-  scroll-snap-align: start;
-  padding: 1rem;
-  text-align: center;
-}
 
-.carousel-item img {
+
+/* mascotas */
+
+.seccion-mascotas {
+  background-color: #A7EBDA;
   width: 100%;
-  height: 180px;
-  object-fit: cover;
-  border-radius: 8px;
+  margin: 0;
+  padding: 0 0 40px 0; 
+  color: #fff;
+  font-family: 'Nunito', sans-serif;
+  overflow-x: hidden;
 }
 
-.btn-ver {
-  background: var(--primary);
-  color: white;
-  padding: 6px 12px;
-  border-radius: 6px;
-  margin-top: 0.5rem;
-  display: inline-block;
+.titulo-mascotas {
+  width: 100vw;
+  background-color: #fff;
+  margin: 0 0 20px 0;
+  padding: 30px 0; 
+  text-align: center;
+  font-size: 30px;
+  font-family: 'Anton', sans-serif;
+  color: #539C8D;
+}
+
+.contenedor {
+  max-width: 1200px;   
+  width: 100%;
+  margin: 0 auto;      
+  padding: 0 20px;   
+    
+}
+
+.mascotas-iconos-grid {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  flex-wrap: wrap;
+  margin-top: 30px;
+}
+
+/* Cada ícono */
+.mascotas-iconos-grid a {
+  background-color: #fff;
+  border-radius: 12px;
+  padding: 20px;
+  text-align: center;
+  width: 160px;
   text-decoration: none;
+  color: #333;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.cards-grid {
+.mascotas-iconos-grid a:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+/* Imagen del ícono */
+.mascotas-iconos-grid img {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+  margin-bottom: 15px;
+}
+
+/* Título dentro del ícono */
+.mascotas-iconos-grid h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: #539C8D;
+}
+
+
+
+
+
+/* clinicas */
+
+.seccion-clinica {
+
+  background-image: url('../img/fondo_clinica.jpg');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  width: 100%; 
+  height: 50vh;
+  position: relative;
+  padding: 0 0 40px 0; 
+  margin: 0;
+  overflow-x: hidden;
+  color: #333; 
+  font-family: 'Nunito', sans-serif;
+  
+}
+
+.titulo-clinica {
+  width: 100vw;
+  margin: 0 0 20px 0; 
+  padding: 30px 0;
+  background-color: #fff;
+  color: #539C8D;
+  text-align: center;
+  font-size: 30px;
+  font-weight: 600;
+  box-shadow: 0 2px 5px rgb(0 0 0 / 0.1); 
+  position: relative;
+  z-index: 1;
+  font-family: 'Anton', sans-serif;
+}
+
+.contenedor-clinicas {
+  display: flex;
+  align-items: stretch;
+  gap: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  
+}
+
+.cards-grid-clinicas {
+  flex: 1; 
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* grilla responsive */
+  gap: 20px;
+  margin-top: 40px;
+  
+  
 }
 
 .card {
-  background: white;
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
-  padding: 1.5rem;
-  text-align: center;
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 10px;
+  max-width: 220px; 
+  margin: 0 auto;   
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  color: #539C8D;
+  font-size: 15px; 
+  
 }
 
 .card img {
   width: 100%;
-  max-height: 180px;
+  height: auto;
+  border-radius: 6px;
   object-fit: cover;
-  border-radius: 8px;
-  margin-bottom: 1rem;
+  margin-bottom: 10px;
 }
 
 .center-btn {
-  margin-top: 2rem;
+  text-align: center;
+  margin-top: 30px;
 }
 
-.testimonios {
-  background-color: #fff;
-  padding: 3rem 2rem;
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
+.btn-primary {
+  background-color: #ffffff;
+  color: #30524a94;
+  padding: 12px 28px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
 }
 
-.testimonial-slider {
+.btn-primary:hover {
+  background-color: #387266;
+}
+
+.columna-flecha {
+  margin-top: 30px;
+  width: 70px;
+  background-color: #71D5C1;
   display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  flex-shrink: 0;
+  transition: background-color 0.3s ease;
+  position: relative;
+  right: -300px; /* mueve 10px más a la derecha */
+  
 }
 
-.testimonial {
-  font-style: italic;
-  background: #f5f5f5;
-  padding: 1.5rem;
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
+.columna-flecha a {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  cursor: pointer;
 }
 
-.testimonial span {
-  display: block;
-  margin-top: 1rem;
-  font-weight: bold;
-  color: var(--primary);
+.icono-flecha {
+  font-size: 1.5rem;
+  color: #f8f3f3;
+  transition: transform 0.2s ease;
 }
+
+.icono-flecha:hover {
+  transform: translateX(4px);
+}
+
+/* Productos */
+.seccion-productos {
+  background-color: #59B1EB;
+  padding: 0 0 40px 0;
+  width: 100%; 
+  overflow-x: hidden;
+  color: #333;
+  font-family: 'Nunito', sans-serif;
+}
+
+.titulo-productos {
+  width: 100vw;
+  margin: 0 0 20px 0; 
+  padding: 30px 0;
+  background-color: #fff;
+  color: #539C8D;
+  text-align: center;
+  font-size: 30px;
+  font-weight: 600;
+  box-shadow: 0 2px 5px rgb(0 0 0 / 0.1); 
+  position: relative;
+  z-index: 1;
+  font-family: 'Anton', sans-serif;
+}
+
+.contenedor-productos {
+  display: flex;
+  align-items: stretch;
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 20px;
+  color: #333;
+  gap: 20px;
+}
+
+.cards-grid-productos {
+  flex: 1; /* 👈 Esto hace que ocupe el ancho restante */
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* grilla responsive */
+  gap: 20px;
+}
+
+.card-producto {
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 10px;
+  max-width: 220px;
+  margin: 0 auto;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  color: #53679c;
+  font-size: 14px;
+}
+
+.card img,
+.card-producto img {
+  border-radius: 6px;
+  width: 100%;
+  height: 140px;
+  object-fit: cover;
+  margin-bottom: 8px;
+}
+
+.card h3,
+.card-producto h3 {
+  font-size: 16px;
+  margin-bottom: 6px;
+}
+.card p {
+  font-size: 13px;
+  margin-bottom: 6px;
+}
+
+/* Columna de la flecha */
+.columna-flecha {
+  width: 60px;
+  background-color: #3878b086;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px 0 0 8px;
+  box-shadow: -2px 0 6px rgba(0, 0, 0, 0.1);
+  flex-shrink: 0;
+}
+
+.columna-flecha a {
+  text-decoration: none;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icono-flecha {
+  font-size: 24px;
+  color: #fff;
+  transition: transform 0.2s ease;
+}
+
+.columna-flecha:hover .icono-flecha {
+  transform: translateX(4px);
+}
+

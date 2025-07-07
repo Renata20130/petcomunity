@@ -1,61 +1,219 @@
 body {
-  font-family: Arial, sans-serif;
-  background-color: #f9f9f9;
-  margin: 20px;
-  color: #333;
+ font-family: 'Segoe UI', sans-serif;
+ background-color: #f0f2f5; /* Fondo más suave */
+ margin: 0; /* Elimina el margen predeterminado del body */
+  font-size: 16px;
+ color: #333;
 }
 
 h1 {
-  color: #2c3e50;
-  margin-bottom: 20px;
+ color: #2c3e50;
+ text-align: center; /* Centra el título */
+ margin-bottom: 30px; /* Más espacio debajo del título */
+ font-size: 2.5em; /* Tamaño de título más prominente */
 }
 
+/* Contenedor principal de la lista de productos */
 ul.productos-lista {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-  padding: 0;
-  list-style: none;
-  justify-content: center;
+ display: grid; /* Usamos Grid para mayor control sobre el layout */
+ grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); /* Columnas responsivas */
+ gap: 25px; /* Espacio entre las tarjetas */
+ padding: 0;
+ list-style: none;
+ max-width: 1200px; /* Ancho máximo para el contenedor de productos */
+ margin: 0 auto; /* Centra la cuadrícula de productos */
 }
 
-ul.productos-lista li {
-  background-color: white;
-  border-radius: 8px;
-  box-shadow: 0 1px 5px rgba(0,0,0,0.1);
-  padding: 8px;
-  width: 140px;  /* menos ancho */
-  box-sizing: border-box;
-  text-align: center;
-  transition: transform 0.2s ease;
+/* Estilo de cada tarjeta de producto */
+li.producto-card { /* Usamos la nueva clase */
+ background-color: white;
+ border-radius: 12px; /* Bordes más redondeados */
+ box-shadow: 0 4px 15px rgba(0,0,0,0.08); /* Sombra más suave y moderna */
+ padding: 15px; /* Más padding interno */
+ box-sizing: border-box;
+ text-align: center;
+ display: flex; /* Usamos flexbox para organizar el contenido verticalmente */
+ flex-direction: column;
+ justify-content: space-between; /* Empuja el botón al final */
+ transition: all 0.3s ease-in-out; /* Transición más suave al hover */
+ overflow: hidden; /* Asegura que el contenido no sobresalga de los bordes redondeados */
 }
 
-ul.productos-lista li:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 3px 6px rgba(0,0,0,0.12);
+li.producto-card:hover {
+ transform: translateY(-5px); /* Efecto de "levantar" */
+ box-shadow: 0 8px 20px rgba(0,0,0,0.15);
 }
 
+/* Imagen del producto */
 ul.productos-lista li img {
-  max-width: 100%;
-  height: 100px; /* imagen más pequeña */
-  object-fit: cover;
-  border-radius: 5px;
-  margin-bottom: 6px;
+ max-width: 100%;
+ height: 160px; /* Imagen un poco más grande */
+ object-fit: contain; /* Para que la imagen se vea completa dentro de su espacio */
+ border-radius: 8px; /* Bordes redondeados para la imagen */
+ margin-bottom: 12px; /* Más espacio debajo de la imagen */
+ background-color: #eaf1f6; /* Fondo suave para la imagen si es transparente */
+ padding: 5px; /* Pequeño padding alrededor de la imagen */
+}
+
+/* Información del producto (nombre, farmacia) */
+.producto-info {
+ flex-grow: 1; /* Permite que este div ocupe el espacio restante */
+ margin-bottom: 10px; /* Espacio antes del precio/botón */
 }
 
 .producto-nombre {
-  font-weight: bold;
-  font-size: 1.1em;
-  margin-bottom: 5px;
-}
-
-.producto-precio {
-  color: #27ae60;
-  font-weight: bold;
-  margin-bottom: 10px;
+ font-weight: 600; /* Un poco más de grosor */
+ font-size: 1.2em; /* Tamaño de fuente ligeramente mayor */
+ color: #34495e; /* Color más oscuro para el nombre */
+ margin-bottom: 5px;
+ line-height: 1.3; /* Espaciado de línea para nombres largos */
 }
 
 .producto-farmacia {
-  font-size: 0.9em;
-  color: #777;
+ font-size: 0.85em;
+ color: #667c8b; /* Color gris azulado */
+ margin-bottom: 10px; /* Espacio después de la farmacia */
+}
+
+.producto-precio {
+ color: #28a745; /* Verde más vibrante para el precio */
+ font-weight: 700; /* Mayor grosor para destacar */
+ font-size: 1.5em; /* Tamaño de fuente más grande para el precio */
+ margin-top: auto; /* Empuja el precio hacia abajo si hay espacio */
+ margin-bottom: 15px; /* Espacio antes del botón */
+}
+
+/* Botón Añadir al Carrito */
+.producto-acciones {
+ width: 100%; /* El contenedor del botón ocupa todo el ancho */
+}
+
+.btn-agregar-carrito { /* Nueva clase para el botón */
+ background-color: #007bff; /* Azul brillante */
+ color: white;
+ border: none;
+ border-radius: 6px; /* Bordes redondeados */
+ padding: 12px 20px; /* Más padding para un botón más grande */
+ font-size: 1em;
+ cursor: pointer;
+ transition: background-color 0.3s ease, transform 0.1s ease;
+ width: 100%; /* El botón ocupa todo el ancho de su contenedor */
+ font-weight: 500;
+}
+
+.btn-agregar-carrito:hover {
+ background-color: #0056b3; /* Azul más oscuro al pasar el ratón */
+ transform: translateY(-1px); /* Efecto de ligera elevación */
+}
+
+.btn-agregar-carrito:active {
+  transform: translateY(0); /* Efecto de "presión" al hacer clic */
+}
+
+/* Mensaje "No hay productos" */
+p {
+ text-align: center;
+ font-size: 1.2em;
+ color: #555;
+ margin-top: 50px;
+}
+
+/* Contenedor de la barra de búsqueda y filtros */
+.top-controls {
+   display: flex;
+   flex-direction: column; /* Apilar en móviles */
+   align-items: center;
+   gap: 20px; /* Espacio entre la barra y los filtros */
+   margin-bottom: 40px; /* Más espacio antes de la lista de productos */
+   max-width: 1200px; /* Igual que la lista de productos */
+   margin-left: auto;
+   margin-right: auto;
+   padding: 0 15px; /* Pequeño padding lateral */
+}
+
+/* Barra de búsqueda */
+.search-bar {
+   display: flex;
+   width: 100%;
+   max-width: 500px; /* Ancho máximo para la barra de búsqueda */
+   border: 2px solid #ccc;
+   border-radius: 30px; /* Bordes redondeados para un look moderno */
+   overflow: hidden; /* Asegura que los bordes redondeados se apliquen bien */
+}
+
+.search-bar input {
+   flex-grow: 1; /* Ocupa el espacio disponible */
+   border: none;
+   padding: 12px 20px;
+   font-size: 1em;
+   outline: none; /* Elimina el contorno al enfocar */
+   background-color: white;
+}
+
+.search-bar button {
+   background-color: #007bff;
+   color: white;
+   border: none;
+   padding: 12px 18px;
+   cursor: pointer;
+   font-size: 1.1em;
+   transition: background-color 0.3s ease;
+}
+
+.search-bar button:hover {
+   background-color: #0056b3;
+}
+
+/* Filtros de categoría */
+.category-filters {
+   display: flex;
+   flex-wrap: wrap; /* Permite que los botones salten de línea */
+   gap: 10px; /* Espacio entre botones */
+   justify-content: center; /* Centra los botones */
+}
+
+.filter-button {
+   background-color: #e9ecef; /* Color de fondo claro */
+   color: #495057; /* Texto gris oscuro */
+   border: none;
+   border-radius: 20px; /* Bordes muy redondeados (píldora) */
+   padding: 10px 20px;
+   font-size: 0.95em;
+   cursor: pointer;
+   transition: background-color 0.3s ease, color 0.3s ease;
+   font-weight: 500;
+}
+
+.filter-button:hover {
+   background-color: #ced4da;
+}
+
+.filter-button.active { /* Estilo para el botón activo */
+   background-color: #28a745; /* Verde vibrante */
+   color: white;
+   box-shadow: 0 2px 5px rgba(40, 167, 69, 0.3); /* Sombra para destacar */
+}
+
+/* Media Queries para ajustar en pantallas más grandes */
+@media (min-width: 768px) {
+   .top-controls {
+     flex-direction: row; /* En fila en tablets y escritorios */
+     justify-content: space-between; /* Espacio entre búsqueda y filtros */
+   }
+   .search-bar {
+     max-width: 400px; /* Ancho ajustable */
+   }
+}
+
+/* Opcional: Para una mejor presentación en pantallas grandes */
+@media (min-width: 768px) {
+ ul.productos-lista {
+  grid-template-columns: repeat(3, 1fr); /* 3 columnas en tablets */
+ }
+}
+
+@media (min-width: 1024px) {
+ ul.productos-lista {
+  grid-template-columns: repeat(4, 1fr); /* 4 columnas en escritorios */
+ }
 }

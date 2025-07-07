@@ -7,11 +7,20 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}" />
     {% block extra_css %}{% endblock %}
     <link rel="shortcut icon" href="{% static 'favicon.ico' %}" type="image/x-icon" />
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Roboto:wght@300;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    
 </head>
 <body>
     <header>
         <nav>
-            <div class="logo">🐾 PetComunity</div>
+            <div class="logo">
+                <a href="{% url 'home' %}">
+                    <img src="{% static 'img/logo-petcommunity.png' %}" alt="PetComunity Logo" class="logo-img">
+                </a>
+            </div>
+
             <ul class="nav-links">
 
                 <!-- Estas páginas siempre visibles -->
@@ -59,7 +68,7 @@
     </main>
 
     <footer>
-        <p>&copy; 2025 PetComunity - Todos los derechos reservados</p>
+        <p>&copy; 2025 PetCommunity - Todos los derechos reservados</p>
     </footer>
     {% if messages %}
         <ul class="messages">
@@ -68,23 +77,7 @@
             {% endfor %}
         </ul>
     {% endif %}
-   <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const btn = document.querySelector('.btn-perfil');
-        const submenu = document.querySelector('.submenu');
-        
-        if (btn && submenu) {
-            btn.addEventListener('click', function (e) {
-                e.stopPropagation();
-                submenu.style.display = submenu.style.display === 'block' ? 'none' : 'block';
-            });
-
-            document.addEventListener('click', function () {
-                submenu.style.display = 'none';
-            });
-        }
-    });
-    </script>
+   <script src="{% static 'js/base.js' %}" defer></script>
 
     {% block extra_js %}{% endblock %}
 

@@ -2,24 +2,72 @@
 {% load static %}
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/adopciones.css' %}">
-
-
 {% endblock %}
 
 {% block content %}
-<h2>🐾 Mascotas en Adopción</h2>
+<h2>
+    {% if filtro_especie == 'perro' %}
+        🐶 Perros en Adopción
+    {% elif filtro_especie == 'gato' %}
+        🐱 Gatos en Adopción
+    {% elif filtro_especie == 'otro' %}
+        🐾 Otras especies en Adopción
+    {% else %}
+        🐾 Todas las Mascotas en Adopción
+    {% endif %}
+</h2>
 
-<div class="grid-mascotas">
-  {% for mascota in mascotas %}
-    <div class="tarjeta-mascota">
-      <img src="{{ mascota.imagen.url }}" alt="{{ mascota.nombre }}">
-      <h3>{{ mascota.nombre }}</h3>
-      <p><strong>Especie:</strong> {{ mascota.especie }}</p>
-      <p><strong>Edad:</strong> {{ mascota.edad }} años</p>
-      <a href="{% url 'detalle_mascota' mascota.id %}">Ver más</a>
+<div class="main-content-wrapper"> {# Contenedor principal para la cuadrícula y el panel lateral #}
+
+    <div class="grid-mascotas">
+        {% for mascota in mascotas %}
+            {# Mantenemos los atributos data- para que JS pueda leer la información #}
+            <div class="tarjeta-mascota"
+                 data-id="{{ mascota.id }}" {# Añadimos el ID para identificarla #}
+                 data-nombre="{{ mascota.nombre }}"
+                 data-especie="{{ mascota.get_especie_display }}"
+                 data-edad="{{ mascota.edad }}"
+                 data-descripcion="{{ mascota.descripcion }}"
+                 data-imagen="{{ mascota.imagen.url }}"
+                 data-clinica="{{ mascota.clinica.nombre }}"
+                 data-contacto-url="#"
+                 data-sexo="{{ mascota.get_sexo_display }}"
+                 data-raza="{{ mascota.raza|default:'Desconocida' }}">
+                <img src="{{ mascota.imagen.url }}" alt="{{ mascota.nombre }}">
+                <div class="info">
+                    <h3>{{ mascota.nombre }}</h3>
+                    <p><strong>Especie:</strong> {{ mascota.get_especie_display }}</p>
+                    <p><strong>Edad:</strong> {{ mascota.edad }} años</p>
+                </div>
+            </div>
+        {% empty %}
+            <p>No hay mascotas publicadas aún.</p>
+        {% endfor %}
     </div>
-  {% empty %}
-    <p>No hay mascotas publicadas aún.</p>
-  {% endfor %}
-</div>
+
+    {# --- Estructura del Panel de Detalles Lateral --- #}
+    <div id="panelDetallesMascota" class="panel-detalles">
+        <span class="cerrar-panel">&times;</span>
+        <div class="panel-contenido">
+            <div class="panel-header">
+                <img id="panel-imagen" src="" alt="Imagen de la Mascota">
+            </div>
+            <div class="panel-body">
+                <h3 id="panel-nombre"></h3>
+                <p><strong>Especie:</strong> <span id="panel-especie"></span></p>
+                <p><strong>Raza:</strong> <span id="panel-raza"></span></p>
+                <p><strong>Sexo:</strong> <span id="panel-sexo"></span></p>
+                <p><strong>Edad:</strong> <span id="panel-edad"></span> años</p>
+                <p><strong>Descripción:</strong> <span id="panel-descripcion"></span></p>
+                <p><strong>Clínica:</strong> <span id="panel-clinica"></span></p>
+                <a id="panel-contacto" href="#" target="_blank" class="btn-contacto">Contactar Clínica</a>
+            </div>
+        </div>
+    </div>
+
+</div> {# Cierre de main-content-wrapper #}
+
+{# Agrega aquí el enlace a tu nuevo archivo JavaScript #}
+<script src="{% static 'js/adopciones.js' %}" defer></script>
 {% endblock %}
+

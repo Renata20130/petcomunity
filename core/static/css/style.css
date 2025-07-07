@@ -1,26 +1,49 @@
 /* base.css */
+
+html, body {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
+
 body {
     margin: 0;
-    font-family: 'Segoe UI', sans-serif;
+    font-family : 'Segoe UI', sans-serif !important;
     background-color: #f8f9fa;
     color: #333;
+    font-size: 16px !important; /* Define un tamaño base explícito para el body */
+    
+}
+
+main {
+    flex: 1;
+    width: 100%;
 }
 
 header {
-    background-color: #38a169;
-    padding: 1rem 2rem;
+    background-color: #71D5C1;
+    padding: 1rem 2rem; /* Mantén el padding existente */
+    
+    flex-wrap: wrap; /* Importante para responsividad */
+    width: 100%; /* Asegura que el header ocupe todo el ancho */
+    box-sizing: border-box; /* Incluye padding y borde en el ancho */
+}
+
+header nav a {
+    font-size: 16px;
 }
 
 nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    
 }
 
-.logo {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: white;
+.logo-img {
+  height: 70px;
+  width: auto;
 }
 
 
@@ -45,7 +68,7 @@ footer {
     padding: 1rem;
     background-color: #e2e8f0;
     color: #333;
-    margin-top: 3rem;
+    margin-top: 0 !important;
 }
 
 .menu-perfil {
@@ -60,6 +83,26 @@ footer {
     color: white;
     font-weight: bold;
     cursor: pointer;
+    font-size: 1.1em; /* Asegura un tamaño de fuente para el botón del perfil (igual que los enlaces) */
+    padding: 8px 12px; /* Añade padding para que sea clickeable */
+}
+
+.btn-perfil:hover {
+    background-color: rgba(255, 255, 255, 0.2); /* Fondo suave al pasar el ratón */
+    border-radius: 6px;
+}
+
+.submenu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: white;
+    color: black;
+    min-width: 180px;
+    border-radius: 6px;
+    box-shadow: 0px 8px 16px rgba(0,0,0,0.1);
+    z-index: 1000;
 }
 
 .submenu a {
@@ -72,11 +115,14 @@ footer {
 .submenu a:hover {
     background-color: #f2f2f2;
 }
+
 .nav-links {
-  list-style: none;
-  display: flex;
-  gap: 1.5rem;
-  align-items: center;
+    list-style: none;
+    display: flex;
+    gap: 1.5rem ;
+    align-items: center;
+    margin: 0; /* Elimina margen por defecto de ul */
+    padding: 0; /* Elimina padding por defecto de ul */
 }
 
 .nav-links li {
@@ -90,6 +136,7 @@ footer {
     padding: 8px 12px;
     border-radius: 6px;
     transition: background-color 0.3s, color 0.3s;
+    font-size: 1.1em; /* Un poco más grande para los enlaces de navegación (1.1 * 16px = ~17.6px) */
 }
 
 .nav-links li a:hover {

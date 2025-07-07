@@ -10,6 +10,18 @@ from accounts.models import Profile
 from django.contrib.auth.models import User
 
 
+def adopciones(request):
+    especie = request.GET.get('especie')  # obtiene lo que viene en ?especie=
+    mascotas = MascotaEnAdopcion.objects.filter(estado='publicada')
+
+    if especie in ['perro', 'gato', 'otro']:
+        mascotas = mascotas.filter(especie=especie)
+
+    return render(request, 'adopciones/adopciones.html', {
+        'mascotas': mascotas,
+        'filtro_especie': especie
+    })
+
 @login_required
 @tipo_requerido('clinica')
 def publicar_adopcion(request):
