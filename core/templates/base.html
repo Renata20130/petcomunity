@@ -22,44 +22,63 @@
             </div>
 
             <ul class="nav-links">
-
-                <!-- Estas páginas siempre visibles -->
                 <li><a href="{% url 'home' %}">Inicio</a></li>
+                <li><a href="{% url 'adopciones' %}">Adopciones</a></li> {# Mover Adopciones más adelante ya que es un pilar #}
                 <li><a href="{% url 'clinicas' %}">Clínicas</a></li>
-                <li><a href="{% url 'productos_publicados' %}">Productos</a></li>
-                <li><a href="{% url 'adopciones' %}">Adopciones</a></li>
+                <li><a href="{% url 'productos_publicados' %}">Tienda</a></li> {# Cambiar "Productos" por "Tienda" o "Farmacia" #}
                 <li><a href="{% url 'contacto' %}">Contacto</a></li>
+            </ul>
 
-                <!-- Usuario autenticado -->
+            <div class="nav-icons-actions"> {# Nuevo contenedor para íconos y botones #}
+                <a href="{% url 'reservas:cliente_pedir_hora' %}" class="btn-primary-header">Pedir Cita</a> {# Botón CTA #}
+                
+                <div class="search-container">
+                    <i class="fas fa-search search-icon"></i> {# Ícono de búsqueda #}
+                    {# Opcional: Un input de búsqueda que aparece al hacer click en el ícono #}
+                    <input type="text" placeholder="Buscar..." class="search-input"> 
+                </div>
+
+                {% if request.user.is_authenticated and request.user.profile.tipo == "cliente" %}
+                    <a href="{% url 'pedidos:ver_carrito' %}" class="cart-icon-link">
+                        <i class="fas fa-shopping-cart"></i> {# Ícono de carrito #}
+                        {# <span class="cart-count">3</span> Opcional: para mostrar número de ítems #}
+                    </a>
+                {% endif %}
+
                 {% if request.user.is_authenticated %}
-                <li class="menu-perfil-li">
-                    <button class="btn-perfil">{{ request.user.get_username }} ⌄</button>
-                    <ul class="submenu">
-                        {% if request.user.profile.tipo == "clinica" %}
-                            <li><a href="{% url 'editar_perfil_clinica' %}">Mi perfil</a></li>
-                            <li><a href="{% url 'panel_clinica' %}">Panel de Clínica</a></li>
-                            <li><a href="{% url 'publicar_adopcion' %}">Publicar mascota</a></li>
-                           
-                        {% elif request.user.profile.tipo == "cliente" %}
-                            <li><a href="{% url 'panel_cliente' %}">Mi perfil</a></li>
-                            <li><a href="{% url 'reservas:cliente_pedir_hora' %}">Pedir hora</a></li>
-                            <li><a href="{% url 'pedidos:mis_pedidos' %}">Mis Pedidos</a></li>
-                            <li><a href="{% url 'pedidos:ver_carrito' %}">Carrito de compras</a></li>
-                            <li><a href="#">Adopciones</a></li>
+                    <li class="menu-perfil-li"> {# Mantener como li para consistencia con nav-links, o cambiar a div si prefieres #}
+                        <button class="btn-perfil">{{ request.user.get_username }} <i class="fas fa-chevron-down"></i></button>
+                        <ul class="submenu">
+                            {# Los enlaces de perfil específicos por tipo de usuario #}
+                            {% if request.user.profile.tipo == "clinica" %}
+                                <li><a href="{% url 'editar_perfil_clinica' %}">Mi perfil</a></li>
+                                <li><a href="{% url 'panel_clinica' %}">Panel de Clínica</a></li>
+                                <li><a href="{% url 'publicar_adopcion' %}">Publicar mascota</a></li>
+                            {% elif request.user.profile.tipo == "cliente" %}
+                                <li><a href="{% url 'panel_cliente' %}">Mi perfil</a></li>
+                                <li><a href="{% url 'reservas:cliente_pedir_hora' %}">Mis citas</a></li> {# Si ya hay un CTA principal, aquí es "mis citas" #}
+                                <li><a href="{% url 'pedidos:mis_pedidos' %}">Mis Pedidos</a></li>
+                                {# <li><a href="{% url 'pedidos:ver_carrito' %}">Carrito de compras</a></li> Se mueve a ícono #}
+                                <li><a href="#">Mis Adopciones</a></li> {# Si el cliente puede seguir el estado de adopciones #}
                             {% elif request.user.profile.tipo == "farmacia" %}
-                            <li><a href="{% url 'productos:panel_farmacia' %}">Panel Farmacia</a></li>
-                            <li><a href="#">Productos</a></li>
-                            <li><a href="{% url 'panel_farmacia' %}">Panel Pedidos Farmacia</a></li>
-                        {% endif %}
-                        <li><a href="{% url 'logout' %}">Cerrar sesión</a></li>
+                                <li><a href="{% url 'productos:panel_farmacia' %}">Panel Farmacia</a></li>
+                                <li><a href="{% url 'panel_farmacia' %}">Panel Pedidos Farmacia</a></li>
+                                {# <li><a href="#">Productos</a></li> Este parece redundante, ¿quizás "Gestionar Productos"? #}
+                            {% endif %}
+                            <li><a href="{% url 'logout' %}">Cerrar sesión</a></li>
                         </ul>
                     </li>
                 {% else %}
-                    <li><a href="{% url 'registro' %}">Registrarse</a></li>
-                    <li><a href="{% url 'login' %}">Iniciar sesión</a></li>
+                    <ul class="auth-links"> {# Puedes mantenerlo dentro de nav-links o separarlo #}
+                        <li><a href="{% url 'registro' %}">Registrarse</a></li>
+                        <li><a href="{% url 'login' %}">Iniciar sesión</a></li>
+                    </ul>
                 {% endif %}
-                    
-            </ul>
+            </div>
+            {# Si usas un menú hamburguesa para móviles, aquí iría el botón para toggle #}
+            <div class="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
         </nav>
     </header>
 
@@ -68,8 +87,62 @@
     </main>
 
     <footer>
-        <p>&copy; 2025 PetCommunity - Todos los derechos reservados</p>
+        <div class="footer-content">
+            <div class="footer-section about">
+                <h3>Sobre PetCommunity</h3>
+                <p>Conectamos animales necesitados con familias amorosas y ofrecemos servicios veterinarios de calidad, así como productos de farmacia para el cuidado de tus mascotas.</p>
+                {# Puedes añadir una pequeña imagen de tu logo aquí si quieres #}
+                <img src="{% static 'img/logo-petcommunity.png' %}" alt="PetComunity Logo" class="logo-footer">
+            </div>
+
+            <div class="footer-section links">
+                <h3>Navegación Rápida</h3>
+                <ul>
+                    <li><a href="{% url 'home' %}">Inicio</a></li>
+                    <li><a href="{% url 'adopciones' %}">Adopciones</a></li>
+                    <li><a href="{% url 'clinicas' %}">Clínicas Veterinarias</a></li>
+                    <li><a href="{% url 'productos_publicados' %}">Tienda / Farmacia</a></li>
+                    <li><a href="{% url 'contacto' %}">Contacto</a></li>
+                    <li><a href="{% url 'home' %}">Preguntas Frecuentes</a></li> {# Ejemplo de enlace adicional #}
+                </ul>
+            </div>
+
+            <div class="footer-section contact">
+                <h3>Contáctanos</h3>
+                <p><i class="fas fa-map-marker-alt"></i> Dirección: [Tu Dirección Completa en Chile]</p>
+                <p><i class="fas fa-phone"></i> Teléfono: [Tu Número de Teléfono]</p>
+                <p><i class="fas fa-envelope"></i> Email: <a href="mailto:info@petcommunity.cl">info@petcommunity.cl</a></p>
+                <p><i class="fas fa-clock"></i> Horario de Atención: Lun-Vie: 9:00 - 18:00</p>
+            </div>
+
+            <div class="footer-section social-newsletter">
+                <h3>Síguenos</h3>
+                <div class="social-icons">
+                    <a href="https://www.facebook.com/" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://www.instagram.com/" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="https://x.com/?lang=en" target="_blank" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="https://youtube.com/" target="_blank" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                </div>
+                
+                <h3>Mantente Informado</h3>
+                <p>Suscríbete a nuestro boletín para recibir las últimas novedades sobre adopciones y ofertas.</p>
+                <form action="https://sendpulse.com/latam/support/glossary/subscription-form" method="post" class="newsletter-form">
+                    <input type="email" placeholder="Tu correo electrónico" required>
+                    <button type="submit">Suscribirme</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2025 PetCommunity - Todos los derechos reservados.</p>
+            <ul class="legal-links">
+                <li><a href="{% url 'home' %}">Política de Privacidad</a></li> {# Asegúrate de tener estas páginas #}
+                <li><a href="{% url 'home' %}">Términos y Condiciones</a></li>
+                <li><a href="{% url 'home' %}">Política de Cookies</a></li>
+            </ul>
+        </div>
     </footer>
+
     {% if messages %}
         <ul class="messages">
             {% for message in messages %}

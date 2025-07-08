@@ -1,51 +1,85 @@
-{% extends "base.html" %}
 {% load static %}
-
-{% block extra_css %}
-{# Carga login.css PRIMERO para los estilos de fondo y centrado general #}
-<link rel="stylesheet" href="{% static 'accounts/css/login.css' %}">
-{# Carga registro.css DESPUÉS para sobrescribir y añadir estilos específicos #}
-<link rel="stylesheet" href="{% static 'accounts/css/registro.css' %}">
-{% endblock %}
-
-{% block content %}
-<div class="registro-wrapper"> {# Agrega el login-wrapper aquí #}
-    <div class="form-container farmacia"> {# Mantén la clase 'farmacia' #}
-        {# Opcional: Si quieres el logo, puedes añadir el form-header aquí #}
-        <div class="form-header">
-            <img src="{% static 'img/logo-petcommunity.png' %}" alt="Logo de tu Veterinaria" class="logo">
-            {# <p>La salud de tu mascota es nuestra prioridad</p> #}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Farmacia - PetCommunity</title>
+    
+    {# Enlaza tu CSS de registro directamente #}
+    <link rel="stylesheet" href="{% static 'accounts/css/registro.css' %}">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="registration-container">
+        <div class="left-panel">
+            <div class="logo">
+                <img src="{% static 'img/logo-petcommunity.png' %}" alt="Logo PetCommunity" class="logo-img">
+                <span class="logo-text">PetCommunity</span>
+            </div>
+            <div class="registration-info">
+                <h1>Registro de Farmacia</h1> {# Título específico para farmacias #}
+                <p>Únete a nuestra comunidad para distribuir productos veterinarios.</p> {# Slogan adaptado #}
+            </div>
+            <div class="security-info">
+                <i class="fas fa-lock"></i>
+                <p>La seguridad de tus productos es nuestra prioridad.</p>
+                <p class="small-text">Al registrarte, aceptas nuestros términos de servicio y política de privacidad.</p>
+            </div>
         </div>
 
-        <a href="{% url 'registro' %}" class="btn-back">← Volver</a>
-        <h2><span class="icon">💊</span> Registro de Farmacia</h2>
-        <form method="POST" novalidate>
-            {% csrf_token %}
+        <div class="right-panel farmacia"> {# Agregamos la clase 'farmacia' aquí para aplicar los estilos específicos #}
+            <div class="top-nav">
+                {# El botón de volver, ahora como un elemento posicionado absolutamente #}
+                <a href="{% url 'registro' %}" class="btn-back">← Volver</a>
+                {# Puedes añadir otros enlaces aquí si necesitas, como "Iniciar Sesión" para farmacias #}
+            </div>
+            <div class="registration-form">
+                <h2>Crear Cuenta de Farmacia</h2> {# Título del formulario #}
+                <p class="subtitle">Completa tus datos para registrar tu farmacia.</p>
 
-            {% if form.non_field_errors %}
-                <ul class="errorlist">
-                    {% for error in form.non_field_errors %}
-                        <li>{{ error }}</li>
-                    {% endfor %}
-                </ul>
-            {% endif %}
+                <form method="POST" novalidate>
+                    {% csrf_token %}
 
-            {% for field in form %}
-                <div class="form-group">
-                    {{ field.label_tag }}
-                    {{ field }}
-                    {% if field.errors %}
-                        <ul class="errorlist">
-                            {% for error in field.errors %}
+                    {% if form.non_field_errors %}
+                        <ul class="errorlist non-field-errors">
+                            {% for error in form.non_field_errors %}
                                 <li>{{ error }}</li>
                             {% endfor %}
                         </ul>
                     {% endif %}
-                </div>
-            {% endfor %}
 
-            <button type="submit" class="btn-submit">Registrarse</button>
-        </form>
+                    <div class="form-grid">
+                        {% for field in form %}
+                        <div class="form-group">
+                            {{ field.label_tag }}
+                            {{ field }}
+                            {% if field.help_text %}
+                                <small class="help-text">{{ field.help_text }}</small>
+                            {% endif %}
+                            {% if field.errors %}
+                                <ul class="errorlist">
+                                    {% for error in field.errors %}
+                                        <li>{{ error }}</li>
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
+                        </div>
+                        {% endfor %}
+                    </div>
+
+                    <button type="submit" class="btn-submit">Registrar Farmacia</button>
+                </form>
+
+                {# La sección de tipos de registro (Clínica/Farmacia) también podría no ser necesaria aquí, pero la puedes añadir #}
+                <div class="registro-tipos">
+                    <p>¿Eres un usuario particular o una clínica?</p>
+                    <a href="{% url 'registro' %}" class="btn-secondary-type">Registrar como Particular</a>
+                    <a href="{% url 'registro_clinica' %}" class="btn-secondary-type">Registrar como Clínica</a>
+                </div>
+            </div>
+        </div>
     </div>
-</div> {# Cierra el login-wrapper aquí #}
-{% endblock %}
+</body>
+</html>

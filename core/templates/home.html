@@ -3,102 +3,95 @@
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/home.css' %}">
+{# Si usas Font Awesome para iconos, asegúrate de tenerlo en base.html o aquí #}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 {% endblock %}
 
 {% block content %}
-    <!-- Hero -->
-    <section class="hero">
-      <div class="hero-overlay">
-        <h1><span class="resaltado">PetComunity</span></h1>
-        <p class="subtexto">Adopta, cuida y conecta.</p>
-        <div class="hero-buttons">
-          <a href="{% url 'adopciones' %}" class="btn-primary">Ver Mascotas</a>
-          <a href="{% url 'clinicas' %}" class="btn-secondary">Reservar Hora</a>
-          <a href="#productos" class="btn-secondary">Comprar</a>
-        </div>
-      </div>
-    </section>
-
-    <!-- Mascotas -->
-    <section class="seccion-mascotas">
-      <h2 class="titulo-mascotas">Adopta</h2>
-      <div class="contenedor">
-        <div class="mascotas-iconos-grid">
-          
-          <a href="{% url 'adopciones' %}?especie=perro">
-            <img src="{% static 'img/perro-icono.png' %}" alt="Perros">
-            <h3>Perros</h3>
-          </a>
-
-          <a href="{% url 'adopciones' %}?especie=gato">
-            <img src="{% static 'img/gato-icono.png' %}" alt="Gatos">
-            <h3>Gatos</h3>
-          </a>
-
-          
-          </div>
-        </div>
-      </section>
-
-    <!-- Clínicas -->
-    <section class="seccion-clinica">
-      <h2 class="titulo-clinica">Clínicas Veterinarias</h2>
-
-
-      <div class="contenedor-clinicas">
-          <div class="cards-grid-clinicas">
-            {% for clinica in clinicas %}
-            <div class="card">
-              {% if clinica.profile.imagen %}
-                <img src="{{ clinica.profile.imagen.url }}" alt="{{ clinica.username }}">
-              {% else %}
-                <img src="{% static 'img/default_clinica.jpg' %}" alt="Imagen por defecto">
-              {% endif %}
-              <h3>{{ clinica.username }}</h3>
-              <p><strong>Teléfono:</strong> {{ clinica.profile.telefono|default:"No disponible" }}</p>
-              <p><strong>Horarios:</strong></p>
-              <ul>
-                {% for horario in clinica.profile.horarios.all %}
-                <li>{{ horario.dia }}: {{ horario.hora_inicio|time:"H:i" }} - {{ horario.hora_fin|time:"H:i" }}</li>
-                {% empty %}
-                <li>No hay horarios.</li>
-                {% endfor %}
-              </ul>
+    <section class="hero-section">
+        <div class="hero-content">
+            <h1><span class="highlight">Tu Compañero Ideal, Cuidado Integral y Productos de Confianza.</span></h1>
+            <p class="hero-subtitle">Conecta con perros y gatos que buscan un hogar, agenda fácilmente tu consulta veterinaria y accede a la farmacia online con todo lo que necesitan.</p>
+            <div class="hero-buttons">
+                <a href="{% url 'adopciones' %}" class="btn btn-primary">Adoptar un Amigo</a>
+                <a href="{% url 'clinicas' %}" class="btn btn-secondary">Agendar Consulta</a>
+                <a href="{% url 'productos_publicados' %}" class="btn btn-secondary">Explorar la Farmacia</a>
             </div>
-            {% endfor %}
-          </div>
-          <div class="columna-flecha">
-            <a href="{% url 'clinicas' %}" title="Ver todas las clínicas">
-              <i class="fas fa-arrow-right icono-flecha"></i>
-            </a>
-          </div>
-      </div>
-
+        </div>
+        {# La imagen de fondo del hero se manejará con CSS #}
     </section>
 
-    <!-- Productos -->
-    <section class="seccion-productos">
-      <h2 class="titulo-productos">Catálogo de productos</h2>
-
-      <div class="contenedor-productos">
-        <div class="cards-grid-productos">
-          {% for producto in productos %}
-          <div class="card-producto">
-            {% if producto.imagen %}
-              <img src="{{ producto.imagen.url }}" alt="{{ producto.nombre }}">
-            {% endif %}
-            <h3>{{ producto.nombre }}</h3>
-            <p>${{ producto.precio }}</p>
-          </div>
-          {% endfor %}
+    <section class="services-overview">
+        <div class="container">
+            <div class="service-cards-grid">
+                <div class="service-card">
+                    <i class="fas fa-paw icon-large"></i> {# Icono de pata para adopciones #}
+                    <h3>Adopción</h3>
+                    <p>Encuentra perros y gatos que buscan un hogar para darles una segunda oportunidad.</p>
+                    <a href="{% url 'adopciones' %}" class="btn-text-link">Ver Mascotas</a>
+                </div>
+                <div class="service-card">
+                    <i class="fas fa-stethoscope icon-large"></i> {# Icono de estetoscopio para clínica #}
+                    <h3>Clínica Veterinaria</h3>
+                    <p>Agenda horas fácilmente con veterinarios expertos y asegura el bienestar de tu mascota.</p>
+                    <a href="{% url 'clinicas' %}" class="btn-text-link">Reservar Hora</a>
+                </div>
+                <div class="service-card">
+                    <i class="fas fa-shopping-cart icon-large"></i> {# Icono de carrito para farmacia #}
+                    <h3>Farmacia Online</h3>
+                    <p>Accede a medicamentos, alimentos especializados y accesorios de las mejores marcas.</p>
+                    <a href="{% url 'productos_publicados' %}" class="btn-text-link">Comprar Ahora</a>
+                </div>
+            </div>
         </div>
-
-        <div class="columna-flecha">
-          <a href="{% url 'productos_publicados' %}" title="Ver todos los productos">
-            <i class="fas fa-arrow-right icono-flecha"></i>
-          </a>
-        </div>
-
-      </div>
     </section>
+
+    <section class="featured-adoptions-section">
+        <div class="container">
+            <h2 class="section-title">Nuestros Amigos en Adopción</h2>
+            <div class="adoption-cards-grid">
+                {% for mascota in mascotas_clinica|slice:":4" %} {# <-- CAMBIO AQUÍ: 'mascotas_clinica' #}
+                <div class="adoption-card">
+                    {% if mascota.imagen %}
+                        <img src="{{ mascota.imagen.url }}" alt="{{ mascota.nombre }}">
+                    {% else %}
+                        <img src="{% static 'img/default_mascota.jpg' %}" alt="Mascota sin foto">
+                    {% endif %}
+                    <h3>{{ mascota.nombre }}</h3>
+                    <p>{{ mascota.edad }} | {{ mascota.raza|default:"Mestizo" }}</p>
+                    <a href="{% url 'detalle_mascota' mascota.id %}" class="btn btn-small">Ver Perfil</a>
+                </div>
+                {% empty %}
+                <p>Por ahora no hay mascotas destacadas para mostrar. ¡Visita nuestra sección de Adopciones!</p>
+                {% endfor %}
+            </div>
+            <div class="text-center mt-4">
+                <a href="{% url 'adopciones' %}" class="btn-outline">Ver Todas las Adopciones</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="testimonials-section">
+        <div class="container">
+            <h2 class="section-title">Lo que Dicen Nuestros Clientes</h2>
+            <div class="testimonial-grid">
+                <div class="testimonial-card">
+                    <p>"Gracias a PetComunity encontramos a nuestro nuevo integrante familiar. ¡El proceso fue sencillo y profesional!"</p>
+                    <div class="testimonial-author">
+                        <img src="{% static 'img/user1.jpg' %}" alt="Usuario 1">
+                        <span>María G.</span>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <p>"La clínica veterinaria es excelente, con un trato muy humano hacia mi gato. ¡Altamente recomendados!"</p>
+                    <div class="testimonial-author">
+                        <img src="{% static 'img/user2.jpg' %}" alt="Usuario 2">
+                        <span>Juan P.</span>
+                    </div>
+                </div>
+                {# Puedes añadir más testimonios o un carrusel si tienes varios #}
+            </div>
+        </div>
+    </section>
+
 {% endblock %}

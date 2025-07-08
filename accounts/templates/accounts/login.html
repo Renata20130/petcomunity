@@ -1,57 +1,92 @@
-{% extends "base.html" %}
 {% load static %}
-
-{% block extra_css %}
-<link rel="stylesheet" href="{% static 'accounts/css/login.css' %}">
-{% endblock %}
-
-{% block content %}
-<div class="login-wrapper">
-
-    <div class="form-container">
-        <div class="form-header">
-            <img src="{% static 'img/logo-petcommunity.png' %}" alt="Logo de tu Veterinaria" class="logo">
-           
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iniciar Sesión - PetCommunity</title>
+    
+    {# Enlaza tu CSS de registro, que ahora contiene el estilo de pantalla completa #}
+    <link rel="stylesheet" href="{% static 'accounts/css/registro.css' %}">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="registration-container"> {# Reutilizamos la clase principal del diseño de dos paneles #}
+        <div class="left-panel">
+            <div class="logo">
+                <img src="{% static 'img/logo-petcommunity.png' %}" alt="Logo PetCommunity" class="logo-img">
+                <span class="logo-text">PetCommunity</span>
+            </div>
+            <div class="registration-info">
+                <h1>Bienvenido de Nuevo</h1> {# Mensaje de bienvenida #}
+                <p>Accede a tu cuenta para gestionar la salud de tu mascota.</p> {# Slogan adaptado #}
+            </div>
+            <div class="security-info">
+                <i class="fas fa-lock"></i>
+                <p>Tu sesión es segura y tus datos están protegidos.</p>
+                <p class="small-text">Mantén tu información de acceso confidencial.</p>
+            </div>
         </div>
 
-        <h2>Iniciar Sesión</h2>
-        <form method="POST" novalidate>
-            {% csrf_token %}
-
-            <div class="form-group">
-                {{ form.username.label_tag }}
-                {{ form.username }}
-                {% if form.username.errors %}
-                <ul class="errorlist">
-                    {% for error in form.username.errors %}
-                    <li>{{ error }}</li>
-                    {% endfor %}
-                </ul>
-                {% endif %}
+        <div class="right-panel">
+            <div class="top-nav">
+                {# Puedes añadir un enlace de "Registro" aquí para mayor facilidad #}
+                <a href="{% url 'registro' %}">¿No tienes cuenta? Regístrate</a>
+                <i class="fas fa-user-circle user-icon"></i>
             </div>
+            <div class="registration-form"> {# Reutilizamos la clase para el formulario #}
+                <h2>Iniciar Sesión</h2>
+                <p class="subtitle">Ingresa tus credenciales para continuar.</p>
 
-            <div class="form-group password-group">
-                {{ form.password.label_tag }}
-                <div class="password-wrapper">
-                    {{ form.password }}
+                <form method="POST" novalidate>
+                    {% csrf_token %}
+
+                    {% if form.non_field_errors %}
+                        <ul class="errorlist non-field-errors">
+                            {% for error in form.non_field_errors %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+
+                    <div class="form-grid"> {# Aunque solo sean 2 campos, usamos el grid para consistencia #}
+                        <div class="form-group">
+                            {{ form.username.label_tag }}
+                            {{ form.username }}
+                            {% if form.username.errors %}
+                                <ul class="errorlist">
+                                    {% for error in form.username.errors %}
+                                        <li>{{ error }}</li>
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
+                        </div>
+
+                        <div class="form-group">
+                            {{ form.password.label_tag }}
+                            <div class="password-wrapper">
+                                {{ form.password }}
+                                {# Si tienes un icono de "mostrar/ocultar contraseña", irá aquí #}
+                            </div>
+                            {% if form.password.errors %}
+                                <ul class="errorlist">
+                                    {% for error in form.password.errors %}
+                                        <li>{{ error }}</li>
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
+                        </div>
+                    </div>
                     
-                </div>
-                {% if form.password.errors %}
-                <ul class="errorlist">
-                    {% for error in form.password.errors %}
-                    <li>{{ error }}</li>
-                    {% endfor %}
-                </ul>
-                {% endif %}
+                    {# Mueve el enlace de registro *antes* del botón de submit si quieres que esté separado #}
+                    {# <a href="{% url 'registro' %}" class="registro-link">¿No tienes cuenta? Regístrate aquí</a> #}
+
+                    <button type="submit" class="btn-submit">Entrar</button>
+                </form>
+
             </div>
-
-            <a href="{% url 'registro' %}" class="registro-link">¿No tienes cuenta? Regístrate aquí</a>
-
-            <button type="submit" class="btn-submit">Entrar</button>
-        </form>
+        </div>
     </div>
-</div>
-
-
-
-{% endblock %}
+</body>
+</html>

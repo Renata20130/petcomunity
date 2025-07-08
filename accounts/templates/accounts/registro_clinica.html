@@ -1,52 +1,86 @@
-{% extends "base.html" %}
 {% load static %}
-
-{% block extra_css %}
-{# Carga login.css PRIMERO para los estilos de fondo y centrado general #}
-<link rel="stylesheet" href="{% static 'accounts/css/login.css' %}">
-{# Carga registro.css DESPUÉS para sobrescribir y añadir estilos específicos #}
-<link rel="stylesheet" href="{% static 'accounts/css/registro.css' %}">
-{% endblock %}
-
-{% block content %}
-<div class="registro-wrapper"> {# Agrega el login-wrapper aquí #}
-    <div class="form-container clinica">
-        {# Opcional: Si quieres el logo y la mascota, los puedes añadir aquí. #}
-        {# Por ejemplo, el form-header que tenías en login.html #}
-        <div class="form-header">
-            <img src="{% static 'img/logo-petcommunity.png' %}" alt="Logo de tu Veterinaria" class="logo">
-            {# <p>La salud de tu mascota es nuestra prioridad</p> #}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Clínica - PetCommunity</title>
+    
+    {# Enlaza tu CSS de registro directamente #}
+    <link rel="stylesheet" href="{% static 'accounts/css/registro.css' %}">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="registration-container">
+        <div class="left-panel">
+            <div class="logo">
+                <img src="{% static 'img/logo-petcommunity.png' %}" alt="Logo PetCommunity" class="logo-img">
+                <span class="logo-text">PetCommunity</span>
+            </div>
+            <div class="registration-info">
+                <h1>Registro de Clínica</h1> {# Título específico para clínicas #}
+                <p>Únete a nuestra red para ofrecer tus servicios veterinarios.</p> {# Slogan adaptado #}
+            </div>
+            <div class="security-info">
+                <i class="fas fa-lock"></i>
+                <p>Tu privacidad y la de tus pacientes son nuestra prioridad.</p>
+                <p class="small-text">Al registrarte, aceptas nuestros términos de servicio y política de privacidad.</p>
+            </div>
         </div>
 
-        <a href="{% url 'registro' %}" class="btn-back">← Volver</a>
-        <h2><span class="icon"></span> Registro de Clínica</h2>
-        <form method="POST" novalidate>
-            {% csrf_token %}
+        <div class="right-panel clinica"> {# Agregamos la clase 'clinica' aquí para aplicar los estilos específicos #}
+            <div class="top-nav">
+                {# El botón de volver, ahora como un elemento posicionado absolutamente #}
+                <a href="{% url 'registro' %}" class="btn-back">← Volver</a>
+                {# Puedes añadir otros enlaces aquí si necesitas, como "Iniciar Sesión" para veterinarios #}
+            </div>
+            <div class="registration-form">
+                <h2>Crear Cuenta de Clínica</h2> {# Título del formulario #}
+                <p class="subtitle">Completa tus datos para registrar tu clínica.</p>
 
-            {% if form.non_field_errors %}
-                <ul class="errorlist">
-                    {% for error in form.non_field_errors %}
-                        <li>{{ error }}</li>
-                    {% endfor %}
-                </ul>
-            {% endif %}
+                <form method="POST" novalidate>
+                    {% csrf_token %}
 
-            {% for field in form %}
-                <div class="form-group">
-                    {{ field.label_tag }}
-                    {{ field }}
-                    {% if field.errors %}
-                        <ul class="errorlist">
-                            {% for error in field.errors %}
+                    {% if form.non_field_errors %}
+                        <ul class="errorlist non-field-errors">
+                            {% for error in form.non_field_errors %}
                                 <li>{{ error }}</li>
                             {% endfor %}
                         </ul>
                     {% endif %}
-                </div>
-            {% endfor %}
 
-            <button type="submit" class="btn-submit">Registrarse</button>
-        </form>
+                    <div class="form-grid">
+                        {% for field in form %}
+                        <div class="form-group">
+                            {{ field.label_tag }}
+                            {{ field }}
+                            {% if field.help_text %}
+                                <small class="help-text">{{ field.help_text }}</small>
+                            {% endif %}
+                            {% if field.errors %}
+                                <ul class="errorlist">
+                                    {% for error in field.errors %}
+                                        <li>{{ error }}</li>
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
+                        </div>
+                        {% endfor %}
+                    </div>
+
+                    <button type="submit" class="btn-submit">Registrar Clínica</button>
+                </form>
+
+                {# La sección de tipos de registro (Clínica/Farmacia) podría no ser necesaria aquí, pero la puedes añadir si quieres que desde aquí también se pueda ir a registro de farmacia o usuario normal #}
+                {# Por ejemplo: #}
+                <div class="registro-tipos">
+                    <p>¿Eres un usuario particular o una farmacia?</p>
+                    <a href="{% url 'registro' %}" class="btn-secondary-type">Registrar como Particular</a>
+                    <a href="{% url 'registro_farmacia' %}" class="btn-secondary-type">Registrar como Farmacia</a>
+                </div>
+            </div>
+        </div>
     </div>
-</div> {# Cierra el login-wrapper aquí #}
-{% endblock %}
+</body>
+</html>

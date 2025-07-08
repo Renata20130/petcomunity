@@ -1,5 +1,6 @@
-/* base.css */
+/* base.css - Adaptaciones para el Header */
 
+/* Asegura que el body use flexbox para que header, main y footer se apilen correctamente */
 html, body {
     height: 100%;
     margin: 0;
@@ -9,124 +10,49 @@ html, body {
 
 body {
     margin: 0;
-    font-family : 'Segoe UI', sans-serif !important;
+    font-family : 'Roboto', sans-serif; /* Usar Roboto si Anton es solo para títulos */
     background-color: #f8f9fa;
     color: #333;
-    font-size: 16px !important; /* Define un tamaño base explícito para el body */
-    
-}
-
-main {
-    flex: 1;
-    width: 100%;
-}
-
-header {
-    background-color: #71D5C1;
-    padding: 1rem 2rem; /* Mantén el padding existente */
-    
-    flex-wrap: wrap; /* Importante para responsividad */
-    width: 100%; /* Asegura que el header ocupe todo el ancho */
-    box-sizing: border-box; /* Incluye padding y borde en el ancho */
-}
-
-header nav a {
     font-size: 16px;
 }
 
-nav {
+main {
+    flex: 1; /* Permite que main ocupe el espacio restante */
+    width: 100%;
+}
+
+/* --- Header y Navegación --- */
+header {
+    background-color: #71D5C1; /* Tu color actual */
+    padding: 1rem 2rem; 
+    width: 100%;
+    box-sizing: border-box;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Sombra sutil para darle profundidad */
+}
+
+header nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    
+    max-width: 1200px; /* Ancho máximo para el contenido del nav */
+    margin: 0 auto; /* Centrar el contenido del nav */
+    flex-wrap: wrap; /* Permite que los elementos se envuelvan en pantallas pequeñas */
 }
 
 .logo-img {
-  height: 70px;
-  width: auto;
-}
-
-
-
-.btn {
-    background-color: #0AA;
-    color: white;
-    padding: 0.8rem 1.5rem;
-    border-radius: 8px;
-    text-decoration: none;
-    font-weight: 600;
-    transition: background-color 0.3s;
-    display: inline-block;
-}
-
-.btn:hover {
-    background-color: #088;
-}
-
-footer {
-    text-align: center;
-    padding: 1rem;
-    background-color: #e2e8f0;
-    color: #333;
-    margin-top: 0 !important;
-}
-
-.menu-perfil {
-    position: relative;
-    display: inline-block;
-}
-
-
-.btn-perfil {
-    background: none;
-    border: none;
-    color: white;
-    font-weight: bold;
-    cursor: pointer;
-    font-size: 1.1em; /* Asegura un tamaño de fuente para el botón del perfil (igual que los enlaces) */
-    padding: 8px 12px; /* Añade padding para que sea clickeable */
-}
-
-.btn-perfil:hover {
-    background-color: rgba(255, 255, 255, 0.2); /* Fondo suave al pasar el ratón */
-    border-radius: 6px;
-}
-
-.submenu {
-    display: none;
-    position: absolute;
-    top: 100%;
-    right: 0;
-    background-color: white;
-    color: black;
-    min-width: 180px;
-    border-radius: 6px;
-    box-shadow: 0px 8px 16px rgba(0,0,0,0.1);
-    z-index: 1000;
-}
-
-.submenu a {
-    padding: 10px 16px;
-    display: block;
-    text-decoration: none;
-    color: #333;
-}
-
-.submenu a:hover {
-    background-color: #f2f2f2;
+    height: 70px;
+    width: auto;
+    display: block; /* Elimina espacio extra debajo de la imagen */
 }
 
 .nav-links {
     list-style: none;
     display: flex;
-    gap: 1.5rem ;
+    gap: 1.5rem;
     align-items: center;
-    margin: 0; /* Elimina margen por defecto de ul */
-    padding: 0; /* Elimina padding por defecto de ul */
-}
-
-.nav-links li {
-  position: relative;
+    margin: 0;
+    padding: 0;
+    margin-left: 2rem;
 }
 
 .nav-links li a {
@@ -136,48 +62,466 @@ footer {
     padding: 8px 12px;
     border-radius: 6px;
     transition: background-color 0.3s, color 0.3s;
-    font-size: 1.1em; /* Un poco más grande para los enlaces de navegación (1.1 * 16px = ~17.6px) */
+    font-size: 1.1em;
 }
 
 .nav-links li a:hover {
     background-color: white;
-    color: #38a169; /* verde del header */
+    color: #71D5C1; /* Color del header para el hover */
 }
 
-.menu-perfil:hover .submenu {
-  display: block;
+/* --- Nuevo Contenedor para Iconos y Acciones --- */
+.nav-icons-actions {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem; /* Espacio entre los nuevos elementos */
+    margin-left: auto; /* Empuja este grupo a la derecha */
+}
+
+/* --- Botón CTA en el Header --- */
+.btn-primary-header {
+    background-color: #FF7F50; /* Un naranja vibrante para destacar */
+    color: white;
+    padding: 0.8rem 1.5rem;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: background-color 0.3s;
+    white-space: nowrap; /* Evita que el texto del botón se rompa */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2); /* Sombra para el botón */
+}
+
+.btn-primary-header:hover {
+    background-color: #E66A3D;
+}
+
+/* --- Buscador --- */
+.search-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.search-icon {
+    color: white;
+    font-size: 1.2em;
+    cursor: pointer;
+    padding: 5px; /* Área clickeable */
+}
+
+.search-input {
+    border: none;
+    padding: 8px 10px;
+    border-radius: 5px;
+    outline: none;
+    width: 0; /* Oculto por defecto */
+    opacity: 0;
+    transition: width 0.3s ease, opacity 0.3s ease;
+    margin-left: 0;
+}
+
+.search-container.active .search-input { /* Para activar con JS */
+    width: 150px; /* Ancho cuando está activo */
+    opacity: 1;
+    margin-left: 10px;
+}
+.search-input::placeholder {
+    color: #aaa;
+}
+/* Estilo para el ícono de búsqueda al pasar el ratón */
+.search-icon:hover {
+    color: #e0e0e0; /* Un gris más claro para el hover */
+}
+
+
+/* --- Ícono de Carrito --- */
+.cart-icon-link {
+    color: white;
+    font-size: 1.4em; /* Un poco más grande que el search icon */
+    text-decoration: none;
+    position: relative;
+    padding: 5px; /* Área clickeable */
+}
+
+.cart-icon-link:hover {
+    color: #e0e0e0;
+}
+
+.cart-count { /* Si decides añadir un contador de ítems */
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background-color: #FF4500; /* Rojo vibrante */
+    color: white;
+    font-size: 0.7em;
+    border-radius: 50%;
+    padding: 2px 6px;
+    min-width: 18px;
+    text-align: center;
+    line-height: 1;
+}
+
+/* --- Menú de Perfil de Usuario --- */
+.menu-perfil-li {
+    list-style: none; /* Asegura que no tenga puntos */
+    position: relative;
+}
+
+.btn-perfil {
+    background: none;
+    border: none;
+    color: white;
+    font-weight: 600; /* Cambiado a 600 para consistencia */
+    cursor: pointer;
+    font-size: 1.1em;
+    padding: 8px 12px;
+    display: flex; /* Para alinear el texto y la flecha */
+    align-items: center;
+    gap: 5px; /* Espacio entre el nombre y la flecha */
+}
+
+.btn-perfil:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 6px;
 }
 
 .submenu {
     display: none;
     position: absolute;
-    top: 100%;
+    top: calc(100% + 5px); /* Un poco de espacio entre el botón y el menú */
     right: 0;
     background-color: white;
-    color: black;
-    min-width: 180px;
+    color: #333; /* Color oscuro para el texto del submenu */
+    min-width: 200px; /* Ancho mínimo para los elementos del submenu */
     border-radius: 6px;
-    box-shadow: 0px 8px 16px rgba(0,0,0,0.1);
+    box-shadow: 0px 8px 16px rgba(0,0,0,0.15); /* Sombra más pronunciada */
     z-index: 1000;
+    list-style: none; /* Eliminar puntos de lista */
+    padding: 5px 0; /* Padding interno */
 }
 
-
 .submenu li a {
-    color: #333;
     padding: 10px 16px;
     display: block;
     text-decoration: none;
+    color: #333;
+    transition: background-color 0.2s ease;
+    font-size: 1em; /* Ajustar tamaño de fuente */
 }
-
 
 .submenu li a:hover {
-    background-color: #f2f2f2;
-}
-
-.menu-perfil-li {
-    position: relative;
+    background-color: #f0f0f0; /* Color de hover más suave */
 }
 
 .menu-perfil-li:hover .submenu {
     display: block;
+}
+
+/* --- Links de Autenticación (Registrarse/Iniciar sesión) --- */
+.auth-links {
+    list-style: none;
+    display: flex;
+    gap: 1.5rem; /* Espacio entre los enlaces */
+    margin: 0;
+    padding: 0;
+}
+
+.auth-links li a {
+    text-decoration: none;
+    color: white;
+    font-weight: 600;
+    padding: 8px 12px;
+    border-radius: 6px;
+    transition: background-color 0.3s, color 0.3s;
+    font-size: 1.1em;
+}
+
+.auth-links li a:hover {
+    background-color: white;
+    color: #71D5C1;
+}
+
+/* --- Menú Hamburguesa (para móvil) --- */
+.menu-toggle {
+    display: none; /* Oculto por defecto en desktop */
+    font-size: 1.8em;
+    color: white;
+    cursor: pointer;
+}
+
+
+/* --- Media Queries para Responsividad del Header --- */
+@media (max-width: 992px) { /* Por ejemplo, para tablets y móviles */
+    header nav {
+        flex-direction: row; /* Mantener en fila */
+        flex-wrap: wrap; /* Permitir que los elementos se envuelvan */
+        justify-content: center; /* Centrar elementos */
+        gap: 1rem; /* Espacio entre elementos */
+    }
+
+    .logo {
+        flex-basis: 100%; /* El logo ocupa toda la línea */
+        text-align: center;
+        margin-bottom: 1rem;
+    }
+
+    .nav-links {
+        display: none; /* Ocultar el menú de navegación principal */
+        flex-direction: column;
+        width: 100%;
+        text-align: center;
+        background-color: #71D5C1; /* Color de fondo para el menú móvil */
+        position: absolute;
+        top: 100%;
+        left: 0;
+        z-index: 999;
+        padding-bottom: 1rem;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    .nav-links.active { /* Clase para mostrar el menú con JS */
+        display: flex;
+    }
+    .nav-links li {
+        width: 100%;
+    }
+    .nav-links li a {
+        padding: 12px 0;
+        width: 100%;
+    }
+    .nav-links li a:hover {
+        background-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .nav-icons-actions {
+        order: -1; /* Mover los iconos al principio en móvil */
+        width: 100%;
+        justify-content: center;
+        gap: 1rem;
+        margin-left: 0;
+        margin-top: 1rem;
+        position: relative; /* Para posicionar el menú hamburguesa */
+    }
+
+    .btn-primary-header {
+        order: 2; /* Posicionar el botón CTA después de los iconos */
+    }
+
+    .menu-toggle {
+        display: block; /* Mostrar el ícono de hamburguesa */
+        position: absolute;
+        top: 50%;
+        right: 1rem;
+        transform: translateY(-50%);
+    }
+
+    .auth-links {
+        display: none; /* Ocultar en el header móvil, pueden ir en el menú hamburguesa */
+        flex-direction: column;
+        width: 100%;
+    }
+    .auth-links li a {
+        padding: 12px 0;
+        width: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+    header {
+        padding: 1rem;
+    }
+    .logo-img {
+        height: 60px;
+    }
+}
+
+
+/* base.css - Adaptaciones para el Footer */
+
+footer {
+    background-color: #2c3e50; /* Un gris azulado oscuro para el footer */
+    color: #ecf0f1; /* Texto claro para contraste */
+    padding: 2.5rem 2rem; /* Más padding para que tenga espacio */
+    box-sizing: border-box;
+    font-size: 0.95em; /* Ligeramente más pequeño que el body */
+}
+
+.footer-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Columnas responsivas */
+    gap: 2rem; /* Espacio entre columnas */
+    max-width: 1200px;
+    margin: 0 auto; /* Centrar el contenido del footer */
+    text-align: left; /* Alinear texto a la izquierda dentro de cada columna */
+}
+
+.footer-section h3 {
+    color: #71D5C1; /* Tu color verde para los títulos de sección */
+    margin-bottom: 1.2rem;
+    font-size: 1.3em;
+    border-bottom: 2px solid rgba(113, 213, 193, 0.3); /* Línea debajo del título */
+    padding-bottom: 0.5rem;
+    display: inline-block; /* Para que la línea se ajuste al texto */
+}
+
+.footer-section p {
+    margin-bottom: 0.8rem;
+    line-height: 1.6;
+}
+
+.logo-footer {
+    height: 60px; /* Ajusta el tamaño de tu logo en el footer */
+    margin-top: 1rem;
+    opacity: 0.8; /* Ligeramente transparente */
+}
+
+/* --- Enlaces del Footer --- */
+.footer-section ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-section ul li {
+    margin-bottom: 0.6rem;
+}
+
+.footer-section ul li a {
+    color: #bdc3c7; /* Color más claro para los enlaces */
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer-section ul li a:hover {
+    color: #71D5C1; /* Tu color verde al pasar el ratón */
+}
+
+/* --- Contacto --- */
+.footer-section.contact p i {
+    margin-right: 0.8rem;
+    color: #71D5C1; /* Color verde para los íconos */
+}
+.footer-section.contact p a {
+    color: #ecf0f1;
+    text-decoration: none;
+}
+.footer-section.contact p a:hover {
+    color: #71D5C1;
+}
+
+/* --- Redes Sociales --- */
+.social-icons {
+    display: flex;
+    gap: 1.2rem;
+    margin-top: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.social-icons a {
+    color: #ecf0f1;
+    font-size: 1.8em;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.social-icons a:hover {
+    color: #71D5C1;
+    transform: translateY(-3px); /* Pequeño efecto al pasar el ratón */
+}
+
+/* --- Formulario Newsletter --- */
+.newsletter-form {
+    display: flex;
+    margin-top: 1rem;
+    flex-wrap: wrap; /* Para que se adapte en móvil */
+}
+
+.newsletter-form input[type="email"] {
+    flex: 1; /* Ocupa el espacio disponible */
+    padding: 10px 12px;
+    border: none;
+    border-radius: 5px 0 0 5px; /* Bordes redondeados a la izquierda */
+    outline: none;
+    font-size: 1em;
+    min-width: 150px; /* Para que no se haga demasiado pequeño */
+}
+
+.newsletter-form button {
+    background-color: #FF7F50; /* El mismo naranja del botón CTA del header */
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 0 5px 5px 0; /* Bordes redondeados a la derecha */
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s ease;
+}
+
+.newsletter-form button:hover {
+    background-color: #E66A3D;
+}
+
+/* --- Pie de Página Inferior (Copyright y Legales) --- */
+.footer-bottom {
+    border-top: 1px solid rgba(255,255,255,0.1); /* Línea divisoria */
+    padding-top: 1.5rem;
+    margin-top: 2rem;
+    text-align: center;
+    font-size: 0.9em;
+    display: flex;
+    flex-direction: column; /* Por defecto para móvil */
+    gap: 0.5rem;
+}
+
+.footer-bottom p {
+    margin: 0;
+}
+
+.legal-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1.2rem;
+}
+
+.legal-links li a {
+    color: #bdc3c7;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.legal-links li a:hover {
+    color: #71D5C1;
+}
+
+/* --- Media Queries para Responsividad del Footer --- */
+@media (min-width: 768px) {
+    .footer-bottom {
+        flex-direction: row; /* En fila para pantallas más grandes */
+        justify-content: space-between;
+        align-items: center;
+    }
+    .legal-links {
+        justify-content: flex-end; /* Alinear a la derecha los enlaces legales */
+    }
+}
+
+@media (max-width: 576px) { /* Para pantallas muy pequeñas */
+    .footer-content {
+        grid-template-columns: 1fr; /* Una sola columna */
+        text-align: center;
+    }
+    .footer-section h3 {
+        margin: 0 auto 1.2rem auto; /* Centrar títulos */
+    }
+    .social-icons, .newsletter-form {
+        justify-content: center;
+    }
+    .newsletter-form input[type="email"],
+    .newsletter-form button {
+        border-radius: 5px; /* Redondear completo en móvil */
+        width: 100%;
+        margin-top: 0.5rem;
+    }
 }

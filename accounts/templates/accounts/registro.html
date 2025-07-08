@@ -1,59 +1,94 @@
-{% extends "base.html" %}
 {% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Usuario - PetCommunity</title>
+    
+    {# Enlaza tu CSS de registro directamente #}
+    <link rel="stylesheet" href="{% static 'accounts/css/registro.css' %}">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
 
-{% block extra_css %}
-{# Reutilizamos el mismo CSS de login para el estilo de la caja principal #}
-<link rel="stylesheet" href="{% static 'accounts/css/login.css' %}">
-{# Puedes tener un CSS específico para el registro si hay estilos adicionales #}
-<link rel="stylesheet" href="{% static 'accounts/css/registro.css' %}">
-{% endblock %}
-
-{% block content %}
-{# Usamos el mismo envoltorio que el login para el fondo y centrado #}
-<div class="registro-wrapper"> 
-    <div class="form-container">
-        <div class="form-header">
-            <img src="{% static 'img/logo-petcommunity.png' %}" alt="Logo de tu Veterinaria" class="logo">
-            {# Puedes añadir el texto "La salud de tu mascota es nuestra prioridad" aquí si quieres #}
+    <div class="registration-container">
+        <div class="left-panel">
+            <div class="logo">
+                <img src="{% static 'img/logo-petcommunity.png' %}" alt="Logo LOUVE" class="logo-img">
+                <span class="logo-text">PetCommunity</span> {# Ajusta el texto del logo si es diferente #}
+            </div>
+            <div class="registration-info">
+                <h1>Registro</h1> {# Ajusta el título #}
+                <p>La salud de tu mascota es nuestra prioridad.</p> {# Puedes poner un eslogan o texto #}
+                {# Puedes añadir elementos aquí si deseas replicar los inputs y botones del panel izquierdo #}
+                {# Por ejemplo, si tienes algún CTA o información adicional #}
+                {# <input type="text" placeholder="Información adicional"> #}
+                {# <button class="btn-primary">Botón 1</button> #}
+                {# <button class="btn-secondary">Botón 2</button> #}
+            </div>
+            <div class="security-info">
+                <i class="fas fa-lock"></i>
+                <p>Tu privacidad y seguridad son nuestra prioridad.</p>
+                <p class="small-text">Al registrarte, aceptas nuestros términos de servicio y política de privacidad.</p>
+            </div>
         </div>
 
-        <h2><span class="icon"></span> Crear cuenta</h2>
-        <form method="POST" novalidate> {# Añadido novalidate #}
-            {% csrf_token %}
-            
-            {# Errores de formulario no de campo #}
-            {% if form.non_field_errors %}
-                <ul class="errorlist">
-                    {% for error in form.non_field_errors %}
-                        <li>{{ error }}</li>
-                    {% endfor %}
-                </ul>
-            {% endif %}
-
-            {% for field in form %}
-            <div class="form-group">
-                {{ field.label_tag }}
-                {{ field }}
-                {% if field.errors %}
-                    <ul class="errorlist">
-                        {% for error in field.errors %}
-                            <li>{{ error }}</li>
-                        {% endfor %}
-                    </ul>
-                {% endif %}
+        <div class="right-panel">
+            <div class="top-nav">
+                {# Aquí puedes añadir enlaces de navegación superiores si los necesitas, como "Inicio" o "Contacto" #}
+                <a href="{% url 'login' %}">Iniciar Sesión</a> {# Ejemplo de enlace a login #}
+                <i class="fas fa-user-circle user-icon"></i>
             </div>
-            {% endfor %}
-            
-            <button type="submit" class="btn-submit">Registrar</button>
-        </form>
+            <div class="registration-form">
+                <h2>Crear Cuenta</h2>
+                <p class="subtitle">Únete a nuestra comunidad para cuidar mejor a tu mascota.</p>
 
-        {# Mueve el div de tipos de registro fuera del formulario pero dentro del form-container #}
-        <div class="registro-tipos">
-            <p>¿Eres una clínica o una farmacia?</p>
-            <a href="{% url 'registro_clinica' %}" class="btn-secondary">Clínica</a>
-            <a href="{% url 'registro_farmacia' %}" class="btn-secondary">Farmacia</a>
+                <form method="POST" novalidate>
+                    {% csrf_token %}
+
+                    {# Errores de formulario no de campo #}
+                    {% if form.non_field_errors %}
+                        <ul class="errorlist non-field-errors">
+                            {% for error in form.non_field_errors %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+
+                    <div class="form-grid">
+                        {% for field in form %}
+                        <div class="form-group">
+                            {{ field.label_tag }}
+                            {{ field }}
+                            {% if field.help_text %}
+                                <small class="help-text">{{ field.help_text }}</small>
+                            {% endif %}
+                            {% if field.errors %}
+                                <ul class="errorlist">
+                                    {% for error in field.errors %}
+                                        <li>{{ error }}</li>
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
+                        </div>
+                        {% endfor %}
+                    </div>
+
+                    {# Botón de envío principal #}
+                    <button type="submit" class="btn-submit">Registrar</button>
+                </form>
+
+                {# Mueve el div de tipos de registro fuera del formulario pero dentro del form-container #}
+                <div class="registration-types"> {# Cambié la clase a registration-types para evitar conflicto si ya tienes .registro-tipos en otro lugar #}
+                    <p>¿Eres una clínica o una farmacia?</p>
+                    <a href="{% url 'registro_clinica' %}" class="btn-secondary-type">Registrar como Clínica</a> {# Nueva clase para estos botones #}
+                    <a href="{% url 'registro_farmacia' %}" class="btn-secondary-type">Registrar como Farmacia</a>
+                </div>
+            </div>
         </div>
     </div>
-</div>
 
-{% endblock %}
+</body>
+</html>
