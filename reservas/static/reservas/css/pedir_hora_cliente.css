@@ -1,39 +1,99 @@
+/* ========================================================= */
+/* --- Globales y Configuración Base --- */
+/* ========================================================= */
 
+/* ========================================================= */
+/* --- Contenedor Principal del Formulario (.form-reserva) --- */
+/* ========================================================= */
 .form-reserva {
-    max-width: 480px;
-    margin: 2rem auto;
-    background-color: #fff;
-    padding: 2rem 2.5rem;
-    border-radius: 8px;
-    box-shadow: 0 6px 15px rgba(0,0,0,0.1);
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    color: #333;
+    width: 90%; /* Mantén el 90% para que no se pegue totalmente a los bordes en pantallas grandes */
+    max-width: 800px; /* Define un ancho máximo para que no se estire demasiado en monitores grandes */
+    margin: 0 auto; /* Centra el formulario dentro del body si no ocupa el 100% */
+    background-color: #ffffff; /* Fondo blanco para el formulario */
+    padding: 40px; /* Más padding para un look más "premium" */
+    border-radius: 12px; /* Bordes más redondeados y suaves */
+    display: flex;
+    flex-direction: column;
+    gap: 30px; /* Aumenta el espacio entre las secciones del formulario */
+    box-sizing: border-box;
 }
 
+/* ========================================================= */
+/* --- Título del Formulario (h2) --- */
+/* ========================================================= */
 .form-reserva h2 {
-    margin-bottom: 1.5rem;
+    margin-bottom: 30px; /* Más espacio debajo del título */
     font-weight: 700;
-    font-size: 1.8rem;
-    color: #2c3e50;
+    font-size: 2.2rem; /* Título un poco más grande y prominente */
+    color: #212529; /* Un gris casi negro para el título */
     text-align: center;
+    width: 100%;
+    letter-spacing: -0.5px; /* Ajuste para un aspecto más profesional */
 }
 
-.form-reserva form {
+/* ========================================================= */
+/* --- Secciones del Formulario (.form-section) --- */
+/* ========================================================= */
+.form-section {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 25px; /* Espacio entre los form-groups dentro de una sección */
+    justify-content: space-between; /* Distribuye los elementos uniformemente en la fila */
+    margin-bottom: 15px; /* Espacio entre secciones del formulario, un poco menos ya que hay gap general */
+}
+
+/* ========================================================= */
+/* --- Grupo de Campo Individual (.form-group) --- */
+/* ========================================================= */
+.form-group {
+    flex: 1 1 calc(50% - 12.5px); /* Dos columnas, distribuyendo el espacio del gap de 25px */
+    min-width: 280px; /* Asegura un ancho mínimo para cada campo en pantallas grandes */
+    margin-right: 0; /* Elimina este margen, ahora lo maneja el 'gap' del flexbox */
+    margin-bottom: 0; /* Elimina este margen, ahora lo maneja el 'gap' del flexbox */
     display: flex;
     flex-direction: column;
 }
 
-.form-reserva form p {
-    margin-bottom: 1.2rem;
+.form-group.full-width {
+    flex: 0 0 100%;
+    max-width: 100%;
 }
 
+/* ========================================================= */
+/* --- Sección de Fecha y Hora (.form-date-time-section) --- */
+/* ========================================================= */
+.form-date-time-section {
+    display: flex;
+    flex-direction: row;
+    gap: 25px; /* Consistente con el gap de otras secciones */
+    width: 100%; /* Asegura que la sección de fecha/hora ocupe todo el ancho */
+    flex-wrap: wrap; /* Permite que los campos de fecha/hora se apilen en móviles */
+    justify-content: space-between; /* Distribuye espacio entre fecha y hora */
+}
+
+.form-date-time-section .form-group {
+    flex: 1 1 calc(50% - 12.5px); /* Cada uno ocupa la mitad, con el gap */
+    min-width: 180px; /* Ancho mínimo para fecha/hora */
+    margin-right: 0; /* Elimina margen extra */
+}
+
+
+/* ========================================================= */
+/* --- Estilo para Etiquetas (Labels) --- */
+/* ========================================================= */
 .form-reserva label {
     display: block;
-    margin-bottom: 0.3rem;
+    margin-bottom: 8px; /* Espacio consistente entre label e input */
     font-weight: 600;
-    color: #34495e;
+    color: #495057; /* Gris oscuro suave para las etiquetas */
+    font-size: 0.95rem;
+    line-height: 1.2; /* Mejora la legibilidad de etiquetas largas */
 }
 
+/* ========================================================= */
+/* --- Estilo para Inputs, Selects y Textareas --- */
+/* ========================================================= */
 .form-reserva input[type="text"],
 .form-reserva input[type="email"],
 .form-reserva input[type="date"],
@@ -41,52 +101,170 @@
 .form-reserva select,
 .form-reserva textarea {
     width: 100%;
-    padding: 0.5rem 0.7rem;
-    border: 1px solid #bdc3c7;
-    border-radius: 5px;
+    padding: 12px 15px; /* Padding ajustado para un look limpio */
+    border: 1px solid #ced4da; /* Borde más sutil */
+    border-radius: 8px; /* Bordes redondeados */
     font-size: 1rem;
     font-family: inherit;
-    transition: border-color 0.3s ease;
+    color: #495057; /* Color de texto dentro del input */
+    background-color: #ffffff; /* Fondo blanco para los campos */
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    box-sizing: border-box;
 }
 
-.form-reserva input[type="text"]:focus,
-.form-reserva input[type="email"]:focus,
-.form-reserva input[type="date"]:focus,
-.form-reserva input[type="time"]:focus,
+.form-reserva input[type="text"]::placeholder,
+.form-reserva input[type="email"]::placeholder,
+.form-reserva textarea::placeholder {
+    color: #adb5bd; /* Color más claro para el texto de placeholder */
+}
+
+/* Estado de enfoque (Focus) */
+.form-reserva input:focus,
 .form-reserva select:focus,
 .form-reserva textarea:focus {
-    border-color: #2980b9;
+    border-color: #007bff; /* Azul de enfoque clásico */
+    box-shadow: 0 0 0 0.25rem rgba(0, 123, 255, 0.25); /* Sombra de enfoque sutil */
     outline: none;
 }
 
 .form-reserva textarea {
-    resize: vertical;
-    min-height: 80px;
+    min-height: 120px; /* Altura mínima un poco mayor para textarea */
+    resize: vertical; /* Permite al usuario redimensionar verticalmente */
 }
 
+/* ========================================================= */
+/* --- Estilo para el Botón de Enviar --- */
+/* ========================================================= */
 .form-reserva button {
-    margin-top: 1.5rem;
-    background-color: #27ae60;
+    margin-top: 30px; /* Más espacio superior antes del botón */
+    background-color: #007bff; /* Azul primario fuerte */
     border: none;
     color: white;
-    padding: 0.75rem 1.2rem;
-    font-size: 1.1rem;
-    border-radius: 6px;
+    padding: 15px 25px; /* Botón más grande y con buen padding */
+    font-size: 1.1rem; /* Tamaño de fuente del botón */
+    border-radius: 8px; /* Bordes redondeados */
     cursor: pointer;
     font-weight: 600;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    align-self: center; /* Centra el botón horizontalmente si no es 100% de ancho */
+    width: auto; /* Ancho automático, se ajusta al contenido. Si quieres 100%, cámbialo a '100%' */
+    min-width: 200px; /* Asegura un ancho mínimo para el botón */
+    box-shadow: 0 4px 10px rgba(0, 123, 255, 0.2); /* Sombra suave para darle profundidad */
 }
 
 .form-reserva button:hover {
-    background-color: #219150;
+    background-color: #0056b3; /* Tono más oscuro al pasar el ratón */
+    transform: translateY(-2px); /* Pequeño efecto de elevación */
+    box-shadow: 0 6px 15px rgba(0, 123, 255, 0.3); /* Sombra más pronunciada en hover */
 }
 
+.form-reserva button:active {
+    transform: translateY(0); /* Vuelve a la posición normal al hacer clic */
+    box-shadow: 0 2px 5px rgba(0, 123, 255, 0.2); /* Sombra más pequeña al hacer clic */
+}
+
+/* ========================================================= */
+/* --- Mensajes (Éxito y Error) --- */
+/* ========================================================= */
 .mensaje-exito {
-    background-color: #d4edda;
+    background-color: #d4edda; /* Verde claro de éxito */
     border: 1px solid #c3e6cb;
-    color: #155724;
-    padding: 1rem 1.2rem;
-    border-radius: 6px;
-    font-weight: 600;
+    color: #155724; /* Verde oscuro para el texto */
+    padding: 15px 20px;
+    border-radius: 8px;
+    font-weight: 500;
     text-align: center;
+    margin-bottom: 25px; /* Espacio debajo del mensaje */
+    font-size: 1rem;
+}
+
+.error-message {
+    color: #dc3545; /* Rojo de error */
+    font-size: 0.875rem;
+    margin-top: 5px;
+    margin-bottom: 10px; /* Espacio debajo del mensaje de error */
+    font-weight: 500;
+}
+
+
+/* ========================================================= */
+/* --- Media Queries para Responsividad --- */
+/* ========================================================= */
+@media (max-width: 992px) {
+    /* Ajustes para pantallas de tabletas grandes */
+    .form-reserva {
+        padding: 35px;
+        width: 95%; /* Ocupa un poco más de ancho en tabletas */
+    }
+    .form-reserva h2 {
+        font-size: 2rem;
+    }
+    .form-group {
+        min-width: unset; /* Quita el min-width para mayor flexibilidad */
+    }
+}
+
+@media (max-width: 768px) {
+    /* Ajustes para pantallas de tabletas pequeñas y móviles */
+    .form-reserva {
+        padding: 30px 20px; /* Reduce el padding lateral para móviles */
+        width: 95%; /* Mantenemos el 95% para un pequeño margen visual */
+        border-radius: 0; /* Sin bordes redondeados si es de ancho completo en móvil */
+        box-shadow: none; /* Sin sombra en móvil */
+    }
+
+    .form-reserva h2 {
+        font-size: 1.8rem;
+    }
+
+    .form-section {
+        flex-direction: column; /* Apila los grupos en una sola columna */
+        gap: 20px;
+    }
+
+    .form-group {
+        flex: 0 0 100%; /* Ocupa el 100% del ancho disponible */
+        max-width: 100%;
+        margin-bottom: 0; /* Ya lo maneja el gap */
+    }
+
+    .form-date-time-section {
+        flex-direction: column; /* También apila fecha y hora */
+        gap: 15px;
+    }
+
+    .form-reserva button {
+        width: 100%; /* Botón al 100% en pantallas pequeñas */
+        padding: 14px 20px;
+        font-size: 1rem;
+        margin-top: 25px;
+    }
+
+    .form-reserva label {
+        font-size: 0.9rem;
+    }
+    .form-reserva input,
+    .form-reserva select,
+    .form-reserva textarea {
+        font-size: 0.95rem;
+        padding: 10px 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    /* Ajustes para móviles muy pequeños */
+    .form-reserva {
+        padding: 25px 15px; /* Reduce aún más el padding para pantallas muy estrechas */
+    }
+    .form-reserva h2 {
+        font-size: 1.6rem;
+        margin-bottom: 20px;
+    }
+    .form-section {
+        gap: 15px;
+    }
+    .form-reserva button {
+        padding: 12px 15px;
+        font-size: 0.95rem;
+    }
 }

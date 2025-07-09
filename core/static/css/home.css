@@ -1,172 +1,170 @@
 /* --- Variables CSS para consistencia --- */
-/* HE ADAPTADO ESTAS VARIABLES PARA UN LOOK MÁS PROFESIONAL Y SUTIL */
 :root {
-    --primary-brand-color: #3667C2; /* Un azul profesional, tu color principal */
-    --secondary-brand-color: #28A745; /* Un verde vibrante para acentos y éxito */
-    --accent-warm-color: #FF7F50; /* Un color coral/naranja suave para calidez, pero usado con moderación */
-    --neutral-dark: #343A40; /* Gris oscuro para el texto principal */
-    --neutral-medium: #6C757D; /* Gris medio para descripciones */
-    --neutral-light: #F8F9FA; /* Fondo muy claro, casi blanco */
-    --white: #FFFFFF; /* Blanco puro */
+    --primary-brand-color: #7BC0E3; 
+    --secondary-brand-color: #54869e; 
+    --accent-warm-color: #FF7F50; 
+    --neutral-dark: #343A40; 
+    --neutral-medium: #6C757D; 
+    --neutral-light: #F8F9FA; 
+    --white: #FFFFFF; 
 
-    --font-heading: 'Montserrat', sans-serif; /* Más moderno y formal para títulos */
-    --font-body: 'Roboto', sans-serif; /* Limpio y legible para el cuerpo */
-    --font-hero-accent: 'Anton', sans-serif; /* Mantenemos este para el RESALTADO si te gusta, pero lo usaremos más sutil */
+    --font-heading: 'Montserrat', sans-serif; 
+    --font-body: 'Roboto', sans-serif; 
+    --font-hero-accent: 'Anton', sans-serif; 
 
     --border-radius-card: 12px;
-    --shadow-soft: 0 4px 15px rgba(0, 0, 0, 0.08); /* Sombra más suave */
-    --shadow-hover: 0 8px 25px rgba(0, 0, 0, 0.12); /* Sombra al pasar el mouse */
+    --shadow-soft: 0 4px 15px rgba(0, 0, 0, 0.356); 
+    --shadow-hover: 0 8px 25px rgba(0, 0, 0, 0.575); 
 }
 
 /* --- Resets y Estilos Generales --- */
 body {
-    font-family: var(--font-body);
+    font-family : 'Roboto', sans-serif; 
     background-color: var(--neutral-light);
     color: var(--neutral-dark);
     margin: 0;
-    line-height: 1.6; /* Mejora la legibilidad */
+    line-height: 1.6; 
 }
 
-.seccion { /* CAMBIAMOS A UN NOMBRE MÁS DESCRIPTIVO Y MENOS GENÉRICO, COMO .section-block */
-    max-width: 1200px; /* Reducimos el max-width para un diseño más contenido */
-    margin: 5rem auto; /* Más espacio vertical entre secciones */
-    padding: 0 20px; /* Ajustamos el padding horizontal */
-    text-align: left; /* Mantener la alineación */
+.seccion { 
+    max-width: 1200px; 
+    margin: 5rem auto; 
+    padding: 0 20px; 
+    text-align: left; 
 }
 
-.section-title { /* NUEVA CLASE PARA TÍTULOS DE SECCIÓN UNIFORMES */
+.section-title { 
     font-family: var(--font-heading);
-    font-size: 2.8rem; /* Tamaño grande y profesional */
+    font-size: 2.8rem; 
     color: var(--primary-brand-color);
     text-align: center;
-    margin-bottom: 60px; /* Más espacio debajo del título */
+    margin-bottom: 60px; 
     position: relative;
     padding-bottom: 15px;
-    font-weight: 700; /* Asegura que sea un título fuerte */
+    font-weight: 700; 
 }
 
-.section-title::after { /* Subrayado decorativo para títulos de sección */
+.section-title::after { 
     content: '';
     position: absolute;
     left: 50%;
     bottom: 0;
     transform: translateX(-50%);
-    width: 80px; /* Longitud del subrayado */
-    height: 4px; /* Grosor del subrayado */
-    background-color: var(--secondary-brand-color); /* Color del subrayado */
+    width: 80px; 
+    height: 4px; 
+    background-color: var(--secondary-brand-color); 
     border-radius: 2px;
 }
 
 
 /* --- Sección Hero --- */
-/* HE RENOMBRADO A .hero-section y ajustado sus propiedades */
 .hero-section {
-    background-image: url('../img/fondo_home.jpeg'); /* ¡CAMBIA ESTA IMAGEN POR UNA MÁS PROFESIONAL Y CÁLIDA! */
+    background-image: url('../img/fondo_home.jpeg'); 
     background-size: cover;
     background-position: center;
-    background-attachment: scroll; /* Cambiado a scroll, fixed puede causar problemas en móvil */
+    background-attachment: scroll; 
     width: 100%;
-    height: 600px; /* Aumentamos la altura para un impacto visual */
+    height: 600px; 
     position: relative;
-    display: flex; /* Usamos flexbox para centrar el contenido */
+    display: flex; 
     align-items: center;
     justify-content: center;
-    text-align: center; /* Alineamos el texto al centro */
-    padding: 0; /* Aseguramos que no haya padding */
-    box-shadow: 0 5px 20px rgba(0,0,0,0.15); /* Sombra más destacada */
+    text-align: center; 
+    padding: 0; 
+    box-shadow: 0 5px 20px rgba(0,0,0,0.15); 
 }
 
-.hero-section::before { /* Overlay para oscurecer la imagen y mejorar contraste del texto */
+.hero-section::before { 
     content: '';
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.45); /* Overlay más oscuro para el texto blanco */
+    background-color: rgba(0, 0, 0, 0.45); 
     z-index: 0;
 }
 
-.hero-content { /* NUEVA CLASE PARA CONTENER EL TEXTO Y BOTONES DEL HERO */
+.hero-content { 
     position: relative;
-    z-index: 1; /* Asegura que esté por encima del overlay */
-    max-width: 900px; /* Ancho máximo para el texto del hero */
+    z-index: 1; 
+    max-width: 900px; 
     padding: 20px;
 }
 
 .hero-content h1 {
     color: var(--white);
-    font-family: var(--font-heading); /* Cambiamos a la fuente de títulos */
-    font-size: 4.5rem; /* Tamaño más grande para el título principal */
-    line-height: 1.1; /* Espaciado de línea más ajustado */
+    font-family: var(--font-heading);  
+    font-size: 4.5rem; 
+    line-height: 1.1; 
     margin-bottom: 20px;
     font-weight: 700;
 }
 
-.hero-content .highlight { /* Ajustamos el resaltado */
-    font-family: var(--font-hero-accent); /* Mantenemos Anton para este toque */
-    font-size: 5rem; /* Un poco más grande que el texto normal del h1 */
-    color: #A7EBDA; /* Color original, si te gusta el contraste */
+.hero-content .highlight { 
+    font-family: var(--font-hero-accent); 
+    font-size: 5rem; 
+    color: #A7EBDA; 
     font-weight: normal;
-    display: block; /* Para que esté en su propia línea si es muy largo */
+    display: block; 
 }
 
 .hero-subtitle {
-    font-family: var(--font-body); /* Usamos la fuente del cuerpo para el subtítulo */
-    font-weight: 400; /* Peso normal */
-    font-size: 1.5rem; /* Buen tamaño para el subtítulo */
-    color: #E0E0E0; /* Un blanco suave para el subtexto */
-    margin-top: 20px; /* Más espacio superior */
-    margin-bottom: 40px; /* Más espacio inferior para los botones */
+    font-family: var(--font-body); 
+    font-weight: 400; 
+    font-size: 1.5rem; 
+    color: #E0E0E0; 
+    margin-top: 20px; 
+    margin-bottom: 40px; 
     line-height: 1.4;
 }
 
 .hero-buttons {
     display: flex;
     flex-wrap: wrap;
-    gap: 20px; /* Más espacio entre los botones */
+    gap: 20px; 
     justify-content: center;
 }
 
-/* --- Botones (refinados para el look profesional) --- */
-.btn { /* Clase base para todos los botones */
-    padding: 14px 30px; /* Más padding para un botón más robusto */
-    border-radius: var(--border-radius-card); /* Usamos la variable para radios consistentes */
+/* --- Botones --- */
+.btn { 
+    padding: 14px 30px; 
+    border-radius: var(--border-radius-card); 
     text-decoration: none;
     font-weight: 600;
     transition: all 0.3s ease;
-    font-size: 1.1rem; /* Tamaño de fuente ligeramente más grande */
+    font-size: 1.1rem; 
     cursor: pointer;
     border: none;
-    display: inline-block; /* Para asegurar el padding y el ancho correcto */
+    display: inline-block; 
 }
 
 .btn-primary {
     background-color: var(--primary-brand-color);
     color: var(--white);
-    border: 2px solid var(--primary-brand-color); /* Borde para consistencia visual */
+    border: 2px solid var(--primary-brand-color); 
 }
 
 .btn-primary:hover {
-    background-color: darken(var(--primary-brand-color), 8%); /* Usar SASS/LESS darken o calcular manualmente */
-    box-shadow: 0 5px 15px rgba(0,0,0,0.2); /* Sombra al pasar el mouse */
-    transform: translateY(-2px); /* Pequeño efecto de elevación */
+    background-color: #63AFC7; 
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    transform: translateY(-2px); 
 }
 
 .btn-secondary {
     background-color: transparent;
-    color: var(--white); /* Texto blanco para que contraste bien con el overlay */
-    border: 2px solid var(--white); /* Borde blanco para el contraste */
+    color: var(--white); 
+    border: 2px solid var(--white); 
 }
 
 .btn-secondary:hover {
     background-color: var(--white);
-    color: var(--primary-brand-color); /* El texto cambia a color primario al pasar el mouse */
+    color: var(--primary-brand-color); 
     box-shadow: 0 5px 15px rgba(0,0,0,0.2);
     transform: translateY(-2px);
 }
 
-.btn-text-link { /* Para enlaces dentro de las tarjetas de servicio */
+.btn-text-link { 
     color: var(--primary-brand-color);
     text-decoration: none;
     font-weight: 600;
@@ -179,7 +177,7 @@ body {
     text-decoration: underline;
 }
 
-.btn-outline { /* Para el botón "Ver Todas las Adopciones" */
+.btn-outline { 
     background-color: transparent;
     color: var(--primary-brand-color);
     border: 2px solid var(--primary-brand-color);
@@ -198,7 +196,7 @@ body {
     box-shadow: 0 5px 15px rgba(0,0,0,0.15);
 }
 
-.btn-small { /* Para el botón "Ver Perfil" en las tarjetas de adopción */
+.btn-small { 
     padding: 8px 15px;
     font-size: 0.9rem;
     border-radius: 6px;
@@ -209,22 +207,21 @@ body {
 }
 
 .btn-small:hover {
-    background-color: darken(var(--primary-brand-color), 8%);
+    background-color: #63AFC7;
 }
 
 
 /* --- Sección de Servicios Principales (NUEVA ESTRUCTURA DE 3 TARJETAS) --- */
-/* Usaremos esta nueva sección en lugar de .seccion-mascotas, .seccion-clinica, .seccion-productos para la visión general */
 .services-overview {
-    padding: 80px 0; /* Padding consistente */
-    background-color: var(--neutral-light); /* Fondo claro */
+    padding: 80px 0; 
+    background-color: var(--neutral-light); 
 }
 
 .service-cards-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 30px;
-    margin-top: 5px; /* Espacio después del título */
+    margin-top: 5px; 
 }
 
 .service-card {
@@ -237,8 +234,8 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: flex-start; /* Alinea el contenido hacia arriba */
-    min-height: 250px; /* Para que todas las tarjetas tengan una altura mínima */
+    justify-content: flex-start; 
+    min-height: 250px; 
 }
 
 .service-card:hover {
@@ -246,8 +243,8 @@ body {
     box-shadow: var(--shadow-hover);
 }
 
-.service-card .icon-large { /* Iconos de Font Awesome */
-    font-size: 3rem; /* Iconos más grandes */
+.service-card .icon-large { 
+    font-size: 3rem; 
     color: var(--primary-brand-color);
     margin-bottom: 20px;
 }
@@ -263,14 +260,14 @@ body {
     font-size: 0.95rem;
     color: var(--neutral-medium);
     margin-bottom: 20px;
-    flex-grow: 1; /* Permite que el párrafo ocupe el espacio */
+    flex-grow: 1; 
 }
 
 
 /* --- Sección de Adopciones Destacadas --- */
 .featured-adoptions-section {
     padding: 80px 0;
-    background-color: #F0F4F8; /* Un fondo ligeramente azulado/grisáceo */
+    background-color: #F0F4F8; 
     
 }
 
@@ -278,7 +275,7 @@ body {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     gap: 30px;
-    margin-top: 40px; /* Espacio debajo del título */
+    margin-top: 40px; 
     margin-bottom: 40px;
 }
 
@@ -298,9 +295,9 @@ body {
 
 .adoption-card img {
     width: 100%;
-    height: 200px; /* Altura fija para las imágenes de mascotas */
+    height: 200px; 
     object-fit: cover;
-    border-bottom: 1px solid var(--border-color); /* Puedes definir --border-color en tus variables */
+    border-bottom: 1px solid var(--border-color); 
 }
 
 .adoption-card h3 {
@@ -319,12 +316,12 @@ body {
 
 .text-center {
     text-align: center;
-    margin-top: 40px; /* Aumenta este valor si quieres que esté aún más abajo */
+    margin-top: 40px;
 }
 
 .btn-small {
-    padding: 6px 12px; /* Reducimos el padding del botón pequeño */
-    font-size: 0.85rem; /* Reducimos el tamaño de la fuente */
+    padding: 6px 12px; 
+    font-size: 0.85rem; 
 }
 
 /* --- Sección de Testimonios (NUEVA SECCIÓN) --- */
@@ -354,14 +351,14 @@ body {
     color: var(--neutral-dark);
     margin-bottom: 20px;
     font-size: 1.1rem;
-    z-index: 1; /* Para que el texto esté sobre las comillas decorativas */
+    z-index: 1; 
     position: relative;
 }
 
-.testimonial-card::before { /* Comillas decorativas */
+.testimonial-card::before { 
     content: '“';
-    font-family: serif; /* O una fuente cursiva si tienes una adecuada */
-    font-size: 6rem; /* Comillas grandes */
+    font-family: serif; 
+    font-size: 6rem; 
     color: var(--primary-brand-color);
     opacity: 0.1;
     position: absolute;
@@ -384,7 +381,7 @@ body {
     border-radius: 50%;
     object-fit: cover;
     margin-right: 15px;
-    border: 3px solid var(--secondary-brand-color); /* Borde con color de acento */
+    border: 3px solid var(--secondary-brand-color);
 }
 
 .testimonial-author span {
@@ -394,79 +391,72 @@ body {
 }
 
 
-/* --- SECCIONES ORIGINALES (Clínicas y Productos) - Adaptación para ser más uniformes --- */
-/* Si decides mantener estas secciones en tu home.html, ajustamos los estilos */
-
+/* --- SECCIONES ORIGINALES (Clínicas y Productos) --- */
 .seccion-clinica, .seccion-productos {
-    /* Mantendremos tus imágenes de fondo si las quieres, pero un overlay es clave */
-    position: relative; /* Asegura que el overlay se posicione correctamente */
-    padding: 60px 0; /* Padding consistente */
+    position: relative; 
+    padding: 60px 0; 
     margin: 0;
-    overflow: hidden; /* Evita desbordamiento si hay animaciones o elementos fuera */
-    color: var(--neutral-dark); /* Color de texto por defecto */
+    overflow: hidden; 
+    color: var(--neutral-dark); 
     font-family: var(--font-body);
 }
 
-.seccion-clinica::before, .seccion-productos::before { /* Overlay sutil para las secciones con fondo */
+.seccion-clinica::before, .seccion-productos::before { 
     content: '';
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(255, 255, 255, 0.7); /* Un overlay blanco transparente */
+    background-color: rgba(255, 255, 255, 0.7); 
     z-index: 0;
 }
 
-.titulo-clinica, .titulo-productos { /* Utilizaremos la clase .section-title general para estos títulos */
-    /* Estas propiedades serán sobrescritas por .section-title si usas la clase en HTML */
-    /* width: 100vw; - no necesario con .container y margin: auto */
-    /* margin: 0 0 20px 0; */
+.titulo-clinica, .titulo-productos { 
     padding: 30px 0;
-    background-color: transparent; /* Fondo transparente si usas overlay */
-    color: var(--primary-brand-color); /* Usamos el color de marca */
+    background-color: transparent; 
+    color: var(--primary-brand-color); 
     text-align: center;
-    font-size: 2.5rem; /* Ajuste para que sea parte de los títulos de sección */
+    font-size: 2.5rem; 
     font-weight: 700;
-    box-shadow: none; /* Eliminamos la sombra del título */
+    box-shadow: none; 
     position: relative;
-    z-index: 1; /* Asegura que el título esté sobre el overlay */
+    z-index: 1; 
     font-family: var(--font-heading);
 }
 
 /* Contenedores de clínicas y productos */
 .contenedor-clinicas, .contenedor-productos {
     display: flex;
-    align-items: stretch; /* Asegura que las tarjetas se estiren a la misma altura */
-    gap: 30px; /* Más espacio entre el grid y la flecha */
+    align-items: stretch; 
+    gap: 30px; 
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 20px;
     color: var(--neutral-dark);
-    position: relative; /* Para que el contenido esté sobre el overlay */
+    position: relative; 
     z-index: 1;
 }
 
 .cards-grid-clinicas, .cards-grid-productos {
     flex: 1;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Grilla un poco más grande */
-    gap: 25px; /* Espacio entre tarjetas */
-    margin-top: 40px; /* Espacio con el título */
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); 
+    gap: 25px; 
+    margin-top: 40px; 
 }
 
 /* Tarjetas de clínica y producto */
 .card, .card-producto {
     background-color: var(--white);
     border-radius: var(--border-radius-card);
-    padding: 15px; /* Más padding */
-    /* max-width: 220px; - Eliminar si usas auto-fill en grid */
+    padding: 15px; 
     margin: 0 auto;
     box-shadow: var(--shadow-soft);
     color: var(--neutral-medium);
-    font-size: 1rem; /* Tamaño de fuente normal */
+    font-size: 1rem;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    overflow: hidden; /* Para las imágenes */
+    overflow: hidden; 
 }
 
 .card:hover, .card-producto:hover {
@@ -475,16 +465,16 @@ body {
 }
 
 .card img, .card-producto img {
-    border-radius: 8px; /* Bordes un poco más definidos para las imágenes */
+    border-radius: 8px; 
     width: 100%;
-    height: 180px; /* Altura unificada para imágenes */
+    height: 180px; 
     object-fit: cover;
-    margin-bottom: 15px; /* Más espacio debajo de la imagen */
+    margin-bottom: 15px; 
 }
 
 .card h3, .card-producto h3 {
     font-family: var(--font-heading);
-    font-size: 1.5rem; /* Tamaño más grande para los títulos de tarjeta */
+    font-size: 1.5rem; 
     color: var(--primary-brand-color);
     margin-bottom: 10px;
 }
@@ -507,23 +497,23 @@ body {
 
 /* Columna de la flecha (derecha) */
 .columna-flecha {
-    width: 70px; /* Un poco más ancho */
-    background-color: var(--primary-brand-color); /* Color de marca */
+    width: 70px; 
+    background-color: var(--primary-brand-color); 
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: var(--border-radius-card); /* Borde redondeado completo */
-    box-shadow: var(--shadow-soft); /* Sombra consistente */
+    border-radius: var(--border-radius-card); 
+    box-shadow: var(--shadow-soft); 
     flex-shrink: 0;
     transition: background-color 0.3s ease, transform 0.3s ease;
-    position: relative; /* Asegura el z-index */
-    z-index: 1; /* Esté sobre el overlay */
-    right: 0; /* Lo posicionamos correctamente */
+    position: relative; 
+    z-index: 1; 
+    right: 0; 
 }
 
 .columna-flecha:hover {
-    background-color: darken(var(--primary-brand-color), 10%); /* Oscurece al pasar el mouse */
-    transform: translateX(5px); /* Se mueve un poco para indicar acción */
+    background-color: darken(var(--primary-brand-color), 10%); 
+    transform: translateX(5px); 
 }
 
 .columna-flecha a {
@@ -536,12 +526,29 @@ body {
 }
 
 .icono-flecha {
-    font-size: 2.5rem; /* Icono más grande */
+    font-size: 2.5rem; 
     color: var(--white);
     transition: transform 0.2s ease;
 }
 
-/* NOTA: El hover del icono ahora está en .columna-flecha:hover */
+.seccion-clinica {
+    background-image: url('../img/fondo_clinica.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: scroll; 
+}
+
+.seccion-productos {
+    background-image: url('../img/fondo_productos.jpg'); 
+    background-size: cover;
+    background-position: center;
+    background-attachment: scroll; 
+}
+
+/* Opcional: Si quieres un efecto más pronunciado para los overlays en estas secciones */
+.seccion-clinica::before, .seccion-productos::before {
+    background-color: rgba(255, 255, 255, 0.8); 
+}
 
 
 /* --- Media Queries (ajustados para las nuevas dimensiones) --- */
@@ -562,17 +569,17 @@ body {
     .cards-grid-clinicas, .cards-grid-productos {
         grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     }
-    .columna-flecha { /* Ajustar posición si el flexbox se envuelve */
-        right: 0; /* Eliminar desplazamiento si no aplica */
-        margin-top: 20px; /* Para que no esté pegado al grid */
+    .columna-flecha { 
+        right: 0; 
+        margin-top: 20px; 
     }
     .contenedor-clinicas, .contenedor-productos {
-        flex-direction: column; /* Coloca la flecha debajo del grid */
+        flex-direction: column; 
         align-items: center;
     }
     .columna-flecha {
         width: 100%;
-        height: 70px; /* Altura para el botón de flecha en móvil */
+        height: 70px; 
         border-radius: var(--border-radius-card);
     }
 }
@@ -589,12 +596,12 @@ body {
     }
     .hero-buttons {
         flex-direction: column;
-        align-items: center; /* Centra los botones en columna */
+        align-items: center; 
         gap: 15px;
     }
     .btn {
-        width: 90%; /* Hace los botones casi de ancho completo */
-        max-width: 300px; /* Limita el ancho máximo */
+        width: 90%;
+        max-width: 300px; 
     }
     .section-title {
         font-size: 2rem;
@@ -630,7 +637,7 @@ body {
     }
     .service-cards-grid, .adoption-cards-grid, .testimonial-grid,
     .cards-grid-clinicas, .cards-grid-productos {
-        grid-template-columns: 1fr; /* Una sola columna en pantallas muy pequeñas */
+        grid-template-columns: 1fr; 
         gap: 20px;
     }
     .service-card, .adoption-card, .testimonial-card, .card, .card-producto {
@@ -638,24 +645,3 @@ body {
     }
 }
 
-/* --- Animación para el overlay de la clínica y productos (opcional, pero profesional) --- */
-/* Si tu fondo es fijo, el overlay no necesita esta animación, pero si el fondo no es fijo y el contenido es grande, considera un efecto de scroll */
-.seccion-clinica {
-    background-image: url('../img/fondo_clinica.jpg');
-    background-size: cover;
-    background-position: center;
-    background-attachment: scroll; /* Cambiado a scroll */
-}
-
-.seccion-productos {
-    background-image: url('../img/fondo_productos.jpg'); /* Si tienes una imagen diferente para productos */
-    background-size: cover;
-    background-position: center;
-    background-attachment: scroll; /* Cambiado a scroll */
-}
-
-/* Opcional: Si quieres un efecto más pronunciado para los overlays en estas secciones */
-.seccion-clinica::before, .seccion-productos::before {
-    /* Mantenemos el overlay blanco, pero puedes experimentar con opacidades para ver qué se ve mejor con tus imágenes */
-    background-color: rgba(255, 255, 255, 0.8); /* O un color de tu paleta con opacidad */
-}

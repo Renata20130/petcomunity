@@ -1,0 +1,61 @@
+{% extends "core/base_panel.html" %}
+
+{% load static %}
+
+{% block title %}Mis Publicaciones{% endblock %} {# Opcional: título específico #}
+
+{% block extra_css %}
+{# Si tienes CSS específicos adicionales SOLO para esta página, van aquí #}
+{# Por ejemplo: <link rel="stylesheet" href="{% static 'adopciones/css/galeria_mascotas.css' %}"> #}
+{% endblock %}
+
+{% block content %}
+    <main class="main-content">
+        <header class="dashboard-header">
+            <h1>Mis Mascotas en Adopción</h1>
+            <div class="header-actions">
+                <a href="{% url 'publicar_adopcion' %}" class="btn-primary"><i class="fas fa-plus"></i> Nueva Publicación</a>
+            </div>
+        </header>
+
+        <div class="dashboard-grid">
+            <div class="dashboard-module module-mascotas full-width-module">
+                {% if mascotas %}
+                    <div class="grid-mascotas-panel">
+                        {% for mascota in mascotas %}
+                            <div class="tarjeta-mascota-panel" id="mascota-{{ mascota.id }}">
+                                <a href="{% url 'detalle_mascota' mascota.id %}">
+                                    <img src="{{ mascota.imagen.url }}" alt="{{ mascota.nombre }}">
+                                </a>
+                                <div class="info">
+                                    <h4>{{ mascota.nombre }}</h4>
+                                    <p><strong>Especie:</strong> {{ mascota.especie }}</p>
+                                    <p><strong>Edad:</strong> {{ mascota.edad }} años</p>
+                                    <div class="estado-switch-container">
+                                        <p><strong>Estado:</strong></p>
+                                        <label class="switch">
+                                            <input type="checkbox" data-id="{{ mascota.id }}" {% if mascota.estado == 'publicada' %}checked{% endif %}>
+                                            <span class="slider round"></span>
+                                        </label>
+                                    </div>
+                                    <form action="{% url 'eliminar_adopcion' mascota.pk %}" method="POST" class="form-eliminar-panel" onsubmit="return confirmarEliminacion();">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn-eliminar-tarjeta" title="Eliminar publicación">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <p class="no-data">No has publicado ninguna mascota aún.</p>
+                {% endif %}
+            </div>
+        </div>
+    </main>
+{% endblock %}
+
+{% block extra_js %}
+{# Puedes poner aquí scripts JS específicos SOLO para esta página si son necesarios #}
+{% endblock %}

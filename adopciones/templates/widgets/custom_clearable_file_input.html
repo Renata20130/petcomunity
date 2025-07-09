@@ -1,1 +1,29 @@
-<input type="{{ widget.type }}" name="{{ widget.name }}" {% include "django/forms/widgets/attrs.html" %}>
+{# templates/widgets/custom_clearable_file_input.html #}
+<div class="custom-file-input-wrapper">
+    {# Esta parte muestra la imagen actual si ya existe. Puedes mantenerla o quitarla si solo quieres que mainImagePreview la muestre. #}
+    {% if widget.is_initial %}
+        <div class="current-image-display">
+            <p class="current-image-text">{% if widget.value %}Imagen actual:{% endif %}</p>
+            {% if widget.value %}
+                <img src="{{ widget.value.url }}" alt="Current image" class="preview-image" id="widgetImagePreview">
+            {% endif %}
+        </div>
+    {% endif %}
+
+    {# El input de archivo oculto REAL que se activa con JS #}
+    <input type="{{ widget.type }}" name="{{ widget.name }}" id="{{ widget.input_id|default:'id_imagen_fallback' }}" class="hidden-file-input"{% include "django/forms/widgets/attrs.html" %}>
+
+    {# Casilla para "Eliminar imagen" si no es requerida y ya hay una imagen #}
+    {% if not widget.required and widget.is_initial %}
+        <div class="clearable-file-input">
+            <input type="checkbox" name="{{ widget.checkbox_name }}" id="{{ widget.checkbox_id }}" class="clear-checkbox">
+            <label for="{{ widget.checkbox_id }}" class="clear-checkbox-label">{{ widget.clear_checkbox_label|default:'Eliminar imagen' }}</label>
+        </div>
+    {% endif %}
+
+    {# Eliminamos:
+       - <label for="{{ widget.input_id|default:'id_imagen_fallback' }}" class="upload-button">{{ widget.input_text }}</label>
+       - <span class="file-name-display">Ningún archivo seleccionado</span>
+       Ahora el botón principal y el texto de conteo los manejaremos en publicar.html
+    #}
+</div>

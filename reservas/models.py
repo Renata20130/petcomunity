@@ -1,6 +1,23 @@
 from django.db import models
 from django.contrib.auth.models import User
 from datetime import datetime
+from adopciones.models import MascotaEnAdopcion
+
+class Raza(models.Model):
+    nombre = models.CharField(max_length=100, unique=False) # El nombre de la raza (ej: Labrador)
+    
+    # Usamos los mismos choices que en MascotaEnAdopcion para consistencia
+    # Esto asocia la raza con una especie específica (perro, gato, otro)
+    especie = models.CharField(max_length=20, choices=MascotaEnAdopcion.ESPECIE_CHOICES)
+
+    class Meta:
+        # Esto asegura que no puedas tener dos veces "Labrador" para "perro"
+        unique_together = ('nombre', 'especie')
+
+    def __str__(self):
+        # Muestra el nombre de la raza y el nombre legible de la especie (ej: "Labrador (Canino)")
+        return f"{self.nombre} ({self.get_especie_display()})"
+
 
 class Reserva(models.Model):
 

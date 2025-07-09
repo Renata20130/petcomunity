@@ -1,0 +1,113 @@
+/* accounts/static/accounts/css/menu_profile.css */
+
+/* --- Estilos Generales de Navegación --- */
+.main-nav {
+    display: flex;
+    justify-content: space-between; /* Empuja los elementos a los extremos opuestos */
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #7BC0E3; /* Fondo claro para visibilidad */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: relative; /* Necesario para el posicionamiento absoluto del desplegable */
+    z-index: 1000; /* Asegura que se mantenga encima de otros elementos */
+}
+
+.nav-brand h3 {
+    margin: 0;
+    color: #333;
+}
+
+/* --- Contenedor del Menú de Perfil --- */
+.profile-menu-container {
+    position: relative; 
+    margin-right: 20px;
+}
+
+/* --- Botón de Activación del Perfil --- */
+.profile-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    padding: 5px 10px;
+    border-radius: 20px; /* Botón ligeramente redondeado */
+    transition: background-color 0.3s ease;
+}
+
+.profile-toggle:hover {
+    background-color: #e2e6ea;
+}
+
+/* --- Foto de Perfil --- */
+.profile-picture-thumbnail {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%; /* Hace la imagen circular */
+    object-fit: cover; /* Asegura que la imagen cubra el área sin distorsión */
+    margin-right: 8px;
+    border: 1px solid #ddd; /* Borde ligero alrededor de la imagen */
+}
+
+.profile-icon-placeholder {
+    font-size: 30px; /* Ajusta el tamaño del ícono de marcador de posición */
+    color: #6c757d; /* Color gris para el ícono */
+    margin-right: 8px;
+}
+
+.username-display {
+    font-weight: bold;
+    color: #333;
+    margin-right: 5px;
+}
+
+.dropdown-arrow {
+    font-size: 0.8em;
+    color: #666;
+    transition: transform 0.3s ease;
+}
+
+/* Rota la flecha cuando el menú está abierto */
+.profile-toggle.active .dropdown-arrow {
+    transform: rotate(180deg);
+}
+
+/* --- Submenú (Desplegable) --- */
+.profile-dropdown {
+    display: none; /* Oculto por defecto */
+    position: absolute;
+    top: 100%; /* Posiciona justo debajo del botón */
+    right: 10px; /* Alinea al borde derecho del botón */
+    background-color: #fff;
+    min-width: 180px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    padding: 10px 0;
+    list-style: none; /* Quita los puntos de la lista */
+    margin: 0;
+    z-index: 1001; /* Encima de la cabecera */
+}
+
+.profile-dropdown.show {
+    display: block; /* Mostrar cuando está activo */
+}
+
+.profile-dropdown li a {
+    color: #333;
+    padding: 10px 15px;
+    text-decoration: none;
+    display: block;
+    white-space: nowrap; /* Evita que el texto se ajuste */
+}
+
+.profile-dropdown li a:hover {
+    background-color: #f1f1f1;
+}
+
+/* Opcional: Ajustar el padding del header si es necesario para el espaciado */
+
+
+/* Asegura que el elemento `nav` dentro de `header` ocupe todo el ancho */
+header nav {
+    width: 97,5%; 
+}

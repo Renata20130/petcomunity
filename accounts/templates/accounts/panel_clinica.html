@@ -1,176 +1,178 @@
-{% extends "base.html" %}
+{% extends "core/base_panel.html" %}
+
 {% load static %}
 
+{% block title %}Dashboard Clínica{% endblock %} {# Opcional: título específico #}
+
 {% block extra_css %}
-<link rel="stylesheet" href="{% static 'accounts/css/panel_clinica.css' %}">
+{# Si tienes CSS específicos adicionales SOLO para el dashboard, van aquí #}
+{# <link rel="stylesheet" href="{% static 'accounts/css/dashboard_especifico.css' %}"> #}
 {% endblock %}
 
 {% block content %}
-<div class="panel-clinica">
-  <h2>👩‍⚕️ Panel de Clínica</h2>
-  <p class="bienvenida">Bienvenida, <strong>{{ request.user.username }}</strong></p>
-
-  <div class="acciones">
-    <a href="{% url 'publicar_adopcion' %}" class="btn-nueva">➕ Publicar nueva mascota</a>
-    <a href="{% url 'panel_reservas_clinica' %}" class="btn">📆 Gestionar Reservas</a>
-
-  </div>
-
-  <div class="panel-dos-columnas">
-    <!-- Columna izquierda: mascotas -->
-    <div class="columna">
-      
-      <h3>Mascotas publicadas en adopción</h3>
-      {% if mascotas %}
-        <div class="grid-mascotas">
-          {% for mascota in mascotas %}
-            <div class="tarjeta-mascota">
-              <a href="{% url 'detalle_mascota' mascota.id %}">
-                <img src="{{ mascota.imagen.url }}" alt="{{ mascota.nombre }}">
-              </a>
-              <div class="info">
-                <h4>{{ mascota.nombre }}</h4>
-                <p><strong>Especie:</strong> {{ mascota.especie }}</p>
-                <p><strong>Edad:</strong> {{ mascota.edad }} años</p>
-                <p><strong>Estado:</strong>
-                  <label class="switch">
-                    <input type="checkbox" data-id="{{ mascota.id }}" {% if mascota.estado == 'publicada' %}checked{% endif %}>
-                    <span class="slider"></span>
-                  </label>
-                </p>
-                <form action="{% url 'eliminar_adopcion' mascota.pk %}" method="POST" class="form-eliminar" onsubmit="return confirmarEliminacion();">
-                  {% csrf_token %}
-                  <button type="submit" class="btn-x" title="Eliminar publicación">✖</button>
-                </form>
-              </div>
+    <main class="main-content">
+        <header class="dashboard-header">
+            <h1>Panel de Control</h1>
+            <div class="header-actions">
+                <a href="{% url 'publicar_adopcion' %}" class="btn-primary"><i class="fas fa-plus"></i> Nueva Publicación</a>
+                <a href="{% url 'panel_reservas_clinica' %}" class="btn-secondary"><i class="fas fa-calendar"></i> Ver Reservas</a>
             </div>
-          {% endfor %}
-        </div>
-      {% else %}
-        <p class="no-mascotas">No has publicado ninguna mascota aún.</p>
-      {% endif %}
+        </header>
 
-      <h2>📅 Reservas Recibidas</h2>
-    {% if reservas %}
-      <table>
-        <thead>
-          <tr>
-            <th>Cliente</th>
-            <th>Mascota</th>
-            <th>Fecha</th>
-            <th>Hora</th>
-            <th>Motivo</th>
-            <th>Estado</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for reserva in reservas %}
-          <tr>
-            <td>{{ reserva.nombre_cliente }}</td>
-            <td>{{ reserva.nombre_mascota }}</td>
-            <td>{{ reserva.fecha }}</td>
-            <td>{{ reserva.hora }}</td>
-            <td>{{ reserva.motivo }}</td>
-            <td>{{ reserva.estado|capfirst }}</td>
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-    {% else %}
-      <p>No hay reservas aún.</p>
-    {% endif %}
+        <div class="dashboard-grid">
+            {# Aquí se mostrarán los módulos del dashboard #}
+            {% if request.user.profile.tipo == "clinica" %}
+            <div class="dashboard-module profile-details-module">
+                <h3>Mi Perfil de Clínica</h3>
+                <div class="profile-summary">
+                    {% if request.user.profile.imagen %}
+                        <div class="profile-image-wrapper">
+                            <img src="{{ request.user.profile.imagen.url }}" alt="Logo de {{ request.user.profile.nombre_clinica|default:'tu clínica' }}" class="profile-dashboard-image">
+                        </div>
+                    {% else %}
+                        <div class="profile-image-wrapper">
+                            <i class="fas fa-clinic-medical profile-dashboard-icon-placeholder"></i>
+                        </div>
+                    {% endif %}
 
-    </div>
-
-    <!-- Columna derecha: reservas 
-    <div class="columna">
-      <h3>Reservas solicitadas por clientes</h3>
-      {% if reservas_pedidas %}
-        <div class="tabla-reservas">
-          <table>
-            <thead>
-              <tr>
-                <th>Tutor</th>
-                <th>Mascota</th>
-                <th>Fecha</th>
-                <th>Hora</th>
-                <th>Notas</th>
-              </tr>
-            </thead>
-            <tbody>
-              {% for reserva in reservas_pedidas %}
-                <tr>
-                  <td>{{ reserva.nombre_cliente }}</td>
-                  <td>{{ reserva.nombre_mascota }}</td>
-                  <td>{{ reserva.fecha }}</td>
-                  <td>{{ reserva.hora }}</td>
-                  <td>{{ reserva.motivo }}</td>
-                </tr>
-              {% endfor %}
-            </tbody>
+                    <div class="profile-info-summary">
+                        <p><strong>Nombre:</strong> {{ request.user.profile.nombre_clinica|default:"No especificado" }}</p>
+                        <p><strong>Dirección:</strong> {{ request.user.profile.direccion|default:"No especificada" }}</p>
+                        <p><strong>Teléfono:</strong> {{ request.user.profile.telefono|default:"No especificado" }}</p>
+                        <p><strong>Estado del perfil:</strong>
+                            {% if request.user.profile.perfil_publicado %}
+                                <span class="status-active"><i class="fas fa-check-circle"></i> Publicado</span>
+                            {% else %}
+                                <span class="status-inactive"><i class="fas fa-exclamation-triangle"></i> Pendiente (No público)</span>
+                            {% endif %}
+                        </p>
+                    </div>
+                </div>
+                <div class="profile-actions">
+                    <a href="{% url 'editar_perfil_clinica' %}" class="btn-edit-profile">
+                        <i class="fas fa-cog"></i> Editar Perfil
+                    </a>
+                </div>
+            </div>
+            {% endif %}
             
-          </table>
+            <div class="dashboard-module module-mascotas">
+                <h3>Mascotas en Adopción (Resumen)</h3>
+                {% if mascotas %}
+                    <div class="grid-mascotas-panel">
+                        {% for mascota in mascotas|slice:":3" %} {# Muestra solo 3 mascotas de resumen #}
+                            <div class="tarjeta-mascota-panel" id="mascota-{{ mascota.id }}">
+                                <a href="{% url 'detalle_mascota' mascota.id %}">
+                                    <img src="{{ mascota.imagen.url }}" alt="{{ mascota.nombre }}">
+                                </a>
+                                <div class="info">
+                                    <h4>{{ mascota.nombre }}</h4>
+                                    <p><strong>Especie:</strong> {{ mascota.especie }}</p>
+                                    <p><strong>Edad:</strong> {{ mascota.edad }} años</p>
+                                    <div class="estado-switch-container">
+                                        <p><strong>Estado:</strong></p>
+                                        <label class="switch">
+                                            <input type="checkbox" data-id="{{ mascota.id }}" {% if mascota.estado == 'publicada' %}checked{% endif %}>
+                                            <span class="slider round"></span>
+                                        </label>
+                                    </div>
+                                    <form action="{% url 'eliminar_adopcion' mascota.pk %}" method="POST" class="form-eliminar-panel" onsubmit="return confirmarEliminacion();">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn-eliminar-tarjeta" title="Eliminar publicación">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <div class="ver-mas-link">
+                        <a href="{% url 'mis_publicaciones_clinica' %}">Ver todas las mascotas <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                {% else %}
+                    <p class="no-data">No has publicado ninguna mascota aún.</p>
+                {% endif %}
+            </div>
+
+            <div class="dashboard-module module-nueva-mascota">
+                <h3>Nueva Publicación de Mascota</h3>
+                <p>Haz clic aquí para añadir una nueva mascota a tu lista de adopciones.</p>
+                <a href="{% url 'publicar_adopcion' %}" class="btn-call-to-action">
+                    <i class="fas fa-plus-circle"></i> Publicar Mascota Ahora
+                </a>
+                <div class="info-placeholder">
+                    <span>Puedes gestionar todos los detalles en la página de publicación.</span>
+                </div>
+            </div>
+
+            <div class="dashboard-module module-reservas">
+                <h3>Reservas Recibidas</h3>
+                {% if reservas %}
+                    <div class="tabla-scroll">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Cliente</th>
+                                    <th>Mascota</th>
+                                    <th>Fecha</th>
+                                    <th>Hora</th>
+                                    <th>Motivo</th>
+                                    <th>Estado</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for reserva in reservas %}
+                                    <tr>
+                                        <td>{{ reserva.nombre_cliente }}</td>
+                                        <td>{{ reserva.nombre_mascota }}</td>
+                                        <td>{{ reserva.fecha }}</td>
+                                        <td>{{ reserva.hora }}</td>
+                                        <td>{{ reserva.motivo }}</td>
+                                        <td><span class="estado-reserva-{{ reserva.estado|lower }}">{{ reserva.estado|capfirst }}</span></td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="ver-mas-link">
+                        <a href="{% url 'panel_reservas_clinica' %}">Ver todas las reservas <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                {% else %}
+                    <p class="no-data">No hay reservas aún.</p>
+                {% endif %}
+            </div>
+
+            <div class="dashboard-module module-horas-medicas">
+                <h3>Registro de Horas Médicas</h3>
+                <form action="#" method="POST">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="fecha_horas">Fecha:</label>
+                        <input type="date" id="fecha_horas" name="fecha_horas" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="horas_trabajadas">Horas Trabajadas:</label>
+                        <input type="number" id="horas_trabajadas" name="horas_trabajadas" class="form-control" min="0.5" step="0.5" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="descripcion_horas">Descripción (opcional):</label>
+                        <textarea id="descripcion_horas" name="descripcion_horas" class="form-control" rows="2"></textarea>
+                    </div>
+                    <button type="submit" class="btn-submit-horas">Registrar Horas</button>
+                </form>
+                <div class="recent-hours">
+                    <h4>Tus Últimos Registros</h4>
+                    <ul>
+                        <li>05/07/2025: 8 horas (Consulta general)</li>
+                        <li>04/07/2025: 7.5 horas (Cirugías y post-operatorios)</li>
+                    </ul>
+                </div>
+            </div>
         </div>
-      {% else %}
-        <p class="no-reservas">No hay reservas solicitadas por clientes.</p>
-      {% endif %}
+    </main>
+{% endblock %}
 
-      <h3 style="margin-top: 2rem;">Reservas realizadas por la clínica</h3>
-      {% if reservas %}
-      <table>
-        <thead>
-          <tr>
-            <th>Tutor</th>
-            <th>Mascota</th>
-            <th>Fecha</th>
-            <th>Hora</th>
-            <th>Notas</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for reserva in reservas %}
-            <tr>
-              <td>{{ reserva.nombre_cliente }}</td>
-              <td>{{ reserva.nombre_mascota }}</td>
-              <td>{{ reserva.fecha }}</td>
-              <td>{{ reserva.hora }}</td>
-              <td>{{ reserva.motivo }}</td>
-            </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-      {% else %}
-      <p class="no-reservas">No hay reservas ingresadas.</p>
-      {% endif %}
-    </div>-->
-  </div>
-</div>
-
-<script>
-document.querySelectorAll('.switch input[type="checkbox"]').forEach(switchEl => {
-  switchEl.addEventListener('change', function() {
-    const id = this.dataset.id;
-    const csrfToken = '{{ csrf_token }}';
-    fetch("{% url 'cambiar_estado_mascota' %}", {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-        'X-CSRFToken': csrfToken
-      },
-      body: `id=${id}`
-    })
-    .then(response => response.json())
-    .then(data => {
-      if (!data.success) {
-        alert('Error al cambiar estado');
-        this.checked = !this.checked;
-      }
-    });
-  });
-});
-
-function confirmarEliminacion() {
-  return confirm("¿Seguro que quieres eliminar esta publicación?");
-}
-</script>
+{% block extra_js %}
+{# Puedes poner aquí scripts JS específicos SOLO para el dashboard principal si son necesarios #}
+{# Por ejemplo: <script src="{% static 'accounts/js/dashboard_charts.js' %}" defer></script> #}
 {% endblock %}

@@ -27,7 +27,7 @@ urlpatterns = [
     path('adopciones/', include('adopciones.urls')),
     path('accounts/', include('accounts.urls')),
     path('adopciones/', include('adopciones.urls')),
-    path('reservas/', include('reservas.urls')),
+    path('api/', include('reservas.urls')),
     path('productos/', include('productos.urls')),
     path('pedidos/', include('pedidos.urls')),
     path('farmacias/', include('farmacias.urls')),

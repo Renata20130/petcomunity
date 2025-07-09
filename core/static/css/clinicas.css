@@ -1,27 +1,26 @@
 /* --- Globales y Reinicios  --- */
 body {
-    font-family: 'Arial', sans-serif; /* O la fuente que uses en tu proyecto */
-    margin: 0; /* ¡MUY IMPORTANTE! Elimina el margen predeterminado del body */
-    padding: 0; /* ¡MUY IMPORTANTE! Elimina el padding predeterminado del body */
-    background-color: #f8f8f8; /* Un color de fondo suave para la página */
+    font-family : 'Roboto', sans-serif; 
+    margin: 0; 
+    padding: 0; 
+    background-color: #f8f8f8; 
     color: #333;
-    overflow-x: hidden; /* Evita barras de desplazamiento horizontales si algo se desborda */
+    overflow-x: hidden; 
 }
 
 main {
-    max-width: 100%; /* Asegura que el main pueda ocupar todo el ancho */
-    margin: 0 auto; /* Centra el contenido si es más estrecho que la ventana */
-    padding: 0; /* ¡IMPORTANTE! Elimina el padding superior/inferior del main */
-    /* El padding lateral lo podemos añadir a los contenedores internos si es necesario */
+    max-width: 100%; 
+    margin: 0 auto; 
+    padding: 0; 
 }
 
 h1, h2 {
     text-align: center;
-    color: #539C8D; /* Un azul más profesional y vibrante */
+    color: #7BC0E3; 
     margin-bottom: 1rem;
 }
 
-p.descripcion { /* Ajuste para el párrafo de descripción */
+p.descripcion { 
     text-align: center;
     max-width: 700px;
     margin: 0 auto 3rem;
@@ -51,17 +50,17 @@ p.descripcion { /* Ajuste para el párrafo de descripción */
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  color: white; /* Para que el texto sea legible */
-  padding: 4rem 1rem; /* Mantiene el padding interno para el contenido */
+  color: white; 
+  padding: 4rem 1rem; 
   text-align: center;
-  margin-bottom: 3rem; /* Espacio antes del listado de clínicas */
-  border-radius: 0; /* ¡IMPORTANTE! Elimina cualquier border-radius si quieres que sea de lado a lado */
+  margin-bottom: 3rem; 
+  border-radius: 0; 
   position: relative;
   overflow: hidden;
-  width: 100vw; /* ¡MUY IMPORTANTE! Ancho del 100% del viewport */
-  margin-left: calc(-50vw + 50%); /* ¡MUY IMPORTANTE! Truco para centrar y extender de lado a lado */
+  width: 100vw; 
+  margin-left: calc(-50vw + 50%); 
  
-  box-sizing: border-box; /* Asegura que padding y border se incluyan en el width */
+  box-sizing: border-box; 
 }
 
 .clinicas-hero::before {
@@ -71,26 +70,26 @@ p.descripcion { /* Ajuste para el párrafo de descripción */
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.3); /* Un 30% de opacidad negra */
+    background-color: rgba(0, 0, 0, 0.3); 
     z-index: 0;
 }
 
 .hero-content {
-    position: relative; /* Para que el contenido esté encima de la capa */
+    position: relative; 
     z-index: 1;
-    max-width: 800px; /* Limita el ancho del contenido dentro del hero */
+    max-width: 800px; 
     margin: 0 auto;
 }
 
 .clinicas-hero h1 {
     font-size: 2.8rem;
     margin-bottom: 1rem;
-    color: white; /* Asegúrate de que el color del título sea legible */
+    color: white;
 }
 
 .clinicas-hero p {
     font-size: 1.3rem;
-    color: white; /* Asegúrate de que el color del párrafo sea legible */
+    color: white; 
     margin-bottom: 2rem;
 }
 
@@ -100,7 +99,7 @@ p.descripcion { /* Ajuste para el párrafo de descripción */
     display: flex;
     justify-content: center;
     margin-bottom: 1.5rem;
-    gap: 0.5rem; /* Espacio entre input y botón */
+    gap: 0.5rem; 
 }
 
 #search-clinic-input {
@@ -115,12 +114,12 @@ p.descripcion { /* Ajuste para el párrafo de descripción */
 }
 
 #search-clinic-input:focus {
-    border-color: #539C8D;
+    border-color:  #7BC0E3;;
     box-shadow: 0 0 8px rgba(63, 81, 181, 0.2);
 }
 
 .search-button {
-    background-color: #539C8D;
+    background-color:  #7BC0E3;;
     color: white;
     padding: 0.8rem 1.5rem;
     border: none;
@@ -131,14 +130,14 @@ p.descripcion { /* Ajuste para el párrafo de descripción */
 }
 
 .search-button:hover {
-    background-color: #2e554d;
+    background-color:  #304f5f;;
 }
 
 /* --- Botones de Filtro --- */
 .filter-buttons {
     display: flex;
     justify-content: center;
-    flex-wrap: wrap; /* Para que los botones salten de línea si no caben */
+    flex-wrap: wrap; 
     gap: 0.8rem;
     margin-top: 1.5rem;
 }
@@ -160,51 +159,51 @@ p.descripcion { /* Ajuste para el párrafo de descripción */
 }
 
 .filter-btn.active {
-    background-color: #4CAF50; /* Un verde vibrante para el filtro activo */
+    background-color:  #7BC0E3; 
     color: white;
-    border-color: #4CAF50;
-    box-shadow: 0 2px 8px rgba(76, 175, 80, 0.2);
+    border-color:  #7BC0E3;
+    box-shadow: 0 2px 8px rgba(123, 192, 227, 0.2);
 }
 
 /* --- Listado de Clínicas (GRID) --- */
 .clinicas-listado {
-    padding: 2rem 1rem; /* Añade padding lateral aquí para el contenido */
-    max-width: 1200px; /* Limita el ancho del listado para que no sea demasiado ancho */
-    margin: 0 auto; /* Centra el listado */
+    padding: 2rem 1rem; 
+    max-width: 1200px; 
+    margin: 0 auto; 
 }
 
 .grid-clinicas {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Más ancho para las tarjetas */
-    gap: 2rem; /* Espacio entre tarjetas */
-    max-width: 1200px; /* Asegura que la cuadrícula no sea más ancha que el main */
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+    gap: 2rem;
+    max-width: 1200px; 
     margin-top: 2rem;
-    padding: 0 1rem; /* Relleno a los lados dentro del main */
+    padding: 0 1rem; 
 }
  
 /* --- Tarjeta de Clínica --- */
 .card-clinica {
     background-color: #fff;
     border-radius: 12px;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08); /* Sombra más suave y moderna */
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08); 
     display: flex;
     flex-direction: column;
     align-items: center;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    overflow: hidden; /* Para que las imágenes con border-radius no se salgan */
-    padding: 0; /* Quitamos el padding interno de la tarjeta para controlar mejor imagen y texto */
+    overflow: hidden; 
+    padding: 0; 
     text-align: center;
 }
 
 .card-clinica:hover {
-    transform: translateY(-8px); /* Efecto de elevación más pronunciado */
+    transform: translateY(-8px); 
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
 }
 
 .card-clinica-img {
-    width: 100%; /* La imagen ocupa todo el ancho de la tarjeta */
-    height: 200px; /* Altura fija para la imagen */
-    overflow: hidden; /* Recorta la imagen si es más grande */
+    width: 100%; 
+    height: 200px; 
+    overflow: hidden; 
     border-top-left-radius: 12px;
     border-top-right-radius: 12px;
 }
@@ -212,20 +211,20 @@ p.descripcion { /* Ajuste para el párrafo de descripción */
 .card-clinica-img img {
     width: 100%;
     height: 100%;
-    object-fit: cover; /* Asegura que la imagen cubra el área sin distorsionarse */
-    border-radius: 0; /* Quitamos el border-radius redondo aquí */
-    border: none; /* Quitamos el borde aquí */
-    display: block; /* Elimina espacio extra debajo de la imagen */
+    object-fit: cover; 
+    border-radius: 0; 
+    border: none; 
+    display: block; 
 }
 
 .card-clinica-info {
-    padding: 1.5rem; /* Relleno interno para la información */
+    padding: 1.5rem; 
     width: 100%;
-    box-sizing: border-box; /* Para incluir padding en el ancho */
+    box-sizing: border-box; 
 }
 
 .card-clinica-info h3 {
-    color: #539C8D; /* Tono azul para los títulos de clínica */
+    color: #7BC0E3; 
     font-size: 1.5rem;
     margin-bottom: 0.5rem;
     font-weight: 600;
@@ -249,12 +248,12 @@ p.descripcion { /* Ajuste para el párrafo de descripción */
 }
 
 .rating .star {
-    color: #FFC107; /* Color dorado para las estrellas */
+    color: #FFC107; 
     font-size: 1.3rem;
 }
 
 .rating .star-empty {
-    color: #e0e0e0; /* Color gris para estrellas vacías */
+    color: #e0e0e0; 
     font-size: 1.3rem;
 }
 
@@ -266,64 +265,64 @@ p.descripcion { /* Ajuste para el párrafo de descripción */
 
 /* --- Botones de Acción en la Tarjeta --- */
 .btn-ver-perfil {
-    display: inline-flex; /* Usa flexbox para alinear el texto y el icono */
-    align-items: center; /* Centra verticalmente el contenido */
-    justify-content: center; /* Centra horizontalmente si hay espacio */
+    display: inline-flex; 
+    align-items: center; 
+    justify-content: center; 
 
-    background-color: #539C8D; /* Un verde vibrante para el botón */
-    color: white; /* Texto blanco */
-    padding: 0.7rem 1.5rem; /* Relleno interno */
-    border-radius: 25px; /* Bordes bien redondeados (estilo "píldora") */
-    text-decoration: none; /* Quita el subrayado del enlace */
-    font-size: 0.95rem; /* Tamaño de fuente */
-    font-weight: 600; /* Un poco más de negrita para que destaque */
+    background-color: #7BC0E3; 
+    color: white; 
+    padding: 0.7rem 1.5rem; 
+    border-radius: 25px; 
+    text-decoration: none; 
+    font-size: 0.95rem; 
+    font-weight: 600; 
 
-    margin-top: 1.5rem; /* Espacio superior para separarlo del texto de la clínica */
+    margin-top: 1.5rem; 
 
-    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease; /* Transiciones suaves para efectos hover */
-    box-shadow: 0 4px 10px rgba(76, 175, 80, 0.2); /* Sombra sutil para profundidad */
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease; 
+    box-shadow: 0 4px 10px rgba(123, 192, 227, 0.2); 
 
-    gap: 0.5rem; /* ¡Importante! Espacio entre el texto "Ver más" y el icono */
-    white-space: nowrap; /* Evita que el texto y el icono se dividan en varias líneas */
+    gap: 0.5rem; 
+    white-space: nowrap; 
 }
 
 .btn-ver-perfil:hover {
-    background-color: #225f53; /* Verde más oscuro al pasar el ratón */
-    transform: translateY(-2px); /* Pequeño efecto de elevación */
-    box-shadow: 0 6px 15px rgba(76, 175, 80, 0.3); /* Sombra un poco más pronunciada */
+    background-color: #5BA8D5;
+    transform: translateY(-2px); 
+    box-shadow: 0 6px 15px rgba(123, 192, 227, 0.3); 
 }
 
 /* Estilos específicos para el icono de Font Awesome dentro del botón */
 .btn-ver-perfil i.fas.fa-arrow-right {
-    font-size: 0.95rem; /* Asegura que el icono tenga un tamaño consistente con el texto */
-    transition: transform 0.2s ease; /* Transición para el movimiento de la flecha */
+    font-size: 0.95rem; 
+    transition: transform 0.2s ease; 
 }
 
 .btn-ver-perfil:hover i.fas.fa-arrow-right {
-    transform: translateX(3px); /* La flecha se mueve un poco a la derecha al hacer hover */
+    transform: translateX(3px); 
 }
 
 /* --- Mapa de Clínicas --- */
 .mapa-clinicas {
-    margin: 4rem auto; /* Más espacio y centrado */
-    max-width: 1200px; /* Acomoda al ancho del main */
-    padding: 0 1rem; /* Relleno a los lados */
+    margin: 4rem auto; 
+    max-width: 1200px; 
+    padding: 0 1rem; 
 }
 
 .mapa-clinicas h2 {
-    color: #3f51b5; /* Consistente con los títulos */
+    color: #7BC0E3; 
     margin-bottom: 2rem;
 }
 
 .mapa-clinicas iframe {
-    border-radius: 12px; /* Bordes redondeados para el mapa */
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08); /* Sombra para el mapa */
+    border-radius: 12px; 
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08); 
 }
 
 /* --- Responsive (Ajustes Adicionales) --- */
 @media (max-width: 768px) {
     .clinicas-hero {
-        padding: 3rem 1rem; /* Ajusta el padding en móviles */
+        padding: 3rem 1rem; 
     }
     .clinicas-hero h1 {
         font-size: 2rem;
@@ -334,17 +333,17 @@ p.descripcion { /* Ajuste para el párrafo de descripción */
     }
 
     .search-bar-container {
-        flex-direction: column; /* Input y botón apilados en móviles */
+        flex-direction: column; 
         align-items: center;
     }
 
     #search-clinic-input {
         width: 90%;
-        margin-bottom: 1rem; /* Espacio entre input y botón */
+        margin-bottom: 1rem; 
     }
 
     .search-button {
-        width: 90%; /* Botón ocupa casi todo el ancho */
+        width: 90%; 
     }
 
     .filter-buttons {
@@ -352,12 +351,12 @@ p.descripcion { /* Ajuste para el párrafo de descripción */
     }
 
     .grid-clinicas {
-        grid-template-columns: 1fr; /* Una columna en móviles */
+        grid-template-columns: 1fr; 
         padding: 0 1rem;
     }
 
     .card-clinica-img {
-        height: 180px; /* Ajusta la altura de la imagen en móviles */
+        height: 180px; 
     }
 
     .card-clinica-info h3 {

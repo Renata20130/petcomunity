@@ -6,11 +6,11 @@ from .forms import ReservaFormClinica
 from django.contrib import messages
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Reserva
-
+from django.http import JsonResponse
 from django.core.mail import send_mail
 from django.conf import settings
 from django.core.mail import EmailMultiAlternatives
-
+from .models import Raza
 
 @login_required
 def agendar_reserva(request):
@@ -63,6 +63,19 @@ def cliente_pedir_hora(request):
         'form': form,
         'enviado': enviado
     })
+
+def obtener_razas_por_especie(request):
+    especie_seleccionada = request.GET.get('especie', '')
+
+    if especie_seleccionada:
+        # Filtra por la especie_seleccionada que viene del frontend (ej: 'perro', 'gato')
+        # y selecciona solo el id y nombre para la respuesta JSON
+        razas = Raza.objects.filter(especie=especie_seleccionada).values('id', 'nombre').order_by('nombre')
+        data = list(razas) # Convierte el QuerySet a una lista de diccionarios
+    else:
+        data = [] # Si no hay especie seleccionada, devuelve una lista vacía
+
+    return JsonResponse(data, safe=False)
 
 @login_required
 def panel_reservas_clinica(request):

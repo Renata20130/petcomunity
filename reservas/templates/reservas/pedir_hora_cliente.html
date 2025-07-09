@@ -16,10 +16,106 @@
     {% else %}
         <form method="post">
             {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit">Enviar solicitud</button>
+
+            <div class="form-section">
+                {# Selección de Clínica #}
+                <div class="form-group full-width">
+                    <label for="{{ form.clinica.id_for_label }}">Clínica</label>
+                    {{ form.clinica }}
+                    {% if form.clinica.errors %}
+                        <div class="error-message">
+                            {% for error in form.clinica.errors %}{{ error }}{% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="form-section">
+                {# Datos de la Mascota #}
+                <div class="form-group">
+                    <label for="{{ form.nombre_mascota.id_for_label }}">Nombre de la Mascota</label>
+                    {{ form.nombre_mascota }}
+                    {% if form.nombre_mascota.errors %}
+                        <div class="error-message">
+                            {% for error in form.nombre_mascota.errors %}{{ error }}{% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.especie.id_for_label }}">Especie de la Mascota</label>
+                    {{ form.especie }}
+                    {% if form.especie.errors %}
+                        <div class="error-message">
+                            {% for error in form.especie.errors %}{{ error }}{% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="form-group full-width">
+                    <label for="{{ form.raza.id_for_label }}">Raza de la Mascota</label>
+                    {{ form.raza }}
+                    {% if form.raza.errors %}
+                        <div class="error-message">
+                            {% for error in form.raza.errors %}{{ error }}{% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="form-section form-date-time-section">
+                {# Fecha y Hora #}
+                <div class="form-group">
+                    <label for="{{ form.fecha.id_for_label }}">Fecha</label>
+                    {{ form.fecha }}
+                    {% if form.fecha.errors %}
+                        <div class="error-message">
+                            {% for error in form.fecha.errors %}{{ error }}{% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.hora.id_for_label }}">Hora</label>
+                    {{ form.hora }}
+                    {% if form.hora.errors %}
+                        <div class="error-message">
+                            {% for error in form.hora.errors %}{{ error }}{% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="form-section">
+                {# Motivo de la Consulta #}
+                <div class="form-group full-width">
+                    <label for="{{ form.motivo.id_for_label }}">Motivo de la Consulta</label>
+                    {{ form.motivo }}
+                    {% if form.motivo.errors %}
+                        <div class="error-message">
+                            {% for error in form.motivo.errors %}{{ error }}{% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <button type="submit">Confirmar Reserva</button>
         </form>
     {% endif %}
 
 </div>
+
+{% endblock %}
+
+{% block extra_js %}
+{# --- Carga el archivo JS primero --- #}
+<script src="{% static 'reservas/js/pedir_hora_cliente.js' %}"></script>
+
+{# --- Pasa los IDs a una variable global o de datos en el HTML --- #}
+<script>
+    // Define estas variables ANTES de que se ejecute el script externo
+    // Opcional: Podrías usar un objeto window.appConfig = {...} si tienes más valores a pasar
+    const ESPECIE_SELECT_ID = '{{ form.especie.id_for_label }}';
+    const RAZA_SELECT_ID = '{{ form.raza.id_for_label }}';
+    const API_RAZAS_URL = '{% url "reservas:api_razas_por_especie" %}';
+    // Opcional: el valor de "otros" para la especie
+    const OTROS_ESPECIE_VALUE = 'otros'; // Asegúrate que este valor coincida con tu forms.py
+</script>
 {% endblock %}

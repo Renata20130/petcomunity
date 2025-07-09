@@ -8,6 +8,10 @@ from django.http import HttpResponseForbidden
 from django.shortcuts import render
 from accounts.models import Profile  
 from django.contrib.auth.models import User
+import json
+from django.http import JsonResponse
+from django.views.decorators.http import require_POST
+
 
 
 def adopciones(request):
@@ -45,13 +49,6 @@ def panel_clinica(request):
     mascotas = MascotaEnAdopcion.objects.filter(publicada_por=request.user)
     return render(request, 'accounts/panel_clinica.html', {'mascotas': mascotas})
 
-
-# @login_required
-# @tipo_requerido('clinica')
-# def lista_solicitudes(request):
-    # Aquí podrías traer solicitudes relacionadas con la clínica
-    # solicitudes = []  # Ejemplo vacío
-    # return render(request, 'adopciones/lista_solicitudes.html', {'solicitudes': solicitudes})
 
 @login_required
 @tipo_requerido('clinica')
@@ -98,4 +95,41 @@ def detalle_mascota(request, mascota_id):
         'form': form,
         'mascota': mascota
     })
+
+
+@login_required
+@tipo_requerido('clinica')
+@require_POST # Asegura que solo acepte solicitudes POST
+def cambiar_estado_mascota(request):
+    try:
+        data = json.loads(request.body) # Parsea el JSON del cuerpo de la solicitud
+        mascota_id = data.get('mascota_id')
+        nuevo_estado = data.get('estado') # 'publicada' o 'pendiente'
+
+        mascota = get_object_or_404(MascotaEnAdopcion, id=mascota_id, publicada_por=request.user)
+
+        # Validación básica del estado (opcional, pero buena práctica)
+        if nuevo_estado not in ['publicada', 'pendiente']:
+            return JsonResponse({'success': False, 'message': 'Estado inválido.'}, status=400)
+
+        mascota.estado = nuevo_estado
+        mascota.save()
+
+        return JsonResponse({'success': True, 'message': 'Estado actualizado.'})
+
+    except json.JSONDecodeError:
+        return JsonResponse({'success': False, 'message': 'Solicitud JSON inválida.'}, status=400)
+    except Exception as e:
+        return JsonResponse({'success': False, 'message': str(e)}, status=500)
+    
+
+@login_required
+@tipo_requerido('clinica')
+def mis_publicaciones_clinica(request):
+    mascotas = MascotaEnAdopcion.objects.filter(publicada_por=request.user)
+    context = {
+        'mascotas': mascotas,
+        'is_dedicated_page': True # Una bandera para posibles usos futuros en la plantilla
+    }
+    return render(request, 'adopciones/mis_publicaciones_clinica.html', context)
 

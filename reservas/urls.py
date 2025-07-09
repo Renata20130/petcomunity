@@ -10,5 +10,9 @@ urlpatterns = [
     path('cliente/pedir_hora/', views.cliente_pedir_hora, name='cliente_pedir_hora'),
     path('panel/', views.panel_reservas_clinica, name='panel_reservas_clinica'),
     path('cambiar-estado/<int:reserva_id>/<str:nuevo_estado>/', views.cambiar_estado_reserva, name='cambiar_estado_reserva'),
-    path('panel-reservas/', views.panel_reservas_clinica, name='panel_reservas_clinica'),
+    path('cambiar-estado/<int:reserva_id>/<str:nuevo_estado>/', views.cambiar_estado_reserva, name='cambiar_estado_reserva'),
+    path('razas_por_especie/', views.obtener_razas_por_especie, name='api_razas_por_especie'),
+    
+
+
 ]

@@ -1,29 +1,28 @@
 /* accounts/css/registro.css */
 
-/* Variables CSS - Unificadas y ajustadas a tus colores existentes */
 :root {
-    --primary-color: #71D5C1; /* Tu nuevo color principal */
-    --primary-color-dark: #5bc5b0; /* Un tono más oscuro para detalles */
-    --primary-color-darker: #4a9e8d; /* ¡NUEVO! Un tono aún más oscuro para el hover del botón */
-    --primary-color-light: #e0f8f5; /* Un tono más claro para fondos suaves */
+    --primary-color: #7BC0E3; 
+    --primary-color-dark: #5B9CC7; 
+    --primary-color-darker: #3E7FA8; 
+    --primary-color-light: #C7EAF8; 
 
-    /* Gradiente del panel izquierdo (adaptado para complementar el primary-color) */
-    --gradient-start: #2a5a54; /* Tono oscuro verdoso-azulado */
-    --gradient-end: #3d7e75;   /* Tono medio verdoso-azulado */
+    /* Gradiente del panel izquierdo, adaptado al nuevo color */
+    --gradient-start: #3A6D8C; 
+    --gradient-end: #579BC6; 
 
-    --light-grey-bg: #f8f9fa; /* Fondo claro del panel derecho */
+    --light-grey-bg: #f8f9fa;
     --text-color-dark: #333;
-    --text-color-light: #fff; /* Este es el blanco del texto del botón */
-    --border-color: #ccc; /* Tu borde de input actual */
-    --input-bg: #fafafa; /* Tu fondo de input actual */
+    --text-color-light: #fff;
+    --border-color: #ccc;
+    --input-bg: #fafafa;
     
-    /* Botones secundarios (mantienen tu verde original, o se podrían adaptar también si es necesario) */
-    --button-bg-secondary: #38a169; 
-    --button-bg-secondary-hover: #2c7a45; 
-    --error-color: #d9534f; /* Tu color de error */
+    /* Botones secundarios */
+    --button-bg-secondary: #579BC6; 
+    --button-bg-secondary-hover: #3A6D8C; 
+    --error-color: #d9534f;
 
-    /* Colores específicos para clínica y farmacia, mantenidos (se pueden ajustar si también deben cambiar) */
-    --clinica-primary: #2c7a45;
+    /* Colores específicos para clínica y farmacia, mantenidos */
+    --clinica-primary: #579BC6;
     --clinica-bg: #e6f4ea;
     --farmacia-primary: #2d6ca2;
     --farmacia-bg: #e6f0fa;
@@ -32,39 +31,39 @@
 
 /* --- Estilos base para la página completa --- */
 html, body {
-    height: 100%; /* FUNDAMENTAL: Ocupa todo el alto de la ventana */
-    width: 100%;  /* FUNDAMENTAL: Ocupa todo el ancho de la ventana */
+    height: 100%; 
+    width: 100%;  
     margin: 0;
     padding: 0;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     color: var(--text-color-dark);
-    background-color: var(--light-grey-bg); /* Fondo general de la página */
-    box-sizing: border-box; /* Incluye padding y border en el tamaño total */
+    background-color: var(--light-grey-bg); 
+    box-sizing: border-box; 
 }
 
 body {
     display: flex;
-    justify-content: center; /* Centra horizontalmente el contenedor */
-    align-items: center; /* Centra verticalmente el contenedor */
-    /* No se necesita min-height: 100vh si html, body ya tienen height: 100% y align-items */
+    justify-content: center; 
+    align-items: center; 
+    
 }
 
-/* --- Contenedor Principal (Ahora ocupa toda la ventana) --- */
+/* --- Contenedor Principal  --- */
 .registration-container {
     display: flex;
-    width: 100%; /* Ocupa el 100% del ancho del body */
-    height: 100%; /* Ocupa el 100% del alto del body */
-    max-width: none; /* Elimina cualquier restricción de ancho máximo */
-    min-height: auto; /* Ya no es necesario un min-height fijo si ocupa el 100% */
-    box-shadow: none; /* Elimina la sombra si quieres un diseño más plano al borde */
-    border-radius: 0; /* Elimina el redondeo para que llegue a los bordes de la pantalla */
-    overflow: hidden; /* Importante para que el contenido no se salga */
+    width: 100%; 
+    height: 100%; 
+    max-width: none; 
+    min-height: auto; 
+    box-shadow: none; 
+    border-radius: 0; 
+    overflow: hidden; 
 }
 
 
-/* --- Panel Izquierdo (Proporciones ajustadas para pantalla completa) --- */
+/* --- Panel Izquierdo --- */
 .left-panel {
-    flex: 0.4; /* Ajusta la proporción del ancho (ej: 40% del total) */
+    flex: 0.4; 
     background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-end) 100%);
     color: var(--text-color-light);
     padding: 40px;
@@ -82,8 +81,8 @@ body {
     left: 0;
     right: 0;
     bottom: 0;
-    background: radial-gradient(circle at 10% 20%, rgba(5,46,73,0.8) 0%, rgba(13,67,104,0.8) 100%),
-                radial-gradient(circle at 90% 80%, rgba(20,53,88,0.8) 0%, rgba(32,71,114,0.8) 100%);
+    background: radial-gradient(circle at 10% 20%, rgba(20,53,88,0.8) 0%, rgba(32,71,114,0.8) 100%),
+                radial-gradient(circle at 90% 80%, rgba(5,46,73,0.8) 0%, rgba(13,67,104,0.8) 100%);
     opacity: 0.3;
     z-index: 0;
 }
@@ -100,8 +99,8 @@ body {
 }
 
 .logo-img {
-    width: 40px;
-    height: 40px;
+    width: 100px;
+    height: 75px;
     margin-right: 10px;
     filter: brightness(0) invert(1);
 }
@@ -147,7 +146,7 @@ body {
 
 /* --- Panel Derecho (Formulario de Registro) --- */
 .right-panel {
-    flex: 0.6; /* Ajusta la proporción del ancho (ej: 60% del total) */
+    flex: 0.6; 
     background-color: var(--light-grey-bg);
     padding: 40px;
     position: relative;
@@ -164,7 +163,7 @@ body {
     right: -50px;
     width: 200px;
     height: 200px;
-    background-color: rgba(0, 123, 255, 0.1);
+    background-color: rgba(123, 192, 227, 0.1);
     border-radius: 50%;
     z-index: 0;
 }
@@ -175,7 +174,7 @@ body {
     left: -80px;
     width: 150px;
     height: 150px;
-    background-color: rgba(0, 123, 255, 0.05);
+    background-color: rgba(123, 192, 227, 0.05);
     border-radius: 50%;
     z-index: 0;
 }
@@ -201,26 +200,26 @@ body {
 }
 
 .top-nav a:hover {
-    color: var(--primary-blue);
+    color: var(--primary-color);
 }
 
 .user-icon {
     font-size: 1.5em;
-    color: var(--primary-blue);
+    color: var(--primary-color);
 }
 
 /* --- Estilos del Formulario de Registro --- */
 .registration-form {
-    flex-grow: 1; /* Permite que el formulario ocupe el espacio restante */
+    flex-grow: 1;
     display: flex;
     flex-direction: column;
-    justify-content: center; /* Centra el contenido del formulario verticalmente */
+    justify-content: center; 
 }
 
 .registration-form h2 {
     text-align: center;
     margin-bottom: 1rem;
-    color: var(--primary-blue);
+    color: var(--primary-color);
     font-weight: 700;
     letter-spacing: normal;
     font-family: 'Segoe UI', sans-serif;
@@ -276,10 +275,10 @@ body {
 .form-group input:focus,
 .form-group textarea:focus,
 .form-group select:focus {
-    border-color: var(--primary-blue);
+    border-color: var(--primary-color);
     outline: none;
     background-color: white;
-    box-shadow: 0 0 0 3px rgba(0, 170, 170, 0.25);
+    box-shadow: 0 0 0 3px rgba(123, 192, 227, 0.25);
 }
 
 .form-group .help-text {
@@ -302,8 +301,8 @@ input[type="radio"] {
     max-width: 300px;
     margin: 30px auto 0 auto;
     padding: 15px 30px;
-    background-color: var(--primary-color); /* Color principal del botón */
-    color: var(--text-color-light); /* Texto blanco */
+    background-color: var(--primary-color);
+    color: var(--text-color-light); 
     border: none;
     border-radius: 8px;
     font-size: 1.1em;
@@ -314,7 +313,7 @@ input[type="radio"] {
 }
 
 .btn-submit:hover {
-    background-color: var(--primary-color-darker); /* ¡NUEVO! Color de fondo más oscuro al hacer hover */
+    background-color: var(--primary-color-darker); 
     transform: translateY(-2px);
 }
 
@@ -346,7 +345,8 @@ input[type="radio"] {
     padding-top: 30px;
     font-family: 'Segoe UI', sans-serif;
     display: flex;
-    justify-content: center;
+    flex-direction: column; 
+    align-items: center;
     gap: 1.5rem;
     flex-wrap: wrap;
 }
@@ -400,45 +400,40 @@ input[type="radio"] {
     vertical-align: middle;
 }
 
-/* Botón de volver (si lo necesitas en esta página independiente) */
-/* Posición absoluta para fijarlo en una esquina, si aplica */
 .btn-back {
-    position: absolute; /* Para fijarlo en la esquina superior izquierda del right-panel */
+    position: absolute; 
     top: 20px;
     left: 20px;
     display: inline-block;
-    color: var(--primary-color); /* Color del botón de volver con el color principal */
+    color: var(--primary-color); 
     font-weight: 600;
     text-decoration: none;
     font-size: 1rem;
     transition: color 0.3s ease;
     cursor: pointer;
-    z-index: 10; /* Asegura que esté por encima de otros elementos */
+    z-index: 10; 
 }
 
 .btn-back:hover {
-    color: var(--primary-color-dark); /* Hover del botón de volver */
+    color: var(--primary-color-dark); 
 }
 
 
 /* --- Media Queries para Responsividad --- */
 @media (max-width: 768px) {
     body {
-        /* Para móviles, puedes decidir si quieres que el registro ocupe toda la altura */
-        /* o si prefieres que el contenido se desplace (scroll) si es muy largo. */
-        /* Si quieres scroll, puedes quitar align-items: center; */
-        align-items: flex-start; /* Alinea el contenido al inicio en pantallas pequeñas */
-        padding: 10px; /* Un poco de padding en los bordes para móviles */
+        align-items: flex-start; 
+        padding: 10px; 
     }
 
     .registration-container {
-        flex-direction: column; /* Apila los paneles verticalmente */
-        height: auto; /* La altura se ajusta al contenido en móviles */
+        flex-direction: column; 
+        height: auto; 
         border-radius: 0;
     }
 
     .left-panel, .right-panel {
-        flex: none; /* Desactiva flex-grow para que cada uno ocupe el 100% del ancho */
+        flex: none; 
         width: 100%;
         padding: 30px 20px;
     }
@@ -453,7 +448,7 @@ input[type="radio"] {
     }
 
     .form-grid {
-        grid-template-columns: 1fr; /* Una sola columna para el formulario */
+        grid-template-columns: 1fr; 
     }
 
     .btn-submit {

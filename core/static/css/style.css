@@ -1,6 +1,5 @@
 /* base.css - Adaptaciones para el Header */
 
-/* Asegura que el body use flexbox para que header, main y footer se apilen correctamente */
 html, body {
     height: 100%;
     margin: 0;
@@ -10,39 +9,40 @@ html, body {
 
 body {
     margin: 0;
-    font-family : 'Roboto', sans-serif; /* Usar Roboto si Anton es solo para títulos */
+    font-family : 'Roboto', sans-serif; 
     background-color: #f8f9fa;
     color: #333;
     font-size: 16px;
 }
 
 main {
-    flex: 1; /* Permite que main ocupe el espacio restante */
+    flex: 1; 
     width: 100%;
 }
 
 /* --- Header y Navegación --- */
 header {
-    background-color: #71D5C1; /* Tu color actual */
+    background-color: #7BC0E3; 
     padding: 1rem 2rem; 
     width: 100%;
     box-sizing: border-box;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Sombra sutil para darle profundidad */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1); 
+    margin-right: 5px;
 }
 
 header nav {
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    max-width: 1200px; /* Ancho máximo para el contenido del nav */
-    margin: 0 auto; /* Centrar el contenido del nav */
-    flex-wrap: wrap; /* Permite que los elementos se envuelvan en pantallas pequeñas */
+    align-items: end;
+    max-width: 1200px; 
+    margin: 0 auto; 
+    flex-wrap: wrap; 
 }
 
 .logo-img {
     height: 70px;
     width: auto;
-    display: block; /* Elimina espacio extra debajo de la imagen */
+    display: block; 
 }
 
 .nav-links {
@@ -67,32 +67,32 @@ header nav {
 
 .nav-links li a:hover {
     background-color: white;
-    color: #71D5C1; /* Color del header para el hover */
+    color: #7BC0E3; 
 }
 
 /* --- Nuevo Contenedor para Iconos y Acciones --- */
 .nav-icons-actions {
     display: flex;
     align-items: center;
-    gap: 1.2rem; /* Espacio entre los nuevos elementos */
-    margin-left: auto; /* Empuja este grupo a la derecha */
+    gap: 1.2rem; 
+    margin-left: auto;
 }
 
 /* --- Botón CTA en el Header --- */
 .btn-primary-header {
-    background-color: #FF7F50; /* Un naranja vibrante para destacar */
+    background-color: #578ba5; 
     color: white;
     padding: 0.8rem 1.5rem;
     border-radius: 8px;
     text-decoration: none;
     font-weight: 600;
     transition: background-color 0.3s;
-    white-space: nowrap; /* Evita que el texto del botón se rompa */
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2); /* Sombra para el botón */
+    white-space: nowrap; 
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2); 
 }
 
 .btn-primary-header:hover {
-    background-color: #E66A3D;
+    background-color: #346279;
 }
 
 /* --- Buscador --- */
@@ -106,7 +106,7 @@ header nav {
     color: white;
     font-size: 1.2em;
     cursor: pointer;
-    padding: 5px; /* Área clickeable */
+    padding: 5px; 
 }
 
 .search-input {
@@ -114,14 +114,14 @@ header nav {
     padding: 8px 10px;
     border-radius: 5px;
     outline: none;
-    width: 0; /* Oculto por defecto */
+    width: 0; 
     opacity: 0;
     transition: width 0.3s ease, opacity 0.3s ease;
     margin-left: 0;
 }
 
 .search-container.active .search-input { /* Para activar con JS */
-    width: 150px; /* Ancho cuando está activo */
+    width: 150px; 
     opacity: 1;
     margin-left: 10px;
 }
@@ -130,17 +130,17 @@ header nav {
 }
 /* Estilo para el ícono de búsqueda al pasar el ratón */
 .search-icon:hover {
-    color: #e0e0e0; /* Un gris más claro para el hover */
+    color: #e0e0e0; 
 }
 
 
 /* --- Ícono de Carrito --- */
 .cart-icon-link {
     color: white;
-    font-size: 1.4em; /* Un poco más grande que el search icon */
+    font-size: 1.4em; 
     text-decoration: none;
     position: relative;
-    padding: 5px; /* Área clickeable */
+    padding: 5px; 
 }
 
 .cart-icon-link:hover {
@@ -151,7 +151,7 @@ header nav {
     position: absolute;
     top: -5px;
     right: -5px;
-    background-color: #FF4500; /* Rojo vibrante */
+    background-color: #FF4500;
     color: white;
     font-size: 0.7em;
     border-radius: 50%;
@@ -163,21 +163,21 @@ header nav {
 
 /* --- Menú de Perfil de Usuario --- */
 .menu-perfil-li {
-    list-style: none; /* Asegura que no tenga puntos */
+    list-style: none; 
     position: relative;
 }
 
 .btn-perfil {
     background: none;
     border: none;
-    color: white;
-    font-weight: 600; /* Cambiado a 600 para consistencia */
+    color: #7BC0E3;
+    font-weight: 600; 
     cursor: pointer;
     font-size: 1.1em;
     padding: 8px 12px;
-    display: flex; /* Para alinear el texto y la flecha */
+    display: flex; 
     align-items: center;
-    gap: 5px; /* Espacio entre el nombre y la flecha */
+    gap: 5px; 
 }
 
 .btn-perfil:hover {
@@ -188,16 +188,16 @@ header nav {
 .submenu {
     display: none;
     position: absolute;
-    top: calc(100% + 5px); /* Un poco de espacio entre el botón y el menú */
+    top: calc(100% + 5px); 
     right: 0;
     background-color: white;
-    color: #333; /* Color oscuro para el texto del submenu */
-    min-width: 200px; /* Ancho mínimo para los elementos del submenu */
+    color: #333; 
+    min-width: 200px; 
     border-radius: 6px;
-    box-shadow: 0px 8px 16px rgba(0,0,0,0.15); /* Sombra más pronunciada */
+    box-shadow: 0px 8px 16px rgba(0,0,0,0.15); 
     z-index: 1000;
-    list-style: none; /* Eliminar puntos de lista */
-    padding: 5px 0; /* Padding interno */
+    list-style: none; 
+    padding: 5px 0; 
 }
 
 .submenu li a {
@@ -206,11 +206,11 @@ header nav {
     text-decoration: none;
     color: #333;
     transition: background-color 0.2s ease;
-    font-size: 1em; /* Ajustar tamaño de fuente */
+    font-size: 1em; 
 }
 
 .submenu li a:hover {
-    background-color: #f0f0f0; /* Color de hover más suave */
+    background-color: #f0f0f0; 
 }
 
 .menu-perfil-li:hover .submenu {
@@ -221,7 +221,7 @@ header nav {
 .auth-links {
     list-style: none;
     display: flex;
-    gap: 1.5rem; /* Espacio entre los enlaces */
+    gap: 1.5rem;
     margin: 0;
     padding: 0;
 }
@@ -238,7 +238,7 @@ header nav {
 
 .auth-links li a:hover {
     background-color: white;
-    color: #71D5C1;
+    color: #7BC0E3;
 }
 
 /* --- Menú Hamburguesa (para móvil) --- */
@@ -249,6 +249,166 @@ header nav {
     cursor: pointer;
 }
 
+/* base.css - Adaptaciones para el Footer */
+
+footer {
+    background-color: #7BC0E3; 
+    color: #f1f1f1; 
+    padding: 2.5rem 2rem; 
+    box-sizing: border-box;
+    font-size: 0.95em; 
+}
+
+.footer-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
+    gap: 2rem; 
+    max-width: 1200px;
+    margin: 0 auto; 
+    text-align: left; 
+}
+
+.footer-section h3 {
+    color: #ffffff;
+    margin-bottom: 1.2rem;
+    font-size: 1.3em;
+    border-bottom: 2px solid rgba(179, 214, 231, 0.3);
+    padding-bottom: 0.5rem;
+    display: inline-block; 
+}
+
+.footer-section p {
+    margin-bottom: 0.8rem;
+    line-height: 1.6;
+}
+
+.logo-footer {
+    height: 60px;
+    margin-top: 1rem;
+    opacity: 0.8; 
+}
+
+/* --- Enlaces del Footer --- */
+.footer-section ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-section ul li {
+    margin-bottom: 0.6rem;
+}
+
+.footer-section ul li a {
+    color: #fdfdfd; 
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer-section ul li a:hover {
+    color: #7BC0E3;
+}
+
+/* --- Contacto --- */
+.footer-section.contact p i {
+    margin-right: 0.8rem;
+    color: #7BC0E3; 
+}
+.footer-section.contact p a {
+    color: #ffffff;
+    text-decoration: none;
+}
+.footer-section.contact p a:hover {
+    color: #7BC0E3; 
+}
+
+/* --- Redes Sociales --- */
+.social-icons {
+    display: flex;
+    gap: 1.2rem;
+    margin-top: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.social-icons a {
+    color: #ffffff;
+    font-size: 1.8em;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.social-icons a:hover {
+    color: #7BC0E3;
+    transform: translateY(-3px); 
+}
+
+/* --- Formulario Newsletter --- */
+.newsletter-form {
+    display: flex;
+    margin-top: 1rem;
+    flex-wrap: wrap; /* Para que se adapte en móvil */
+}
+
+.newsletter-form input[type="email"] {
+    flex: 1;
+    padding: 10px 12px;
+    border: none;
+    border-radius: 5px 0 0 5px; 
+    outline: none;
+    font-size: 1em;
+    min-width: 150px; 
+}
+
+.newsletter-form button {
+    background-color: #578ba5;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 0 5px 5px 0; 
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s ease;
+}
+
+.newsletter-form button:hover {
+    background-color: #346279;
+}
+
+/* --- Pie de Página Inferior (Copyright y Legales) --- */
+.footer-bottom {
+    border-top: 1px solid rgba(0,0,0,0.1); 
+    padding-top: 1.5rem;
+    margin-top: 2rem;
+    text-align: center;
+    font-size: 0.9em;
+    display: flex;
+    flex-direction: column; 
+    gap: 0.5rem;
+    color: #ffffff; 
+}
+
+.footer-bottom p {
+    margin: 0;
+}
+
+.legal-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1.2rem;
+}
+
+.legal-links li a {
+    color: #fffcfc;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.legal-links li a:hover {
+    color: #7BC0E3; 
+}
 
 /* --- Media Queries para Responsividad del Header --- */
 @media (max-width: 992px) { /* Por ejemplo, para tablets y móviles */
@@ -334,166 +494,6 @@ header nav {
     }
 }
 
-
-/* base.css - Adaptaciones para el Footer */
-
-footer {
-    background-color: #2c3e50; /* Un gris azulado oscuro para el footer */
-    color: #ecf0f1; /* Texto claro para contraste */
-    padding: 2.5rem 2rem; /* Más padding para que tenga espacio */
-    box-sizing: border-box;
-    font-size: 0.95em; /* Ligeramente más pequeño que el body */
-}
-
-.footer-content {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Columnas responsivas */
-    gap: 2rem; /* Espacio entre columnas */
-    max-width: 1200px;
-    margin: 0 auto; /* Centrar el contenido del footer */
-    text-align: left; /* Alinear texto a la izquierda dentro de cada columna */
-}
-
-.footer-section h3 {
-    color: #71D5C1; /* Tu color verde para los títulos de sección */
-    margin-bottom: 1.2rem;
-    font-size: 1.3em;
-    border-bottom: 2px solid rgba(113, 213, 193, 0.3); /* Línea debajo del título */
-    padding-bottom: 0.5rem;
-    display: inline-block; /* Para que la línea se ajuste al texto */
-}
-
-.footer-section p {
-    margin-bottom: 0.8rem;
-    line-height: 1.6;
-}
-
-.logo-footer {
-    height: 60px; /* Ajusta el tamaño de tu logo en el footer */
-    margin-top: 1rem;
-    opacity: 0.8; /* Ligeramente transparente */
-}
-
-/* --- Enlaces del Footer --- */
-.footer-section ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.footer-section ul li {
-    margin-bottom: 0.6rem;
-}
-
-.footer-section ul li a {
-    color: #bdc3c7; /* Color más claro para los enlaces */
-    text-decoration: none;
-    transition: color 0.3s ease;
-}
-
-.footer-section ul li a:hover {
-    color: #71D5C1; /* Tu color verde al pasar el ratón */
-}
-
-/* --- Contacto --- */
-.footer-section.contact p i {
-    margin-right: 0.8rem;
-    color: #71D5C1; /* Color verde para los íconos */
-}
-.footer-section.contact p a {
-    color: #ecf0f1;
-    text-decoration: none;
-}
-.footer-section.contact p a:hover {
-    color: #71D5C1;
-}
-
-/* --- Redes Sociales --- */
-.social-icons {
-    display: flex;
-    gap: 1.2rem;
-    margin-top: 1rem;
-    margin-bottom: 1.5rem;
-}
-
-.social-icons a {
-    color: #ecf0f1;
-    font-size: 1.8em;
-    transition: color 0.3s ease, transform 0.3s ease;
-}
-
-.social-icons a:hover {
-    color: #71D5C1;
-    transform: translateY(-3px); /* Pequeño efecto al pasar el ratón */
-}
-
-/* --- Formulario Newsletter --- */
-.newsletter-form {
-    display: flex;
-    margin-top: 1rem;
-    flex-wrap: wrap; /* Para que se adapte en móvil */
-}
-
-.newsletter-form input[type="email"] {
-    flex: 1; /* Ocupa el espacio disponible */
-    padding: 10px 12px;
-    border: none;
-    border-radius: 5px 0 0 5px; /* Bordes redondeados a la izquierda */
-    outline: none;
-    font-size: 1em;
-    min-width: 150px; /* Para que no se haga demasiado pequeño */
-}
-
-.newsletter-form button {
-    background-color: #FF7F50; /* El mismo naranja del botón CTA del header */
-    color: white;
-    padding: 10px 15px;
-    border: none;
-    border-radius: 0 5px 5px 0; /* Bordes redondeados a la derecha */
-    cursor: pointer;
-    font-size: 1em;
-    transition: background-color 0.3s ease;
-}
-
-.newsletter-form button:hover {
-    background-color: #E66A3D;
-}
-
-/* --- Pie de Página Inferior (Copyright y Legales) --- */
-.footer-bottom {
-    border-top: 1px solid rgba(255,255,255,0.1); /* Línea divisoria */
-    padding-top: 1.5rem;
-    margin-top: 2rem;
-    text-align: center;
-    font-size: 0.9em;
-    display: flex;
-    flex-direction: column; /* Por defecto para móvil */
-    gap: 0.5rem;
-}
-
-.footer-bottom p {
-    margin: 0;
-}
-
-.legal-links {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 1.2rem;
-}
-
-.legal-links li a {
-    color: #bdc3c7;
-    text-decoration: none;
-    transition: color 0.3s ease;
-}
-
-.legal-links li a:hover {
-    color: #71D5C1;
-}
 
 /* --- Media Queries para Responsividad del Footer --- */
 @media (min-width: 768px) {

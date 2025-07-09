@@ -1,4 +1,5 @@
-{% extends "base.html" %}
+{% extends "core/base_panel.html" %}
+
 {% load static %}
 
 {% block extra_css %}
@@ -6,30 +7,100 @@
 {% endblock %}
 
 {% block content %}
-<div class="form-container">
-    <a href="{% url 'panel_clinica' %}" class="btn-back"><span class="icon">←</span> Volver al panel</a>
+<div class="form-wrapper">
+    <div class="form-container">
+        <a href="{% url 'panel_clinica' %}" class="btn-back"><span class="icon">←</span> Volver al panel</a>
 
-    <h2>🐾 Publicar Mascota en Adopción</h2>
-    <p>Campos en el form: {{ form.fields|length }}</p>
-    
-    <form method="POST" enctype="multipart/form-data" novalidate>
-        {% csrf_token %}
-      
-        {% for field in form %}
-            <div class="form-group">
-                {{ field.label_tag }}
-                {{ field }}
-                {% if field.errors %}
-                    <ul class="errorlist">
-                        {% for error in field.errors %}
-                            <li>{{ error }}</li>
-                        {% endfor %}
-                    </ul>
-                {% endif %}
+        <h1>Publicar mascota en adopción</h1>
+
+        <form method="POST" enctype="multipart/form-data" novalidate>
+            {% csrf_token %}
+            
+            <div class="form-grid">
+                <div class="column left-column">
+                    <div class="form-group">
+                        {{ form.nombre.label_tag }}
+                        {{ form.nombre }}
+                        {% if form.nombre.errors %}
+                            <ul class="errorlist">{% for error in form.nombre.errors %}<li>{{ error }}</li>{% endfor %}</ul>
+                        {% endif %}
+                    </div>
+
+                    <div class="form-group">
+                        {{ form.especie.label_tag }}
+                        {{ form.especie }} {# Asegúrate de que este select tenga id="id_especie" #}
+                        {% if form.especie.errors %}
+                            <ul class="errorlist">{% for error in form.especie.errors %}<li>{{ error }}</li>{% endfor %}</ul>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="form-group">
+                        {{ form.raza.label_tag }}
+                        {{ form.raza }} {# Esto renderizará el <select id="razaSelect"> #}
+                        {% if form.raza.errors %}
+                            <ul class="errorlist">{% for error in form.raza.errors %}<li>{{ error }}</li>{% endfor %}</ul>
+                        {% endif %}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="{{ form.edad.id_for_label }}">Edad:</label>
+                        {{ form.edad }}
+                        {% if form.edad.errors %}
+                            <div class="error-message">{{ form.edad.errors }}</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="{{ form.unidad_edad.id_for_label }}">Unidad:</label>
+                        {{ form.unidad_edad }}
+                        {% if form.unidad_edad.errors %}
+                            <div class="error-message">{{ form.unidad_edad.errors }}</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="{{ form.sexo.id_for_label }}">Sexo:</label>
+                        {{ form.sexo }}
+                        {% if form.sexo.errors %}
+                            <div class="error-message">{{ form.sexo.errors }}</div>
+                        {% endif %}
+                    </div>
+
+                </div>
+
+                <div class="column right-column">
+                    <div class="form-group description-group">
+                        {{ form.descripcion.label_tag }}
+                        {{ form.descripcion }}
+                        {% if form.descripcion.errors %}
+                            <ul class="errorlist">{% for error in form.descripcion.errors %}<li>{{ error }}</li>{% endfor %}</ul>
+                        {% endif %}
+                    </div>
+
+                    <div class="form-group image-upload-group">
+                        <div class="main-image-preview-container">
+                            <img id="mainImagePreview" src="{% static 'img/placeholder_image.png' %}" alt="Image Preview" class="main-preview-image">
+                        </div>
+
+                        {{ form.imagen }} 
+                        {% if form.imagen.errors %}
+                            <ul class="errorlist">{% for error in form.imagen.errors %}<li>{{ error }}</li>{% endfor %}</ul>
+                        {% endif %}
+                        
+                        <div class="upload-stats">
+                            <button type="button" class="upload-main-button" id="triggerAdditionalUpload">Subir Imagen</button>
+                            <span class="upload-count" id="uploadCount">0 archivos</span> 
+                        </div>
+                    </div>
+                </div>
             </div>
-        {% endfor %}
-        <button type="submit" class="btn-submit">Publicar</button>
-    </form> 
 
+            <button type="submit" class="btn-submit">Publicar Mascota</button>
+        </form> 
+    </div> 
 </div>
+<script src="{% static 'js/publicar_adopcion.js' %}" defer></script>
+
 {% endblock %}
+
+

@@ -17,6 +17,8 @@ urlpatterns = [
     path('publicas/', views.lista_mascotas_publicas, name='adopciones_publicas'),
     path('mascota/<int:mascota_id>/', views.detalle_mascota, name='detalle_mascota'),
 
-    
+    path('cambiar_estado/', views.cambiar_estado_mascota, name='cambiar_estado_mascota'),
+    path('mis_publicaciones/', views.mis_publicaciones_clinica, name='mis_publicaciones_clinica'),
+
     
 ]

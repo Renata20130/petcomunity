@@ -1,73 +1,543 @@
+/* --- Base y Contenedores Generales --- */
+
+
+.form-wrapper {
+    width: 100%;
+    max-width: 900px; /* Un poco más ancho para la estética de la imagen */
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center; /* Centrar para que la tarjeta no quede "flotando" arriba */
+}
+
 .form-container {
-    max-width: 500px;
-    margin: 2rem auto;
-    padding: 2rem;
-    background: #fff;
-    border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-    font-family: 'Segoe UI', sans-serif;
+    background-color: #ffffff;
+    padding: 40px 50px;
+    border-radius: 18px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0);
+    width: 100%;
+    position: relative;
+    box-sizing: border-box;
 }
 
-h2 {
+/* --- Título Principal (Upload information) --- */
+.form-container h1 { /* Cambiado a h1 para el título principal "Upload information" */
+    font-size: 32px; /* Más grande como en la imagen */
+    color: #333;
+    margin-bottom: 40px; /* Más espacio */
+    text-align: left; /* Alineado a la izquierda como en la imagen */
+    font-weight: 700;
+}
+
+/* --- Botón de Volver (Oculto en la imagen de referencia, pero mantenido por si lo necesitas) --- */
+.btn-back {
+    display: none; /* Ocultar si la imagen no lo muestra */
+    /* Si decides mostrarlo: */
+    /* position: absolute;
+    top: 25px;
+    left: 30px;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #6c757d;
+    font-weight: 600;
+    font-size: 0.95em;
+    transition: color 0.3s ease; */
+}
+
+/* .btn-back:hover { color: #007bff; } */
+/* .btn-back .icon { margin-right: 8px; font-size: 1.3em; } */
+
+/* --- Título del Formulario interno (si existe, como "Publicar Mascota en Adopción") --- */
+.form-container h2 {
     text-align: center;
-    margin-bottom: 1.5rem;
-    color: #0AA;
+    color: #343a40;
+    margin-bottom: 35px;
+    font-size: 2em;
+    font-weight: 700;
+    padding-top: 10px;
+    display: none; /* Ocultamos el h2 si el h1 es el principal */
 }
 
+/* --- Diseño de Grid para Campos --- */
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.3fr; /* La columna de la derecha (imagen) es más ancha */
+    gap: 25px 40px;
+    margin-bottom: 30px;
+}
+
+@media (max-width: 768px) {
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+/* --- Estilos Generales de Campos de Formulario --- */
 .form-group {
-    margin-bottom: 1.2rem;
+    margin-bottom: 0;
 }
 
 .form-group label {
     display: block;
-    margin-bottom: 0.4rem;
-    font-weight: bold;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #495057;
+    font-size: 0.95em;
 }
 
-.form-group input,
+.form-group input[type="text"],
+.form-group input[type="number"],
+.form-group select,
 .form-group textarea {
     width: 100%;
-    padding: 0.6rem;
-    border-radius: 8px;
-    border: 1px solid #ccc;
-    background: #f9f9f9;
+    padding: 14px 18px;
+    border: 1px solid #e0e0e0; /* Borde más suave */
+    border-radius: 10px;
+    box-sizing: border-box;
+    font-size: 1em;
+    color: #495057;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    background-color: #f9f9f9; /* Fondo muy claro */
 }
 
-.btn-submit {
-    width: 100%;
-    background: #0AA;
-    color: white;
-    padding: 0.8rem;
+.form-group input[type="text"]:focus,
+.form-group input[type="number"]:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 4px rgba(0, 123, 255, 0.15);
+    outline: none;
+    background-color: #fff;
+}
+
+.form-group textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+/* --- Placeholders --- */
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+    color: #adb5bd;
+    opacity: 1;
+}
+
+/* --- Mensajes de Error y Ayuda --- */
+.errorlist {
+    color: #dc3545;
+    font-size: 0.8em;
+    margin-top: 5px;
+    padding-left: 0;
+    list-style: none;
+    font-weight: 500;
+}
+
+.help-text {
+    font-size: 0.85em;
+    color: #6c757d;
+    margin-top: 5px;
+    display: block;
+}
+
+/* --- Estilos Específicos para el Campo de Edad (Age) --- */
+.age-input-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.age-input-container input[type="number"] {
+    flex-grow: 1;
+}
+
+.age-control-button {
+    background-color: #e0e0e0; /* Un gris neutro */
+    border: 1px solid #ccc;
     border-radius: 8px;
-    border: none;
-    font-size: 1rem;
+    padding: 10px 15px;
+    font-size: 1.2em; /* Más grande */
+    color: #555;
     cursor: pointer;
-    transition: background 0.3s;
+    transition: background-color 0.3s ease;
+    line-height: 1; /* Para centrar el signo = */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.age-control-button:hover {
+    background-color: #d0d0d0;
+}
+
+/* --- Estilos para la Columna Derecha (Imágenes y Descripción) --- */
+.right-column {
+    display: flex;
+    flex-direction: column;
+    gap: 25px; /* Espacio entre el campo de descripción y el de imagen */
+}
+
+/* --- Sección de Carga de Imágenes (Ajustada a la imagen) --- */
+.image-upload-area {
+    background-color: #fefefe; /* Fondo blanco */
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0); /* Sombra muy suave */
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px; /* Espacio entre elementos dentro del área */
+    border: 1px solid #f0f0f0; /* Borde muy sutil */
+}
+
+.image-thumbnails-bar {
+    display: flex;
+    justify-content: center;
+    gap: 10px; /* Espacio entre miniaturas */
+    margin-bottom: 15px; /* Espacio debajo de las miniaturas */
+    flex-wrap: wrap; /* Si hay muchas, que salten de línea */
+}
+
+.thumbnail-img-small {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 8px; /* Más redondeado */
+    border: 1px solid #e0e0e0;
+    transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.thumbnail-img-small:hover {
+    transform: scale(1.08);
+    border-color: #3269a5;
+}
+
+.upload-button-small { /* El botón "Uploates" de la imagen */
+    background-color: #5a7dff; /* Un azul diferente */
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 15px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-weight: 600;
+}
+
+.upload-button-small:hover {
+    background-color: #4a6ee5;
+}
+
+/* Área de la imagen principal */
+.main-image-preview-container {
+    width: 100%;
+    max-width: 300px; /* Ajustado para la imagen de referencia */
+    height: 250px; /* Altura fija para la imagen */
+    background-color: #e9e9e9;
+    border-radius: 12px;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+    box-shadow: 0 4px 15px rgb(255, 255, 255); /* Sombra para la imagen principal */
+}
+
+.main-image-preview {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.upload-stats { /* "Upload Upload 4" en la imagen */
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 16px;
+    color: #555;
+    font-weight: 600;
+}
+
+/* Este es el botón "Upload Upload" debajo de las miniaturas y el contador.
+   Lo ideal es que este sea el botón que activa el input type="file" oculto. */
+.upload-main-button {
+    background-color: #5a7dff; /* Azul similar al de las miniaturas */
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 25px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-weight: 600;
+    margin-top: 15px; /* Espacio para separarlo */
+}
+
+.upload-main-button:hover {
+    background-color: #4a6ee5;
+}
+
+
+/* --- Botón de Enviar (Publicar Mascota) --- */
+.btn-submit {
+    display: block;
+    width: 100%;
+    padding: 16px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 1.15em;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+    letter-spacing: 0.5px;
+    margin-top: 40px; /* Más espacio para separarlo del contenido */
 }
 
 .btn-submit:hover {
-    background: #088;
-}
-.btn-back {
-  display: inline-flex;
-  align-items: center;
-  padding: 8px 15px;
-  background-color: #0AA; /* color principal */
-  color: white;
-  border-radius: 8px;
-  text-decoration: none;
-  font-weight: 600;
-  font-size: 1rem;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.15);
-  transition: background-color 0.3s ease, transform 0.2s ease;
+    background-color: #218838;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(40, 167, 69, 0.2);
 }
 
-.btn-back:hover {
-  background-color: #088;
-  transform: translateX(-3px);
+/* Contenedor general del widget, que tu custom_clearable_file_input.html debe envolver */
+/* Hacer que el contenedor del widget sea completamente invisible si solo contiene el input oculto */
+.custom-file-input-wrapper {
+    /* Estas reglas ocultan el div que Django envuelve alrededor del input oculto,
+       para que no ocupe espacio visual. */
+    display: none; /* Oculta completamente el div del wrapper */
+    /* Las siguientes reglas son para asegurar que no interfiera si display:none falla o se modifica */
+    border: none;
+    padding: 0;
+    margin: 0;
+    min-height: 0;
+    background-color: transparent;
+    overflow: hidden;
+    position: absolute; /* Oculta pero no ocupa espacio */
+    width: 1px;
+    height: 1px;
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    white-space: nowrap;
+}
+.custom-file-input-wrapper .current-image-display {
+    display: none;
+}
+.custom-file-input-wrapper .upload-button,
+.custom-file-input-wrapper .file-name-display {
+    display: none;
 }
 
-.btn-back .icon {
-  margin-right: 8px;
-  font-size: 1.2rem;
+.preview-image {
+    max-width: 180px; /* Imagen más grande */
+    max-height: 180px;
+    border-radius: 10px;
+    border: 2px solid #a0c4ff; /* Borde azul para la imagen */
+    object-fit: cover;
+    margin-bottom: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Sombra para la imagen */
+}
+
+/* Etiqueta del checkbox "Clear" (aunque la ocultaste en tu widget) */
+.clear-checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #007bff; /* Color de acento para el texto de eliminar */
+    font-size: 0.9em;
+    font-weight: 500;
+    cursor: pointer;
+    /* Si realmente está vacío por tu widget, esta regla no afectará texto */
+}
+
+.clear-checkbox {
+    transform: scale(1.1); /* Checkbox un poco más grande */
+    accent-color: #007bff; /* Color del checkbox */
+}
+
+/* Controles de carga de archivo (input y botón para el texto 'Cambiar imagen') */
+.file-upload-controls {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+/* Oculta el input de archivo por defecto, usaremos un botón simulado */
+.hidden-file-input {
+    display: none;
+}
+
+.upload-stats .upload-main-button {
+    background-color: #007bff; /* Color azul primario */
+    color: white;
+    padding: 14px 30px; /* Padding generoso para el botón principal */
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 1.1em; /* Un poco más grande */
+    border: none;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+}
+
+.upload-stats .upload-main-button:hover {
+    background-color: #0056b3; /* Azul más oscuro al pasar el ratón */
+    transform: translateY(-2px); /* Efecto ligero de elevación */
+    box-shadow: 0 6px 15px rgba(0, 123, 255, 0.4);
+}
+
+.upload-stats .upload-count {
+    font-weight: bold;
+    font-size: 1.2em; /* Un poco más grande */
+    color: #007bff;
+    white-space: nowrap; /* Evita que el texto se rompa */
+}
+
+.upload-stats .icon-person {
+    /* Mantén o elimina este icono según si lo quieres al lado del contador */
+    font-size: 1.5em;
+    color: #6c757d;
+}
+
+.upload-stats {
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Centrar el botón y el contador */
+    gap: 15px; /* Espacio entre el botón y el contador */
+    margin-top: 20px; /* Espacio con la imagen de arriba */
+    padding: 15px 20px; /* Padding dentro del contenedor de stats */
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    background-color: #f8f8f8;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+}
+
+
+/* Estilo del botón 'Cambiar imagen' que CustomClearableFileInput genera */
+.upload-button {
+    display: inline-block;
+    background-color: #007bff; /* Azul primario para el botón de subir */
+    color: white;
+    padding: 12px 25px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 4px 10px rgba(0, 123, 255, 0.2);
+}
+
+.upload-button:hover {
+    background-color: #0056b3;
+    transform: translateY(-1px);
+}
+
+/* Nombre del archivo seleccionado */
+.file-name-display {
+    margin-top: 15px;
+    font-size: 0.9em;
+    color: #343a40;
+    font-weight: 500;
+}
+
+/* --- Estilos para la previsualización grande de la imagen --- */
+.main-image-preview-container {
+    text-align: center;
+    margin-bottom: 20px; /* Espacio entre la vista previa y los controles de carga */
+    border: 1px solid #ddd; /* Borde suave */
+    border-radius: 8px;
+    padding: 10px;
+    background-color: #f9f9f9; /* Fondo claro */
+}
+
+.main-preview-image {
+    max-width: 100%; /* Asegura que la imagen no se salga del contenedor */
+    height: auto; /* Mantiene la proporción */
+    max-height: 250px; /* Altura máxima para la previsualización */
+    object-fit: contain; /* Asegura que la imagen quepa sin cortarse */
+    border-radius: 6px;
+    margin-bottom: 10px;
+    background-color: #e9ecef; /* Fondo claro para imágenes transparentes */
+    border: 1px solid #cceeff; /* Borde azul claro */
+}
+
+.preview-text {
+    font-size: 0.9em;
+    color: #6c757d;
+}
+
+/* ... (Mantén todo el CSS anterior para .custom-file-input-wrapper, .upload-button, etc.) ... */
+
+
+/* --- Responsive Adjustments --- */
+@media (max-width: 768px) {
+    .form-container {
+        margin: 1.5rem auto;
+        padding: 1.5rem;
+        border-radius: 12px;
+    }
+
+    .form-container h1 { /* Ajuste del título principal */
+        font-size: 26px;
+        text-align: center;
+        margin-bottom: 25px;
+    }
+
+    .btn-back { /* Si lo activas */
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
+        margin-bottom: 1.5rem;
+        position: static; /* No flotar en móvil */
+        width: 100%;
+        justify-content: flex-start;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        padding: 0.8rem 1rem;
+        font-size: 0.95rem;
+    }
+
+    .image-thumbnails-bar {
+        justify-content: center;
+    }
+
+    .main-image-preview-container {
+        max-width: 100%;
+        height: 200px;
+    }
+
+    .btn-submit {
+        padding: 0.9rem 1.2rem;
+        font-size: 1.1rem;
+        margin-top: 2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .form-container {
+        padding: 1rem;
+        margin: 1rem auto;
+    }
+
+    .form-container h1 {
+        font-size: 22px;
+    }
+
+    .form-group {
+        margin-bottom: 1rem;
+    }
+
+    .thumbnail-img-small {
+        width: 45px;
+        height: 45px;
+    }
 }
