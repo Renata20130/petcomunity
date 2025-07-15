@@ -1,6 +1,7 @@
 from django.urls import path
 from . import views
 from .views import registrar_reserva
+from .views import RazaListAPIView
 
 app_name = 'reservas'
 
@@ -13,6 +14,6 @@ urlpatterns = [
     path('cambiar-estado/<int:reserva_id>/<str:nuevo_estado>/', views.cambiar_estado_reserva, name='cambiar_estado_reserva'),
     path('razas_por_especie/', views.obtener_razas_por_especie, name='api_razas_por_especie'),
     
-
+    path('api/razas/', RazaListAPIView.as_view(), name='api_razas_list'),
 
 ]

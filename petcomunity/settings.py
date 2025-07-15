@@ -41,12 +41,17 @@ INSTALLED_APPS = [
     'core',
     'accounts',
     'adopciones',
+    'rest_framework',
     'reservas',
     'productos',
     'pedidos',
     'ventas',
     'clinicas',
     'farmacias',
+    'corsheaders',
+    'ubicacion',
+ 
+    
     
     
 ]
@@ -54,6 +59,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    'corsheaders.middleware.CorsMiddleware',
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -159,4 +165,10 @@ EMAIL_HOST_USER = 'vanniariict@gmail.com'
 EMAIL_HOST_PASSWORD = 'kgdg pdsh dedc vppc'
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
+# settings.py de tu proyecto de reservas
+CORS_ALLOWED_ORIGINS = [
+    "https://www.tu-dominio-adopciones.com", # El dominio exacto de tu app de adopciones
+    "http://localhost:8001", # Si la app de adopciones corre en localhost en otro puerto
+    # "http://127.0.0.1:8001", # Otra opción para localhost
+]
 

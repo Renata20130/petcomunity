@@ -1,0 +1,44 @@
+{% extends "core/base_panel.html" %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/panel_solicitudes.css' %}">
+{% endblock %}
+
+{% block content %}
+<main class="main-content">
+    <h1>Solicitudes de Adopción</h1>
+
+    {% if solicitudes %}
+        <ul>
+            {% for solicitud in solicitudes %}
+            <li>
+                <div class="info-text">
+                    <strong>{{ solicitud.nombre_completo }}</strong> solicitó adoptar a <strong>{{ solicitud.mascota.nombre }}</strong> el {{ solicitud.fecha_envio|date:"d/m/Y H:i" }}.
+                </div>
+                <div class="acciones">
+                    <a href="{% url 'detalle_solicitud' solicitud.id %}">Ver detalles</a>
+
+                    <form action="{% url 'actualizar_estado_solicitud' solicitud.id %}" method="POST">
+                        {% csrf_token %}
+                        <select name="estado" onchange="this.form.submit()">
+                            {% for key, label in solicitud.ESTADOS_SOLICITUD %}
+                                <option value="{{ key }}" {% if solicitud.estado == key %}selected{% endif %}>{{ label }}</option>
+                            {% endfor %}
+                        </select>
+                        {% if solicitud.estado == 'contactado' and solicitud.fecha_contacto %}
+                            <small>(Contactado: {{ solicitud.fecha_contacto|date:"d/m/Y H:i" }})</small>
+                        {% elif solicitud.estado == 'rechazada' and solicitud.fecha_rechazo %}
+                            <small>(Rechazado: {{ solicitud.fecha_rechazo|date:"d/m/Y H:i" }})</small>
+                        {% endif %}
+                    </form>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+
+    {% else %}
+        <p>No hay solicitudes aún.</p>
+    {% endif %}
+</main>
+{% endblock %}

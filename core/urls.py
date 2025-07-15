@@ -8,7 +8,7 @@ from core.views import home
 from .views import productos_publicados
 
 
-
+app_name = 'core'  
 
 urlpatterns = [
     path('', views.home, name='home'),
@@ -26,6 +26,8 @@ urlpatterns = [
     path('productos/', include('productos.urls', namespace='productos')),
     path('productos/', include('productos.urls')),
 
+    path('farmacias/', views.farmacias_view, name='farmacias'),
 
- 
+
+
 ]

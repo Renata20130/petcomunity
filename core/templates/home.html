@@ -13,9 +13,10 @@
             <h1><span class="highlight">Tu Compañero Ideal, Cuidado Integral y Productos de Confianza.</span></h1>
             <p class="hero-subtitle">Conecta con perros y gatos que buscan un hogar, agenda fácilmente tu consulta veterinaria y accede a la farmacia online con todo lo que necesitan.</p>
             <div class="hero-buttons">
-                <a href="{% url 'adopciones' %}" class="btn btn-primary">Adoptar un Amigo</a>
-                <a href="{% url 'clinicas' %}" class="btn btn-secondary">Agendar Consulta</a>
-                <a href="{% url 'productos_publicados' %}" class="btn btn-secondary">Explorar la Farmacia</a>
+                <a href="{% url 'core:adopciones' %}" class="btn btn-primary">Adoptar un Amigo</a>
+                <a href="{% url 'core:clinicas' %}" class="btn btn-secondary">Agendar Consulta</a>
+                <a href="{% url 'core:productos_publicados' %}" class="btn btn-secondary">Ver Productos</a>
+
             </div>
         </div>
         {# La imagen de fondo del hero se manejará con CSS #}
@@ -28,19 +29,19 @@
                     <i class="fas fa-paw icon-large"></i> {# Icono de pata para adopciones #}
                     <h3>Adopción</h3>
                     <p>Encuentra perros y gatos que buscan un hogar para darles una segunda oportunidad.</p>
-                    <a href="{% url 'adopciones' %}" class="btn-text-link">Ver Mascotas</a>
+                    <a href="{% url 'core:adopciones' %}" class="btn-text-link">Ver Mascotas</a>
                 </div>
                 <div class="service-card">
                     <i class="fas fa-stethoscope icon-large"></i> {# Icono de estetoscopio para clínica #}
                     <h3>Clínica Veterinaria</h3>
                     <p>Agenda horas fácilmente con veterinarios expertos y asegura el bienestar de tu mascota.</p>
-                    <a href="{% url 'clinicas' %}" class="btn-text-link">Reservar Hora</a>
+                    <a href="{% url 'core:clinicas' %}" class="btn-text-link">Reservar Hora</a>
                 </div>
                 <div class="service-card">
                     <i class="fas fa-shopping-cart icon-large"></i> {# Icono de carrito para farmacia #}
                     <h3>Farmacia Online</h3>
                     <p>Accede a medicamentos, alimentos especializados y accesorios de las mejores marcas.</p>
-                    <a href="{% url 'productos_publicados' %}" class="btn-text-link">Comprar Ahora</a>
+                    <a href="{% url 'core:productos_publicados' %}" class="btn-text-link">Comprar Ahora</a>
                 </div>
             </div>
         </div>
@@ -50,23 +51,33 @@
         <div class="container">
             <h2 class="section-title">Nuestros Amigos en Adopción</h2>
             <div class="adoption-cards-grid">
-                {% for mascota in mascotas_clinica|slice:":4" %} {# <-- CAMBIO AQUÍ: 'mascotas_clinica' #}
-                <div class="adoption-card">
-                    {% if mascota.imagen %}
-                        <img src="{{ mascota.imagen.url }}" alt="{{ mascota.nombre }}">
-                    {% else %}
-                        <img src="{% static 'img/default_mascota.jpg' %}" alt="Mascota sin foto">
-                    {% endif %}
-                    <h3>{{ mascota.nombre }}</h3>
-                    <p>{{ mascota.edad }} | {{ mascota.raza|default:"Mestizo" }}</p>
-                    <a href="{% url 'detalle_mascota' mascota.id %}" class="btn btn-small">Ver Perfil</a>
-                </div>
-                {% empty %}
-                <p>Por ahora no hay mascotas destacadas para mostrar. ¡Visita nuestra sección de Adopciones!</p>
-                {% endfor %}
+                    {% for mascota in mascotas_clinica|slice:":5" %} {# <-- CAMBIO AQUÍ: 'mascotas_clinica' #}
+                    <a href="{% url 'core:adopciones' %}" class="adoption-card-link">
+                    <div class="adoption-card">
+                        {% if mascota.imagen %}
+                            <img src="{{ mascota.imagen.url }}" alt="{{ mascota.nombre }}">
+                        {% else %}
+                            <img src="{% static 'img/default_mascota.jpg' %}" alt="Mascota sin foto">
+                        {% endif %}
+                        <h3>{{ mascota.nombre }}</h3>
+                        <p>
+                            {{ mascota.edad }} 
+                            {% if mascota.unidad_edad == 'meses' %}
+                                meses
+                            {% else %}
+                                años
+                            {% endif %}
+                            | {{ mascota.raza|default:"Mestizo" }}
+                        </p>
+                        
+                    </div>
+                    {% empty %}
+                    <p>Por ahora no hay mascotas destacadas para mostrar. ¡Visita nuestra sección de Adopciones!</p>
+                    {% endfor %}
+
             </div>
             <div class="text-center mt-4">
-                <a href="{% url 'adopciones' %}" class="btn-outline">Ver Todas las Adopciones</a>
+                <a href="{% url 'core:adopciones' %}" class="btn-outline">Ver Todas las Adopciones</a>
             </div>
         </div>
     </section>

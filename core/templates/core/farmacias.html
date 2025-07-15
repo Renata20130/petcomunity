@@ -1,22 +1,77 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Farmacias | PetComunity{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/clinicas.css' %}">
+{% endblock %}
 
 {% block content %}
-<h1>Productos de farmacias</h1>
-
-{% if productos %}
-    <div class="productos-grid">
-        {% for producto in productos %}
-            <div class="producto-card">
-                {% if producto.imagen %}
-                    <img src="{{ producto.imagen.url }}" alt="{{ producto.nombre }}" width="150">
-                {% endif %}
-                <h3>{{ producto.nombre }}</h3>
-                <p>${{ producto.precio }}</p>
-                <p><strong>Farmacia:</strong> {{ producto.farmacia.username }}</p>
+<main>
+    <!-- Hero de bienvenida -->
+    <section class="clinicas-hero">
+        <div class="hero-content">
+            <h1>Encuentra la Farmacia Ideal para tu Compañero</h1>
+            <div class="search-bar-container">
+                <input type="text" id="search-farmacia-input" placeholder="Buscar farmacia por nombre o ubicación...">
+                <button type="button" class="search-button">Buscar</button>
             </div>
-        {% endfor %}
-    </div>
-{% else %}
-    <p>No hay productos publicados.</p>
-{% endif %}
+        </div>
+    </section>
+
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <li class="{{ message.tags }}">{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    <section class="clinicas-listado">
+        <h2 style="text-align:center; margin-bottom: 2rem;">Farmacias Veterinarias Registradas</h2>
+        <div class="grid-clinicas">
+            {% if farmacias %}
+                {% for farmacia in farmacias %}
+                <div class="card-clinica">
+                    <div class="card-clinica-img">
+                        {% if farmacia.profile.foto %}
+                            <img src="{{ farmacia.profile.foto.url }}" alt="Foto de {{ farmacia.username }}">
+                        {% elif farmacia.profile.imagen %}
+                            <img src="{{ farmacia.profile.imagen.url }}" alt="Imagen de {{ farmacia.username }}">
+                        {% else %}
+                            <img src="{% static 'img/default-profile.png' %}" alt="Imagen genérica de farmacia">
+                        {% endif %}
+                    </div>
+                    <div class="card-clinica-info">
+                        <h3>{{ farmacia.profile.nombre_clinica|default:"Farmacia Veterinaria" }}</h3>
+                        <p class="direccion">{{ farmacia.profile.direccion|default:"Dirección no disponible" }}</p>
+                        <p class="telefono">📞 {{ farmacia.profile.telefono|default:"Teléfono no disponible" }}</p>
+                        <div class="rating">
+                            <span class="star">&#9733;</span><span class="star">&#9733;</span><span class="star">&#9733;</span><span class="star">&#9733;</span><span class="star-empty">&#9734;</span>
+                            <span class="rating-text">(4.0)</span>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <p style="text-align:center; grid-column: 1 / -1;">No hay farmacias registradas aún.</p>
+            {% endif %}
+        </div>
+    </section>
+
+    <!-- Mapa (opcional, mismo que clínicas) -->
+    <section class="mapa-clinicas" style="margin: 2rem 0; max-width: 900px; margin-left:auto; margin-right:auto;">
+        <h2 style="text-align:center; color:#0AA; margin-bottom:1rem;">Ubicación de Farmacias</h2>
+        <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3329.1234567890!2d-70.6505555!3d-33.4567890!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9662cfabcd123456%3A0xabcdef1234567890!2sFarmacia%20Veterinaria%20PetCare!5e0!3m2!1ses!2scl!4v1651234567890!5m2!1ses!2scl"
+            width="100%"
+            height="350"
+            style="border:0;"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+    </section>
+</main>
 {% endblock %}

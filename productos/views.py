@@ -42,6 +42,12 @@ def panel_farmacia(request):
         'pedidos': pedidos
     })
 
+@login_required
+def pedidos_farmacia_view(request):
+    # tu lógica aquí
+    pedidos = Pedido.objects.filter(farmacia=request.user)
+
+    return render(request, 'productos/pedidos.html', {'pedidos': pedidos})
 
 @login_required
 @tipo_requerido('farmacia')
@@ -59,7 +65,6 @@ def editar_producto(request, producto_id):
 
     return render(request, 'productos/editar_producto.html', {'form': form, 'producto': producto})
 
-
 @login_required
 @tipo_requerido('farmacia')
 def eliminar_producto(request, producto_id):
@@ -76,6 +81,22 @@ def lista_productos(request):
     productos = Producto.objects.all()
     return render(request, 'productos/lista_productos.html', {'productos': productos})
 
+def stock_farmacia(request):
+    # Lógica para mostrar el stock (puedes adaptarla)
+    return render(request, 'productos/stock_farmacia.html')
+
+def nuevo_pedido_view(request):
+    return render(request, 'productos/nuevo_pedido.html')
+
+def editar_perfil_farmacia(request):
+    profile = request.user.profile
+    if request.method == 'POST':
+        perfil_publicado = request.POST.get('perfil_publicado') == 'on'
+        profile.perfil_publicado = perfil_publicado
+        profile.save()
+        return redirect('productos:pedidos_farmacia')  # O a donde corresponda
+
+    return render(request, 'accounts/editar_perfil_farmacia.html', {'profile': profile})
 
 
 

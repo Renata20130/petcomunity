@@ -13,7 +13,14 @@
         <div class="info">
             <h2>{{ mascota.nombre }}</h2>
             <p><strong>Especie:</strong> {{ mascota.especie }}</p>
-            <p><strong>Edad:</strong> {{ mascota.edad }} años</p>
+            <p><strong>Edad:</strong>
+                {{ mascota.edad }}
+                {% if mascota.unidad_edad == 'meses' %}
+                    meses
+                {% else %}
+                    años
+                {% endif %}
+            </p>
             <p><strong>Descripción:</strong></p>
             <p>{{ mascota.descripcion }}</p>
             <p><strong>Estado:</strong> {{ mascota.get_estado_display }}</p>

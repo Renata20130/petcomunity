@@ -13,17 +13,51 @@ from accounts.models import Profile
 from productos.models import Producto
 from farmacias.models import Farmacia
 from django.db.models import Prefetch
+from django.shortcuts import render, get_object_or_404
+from django.http import HttpResponse
+
+from adopciones.views import lista_mascotas_adopcion
+from adopciones.forms import FiltroMascotaForm
 
 import locale
 
 
 def adopciones(request):
+    form = FiltroMascotaForm(request.GET or None)
     mascotas = MascotaEnAdopcion.objects.filter(
         publicada_por__profile__tipo='clinica',
         estado='publicada'
     ).order_by('-fecha_publicacion')
+
+    filtro_especie = None
     
-    return render(request, 'adopciones.html', {'mascotas': mascotas})
+    if form.is_valid():
+        especie = form.cleaned_data.get('especie')
+        sexo = form.cleaned_data.get('sexo')
+        edad_min = form.cleaned_data.get('edad_min')
+        edad_max = form.cleaned_data.get('edad_max')
+        unidad_edad = form.cleaned_data.get('unidad_edad')
+        ubicacion = form.cleaned_data.get('ubicacion')
+
+        if especie:
+            mascotas = mascotas.filter(especie=especie)
+        if sexo:
+            mascotas = mascotas.filter(sexo=sexo)
+        if edad_min is not None:
+            mascotas = mascotas.filter(edad__gte=edad_min)
+        if edad_max is not None:
+            mascotas = mascotas.filter(edad__lte=edad_max)
+        if unidad_edad:
+            mascotas = mascotas.filter(unidad_edad=unidad_edad)
+        if ubicacion:
+            # Busca en el campo 'direccion' de profile que está en publicada_por
+            mascotas = mascotas.filter(publicada_por__profile__direccion__icontains=ubicacion)
+
+    return render(request, 'adopciones.html', {
+        'form': form,
+        'mascotas': mascotas,
+    })
+
 def clinicas_view(request):
     if request.method == 'POST':
         form = ClinicaForm(request.POST, request.FILES)
@@ -42,8 +76,8 @@ def clinicas_view(request):
     })
 
 def farmacias_view(request):
-    return render(request, 'farmacias.html')
-
+    farmacias = User.objects.filter(profile__tipo='farmacia', profile__perfil_publicado=True)
+    return render(request, 'core/farmacias.html', {'farmacias': farmacias})
 
 def contacto_view(request):
     return render(request, 'contacto.html')
@@ -65,7 +99,6 @@ def publicar_adopcion(request):
 def lista_mascotas_publicas(request):
     mascotas = MascotaEnAdopcion.objects.filter(estado='publicada').order_by('-fecha_publicacion')
     return render(request, 'adopciones/lista_adopciones.html', {'mascotas': mascotas})
-
 
 def registro(request):
     if request.method == 'POST':
@@ -91,7 +124,6 @@ def home(request):
         'clinicas': clinicas, 
         'productos': productos,
     })
-
 
 def productos_publicados(request):
     productos = Producto.objects.filter(estado='publicado')
@@ -142,3 +174,4 @@ def productos_publicados(request):
         })
 
     return render(request, 'core/productos_publicados.html', {'productos': productos_con_precio_formateado})
+

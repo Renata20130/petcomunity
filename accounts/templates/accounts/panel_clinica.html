@@ -1,4 +1,4 @@
-{% extends "core/base_panel.html" %}
+ {% extends "core/base_panel.html" %}
 
 {% load static %}
 
@@ -94,19 +94,36 @@
                 {% endif %}
             </div>
 
-            <div class="dashboard-module module-nueva-mascota">
-                <h3>Nueva Publicación de Mascota</h3>
-                <p>Haz clic aquí para añadir una nueva mascota a tu lista de adopciones.</p>
-                <a href="{% url 'publicar_adopcion' %}" class="btn-call-to-action">
-                    <i class="fas fa-plus-circle"></i> Publicar Mascota Ahora
-                </a>
-                <div class="info-placeholder">
-                    <span>Puedes gestionar todos los detalles en la página de publicación.</span>
-                </div>
+            <a href="{% url 'clinica:nueva_consulta' %}" class="btn btn-primary">
+                Nueva Consulta
+            </a>
+            <div class="dashboard-module module-solicitudes-adopcion">
+                <h3>Solicitudes de Adopción Recibidas</h3>
+                {% if solicitudes %}
+                    <ul class="lista-solicitudes-adopcion">
+                        {% for solicitud in solicitudes|slice:":5" %}
+                            <li>
+                                <strong>Solicitante:</strong> {{ solicitud.nombre_completo }} <br>
+                                <strong>Email:</strong> {{ solicitud.email }} <br>
+                                <strong>Teléfono:</strong> {{ solicitud.telefono }} <br>
+                                <strong>Mascota:</strong> {{ solicitud.mascota.nombre }} <br>
+                                <strong>Fecha de solicitud:</strong> {{ solicitud.fecha_envio|date:"d/m/Y H:i" }}
+                            </li>
+                            <hr>
+                        {% endfor %}
+                    </ul>
+                    <div class="ver-mas-link">
+                        <a href="{% url 'panel_solicitudes' %}">Ver todas las solicitudes <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                {% else %}
+                    <p>No tienes solicitudes nuevas.</p>
+                {% endif %}
             </div>
 
             <div class="dashboard-module module-reservas">
                 <h3>Reservas Recibidas</h3>
+                <p>TEST: Total reservas = {{ reservas|length }}</p>
+
                 {% if reservas %}
                     <div class="tabla-scroll">
                         <table>
@@ -134,12 +151,10 @@
                             </tbody>
                         </table>
                     </div>
-                    <div class="ver-mas-link">
-                        <a href="{% url 'panel_reservas_clinica' %}">Ver todas las reservas <i class="fas fa-arrow-right"></i></a>
-                    </div>
                 {% else %}
                     <p class="no-data">No hay reservas aún.</p>
                 {% endif %}
+
             </div>
 
             <div class="dashboard-module module-horas-medicas">
@@ -168,6 +183,42 @@
                     </ul>
                 </div>
             </div>
+
+            <div class="dashboard-module module-mascotas-registradas">
+                <h3>Mascotas Registradas en la Clínica</h3>
+                {% if mascotas_clinica %}
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Nombre</th><th>Especie</th><th>Edad</th><th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for mascota in mascotas_clinica %}
+                            <tr>
+                                <td>{{ mascota.nombre }}</td>
+                                <td>{{ mascota.especie }}</td>
+                                <td>{{ mascota.edad }}</td>
+                                <td>
+                                    <a href="{% url 'clinicas:ficha_clinica' mascota.id %}" class="btn btn-sm btn-primary">Ver ficha clínica</a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    <div class="ver-mas-link">
+                        <a href="{% url 'clinicas:listado_mascotas' %}">Ver todas las mascotas registradas <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                {% else %}
+                    <p>No hay mascotas registradas para atención.</p>
+                {% endif %}
+           
+                <div class="acciones-module">
+                    <a href="{% url 'clinica:registrar_mascota' %}">Registrar nueva mascota</a>
+
+                    </a>
+                </div>
+            </div>
         </div>
     </main>
 {% endblock %}
@@ -175,4 +226,4 @@
 {% block extra_js %}
 {# Puedes poner aquí scripts JS específicos SOLO para el dashboard principal si son necesarios #}
 {# Por ejemplo: <script src="{% static 'accounts/js/dashboard_charts.js' %}" defer></script> #}
-{% endblock %}
+{% endblock %} 

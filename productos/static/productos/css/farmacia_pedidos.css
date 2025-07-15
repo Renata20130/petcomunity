@@ -1,0 +1,713 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+:root {
+    --primary-color: #7BC0E3; /* Azul oficial de la página */
+    --accent-color: #5BA7CD; /* Un tono más oscuro del azul para acentos */
+    --secondary-accent-color: #3880b3; /* Un tono más oscuro para botones o elementos más destacados */
+    
+    --background-light: #f8fbfd; /* Fondo ligeramente azulado */
+    --background-dark: #eef5f8; /* Fondo más oscuro para elementos */
+    --text-color-dark: #333;
+    --text-color-light: #fefefe;
+    --module-bg: #ffffff;
+    --border-color: #e0e0e0;
+    --shadow-light: 0 4px 12px rgba(0, 0, 0, 0.06);
+    --shadow-medium: 0 8px 24px rgba(0, 0, 0, 0.08);
+
+    /* Colores para armonizar con el azul */
+    --blue-dark: #2F80ED; /* Un azul más intenso para enlaces o íconos */
+    --blue-light: #DBEEF7; /* Un azul muy claro para fondos sutiles */
+
+    /* Colores de estado (manteniendo coherencia) */
+    --status-success: #28a745; /* Verde para éxito/activo */
+    --status-warning: #ffc107; /* Amarillo para advertencia/pendiente */
+    --status-danger: #f44336; /* Rojo para peligro/cancelado */
+}
+
+
+.panel-clinica-container {
+    display: flex;
+    min-height: 100vh;
+    background-color: var(--background-light);
+}
+
+/* --- Sidebar Menu --- */
+.sidebar-menu {
+    width: 250px;
+    background-color: var(--primary-color); /* Usamos el azul oficial aquí */
+    color: var(--text-color-light);
+    padding: 2rem 1.5rem;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.clinic-logo {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.clinic-logo img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 0.5rem;
+    border: 2px solid var(--text-color-light); /* Borde blanco para el logo */
+}
+
+.clinic-logo h2 {
+    color: var(--text-color-light);
+    font-size: 1.5rem;
+    margin: 0;
+    font-weight: 600;
+}
+
+.sidebar-menu nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar-menu nav ul li {
+    margin-bottom: 1rem;
+}
+
+.sidebar-menu nav ul li a {
+    color: var(--text-color-light);
+    text-decoration: none;
+    padding: 0.75rem 1rem;
+    display: flex;
+    align-items: center;
+    border-radius: 8px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    font-weight: 500;
+}
+
+.sidebar-menu nav ul li a i {
+    margin-right: 10px;
+    font-size: 1.1rem;
+}
+
+.sidebar-menu nav ul li a:hover,
+.sidebar-menu nav ul li.active a {
+    background-color: var(--accent-color); /* Tono más oscuro del azul para hover/activo */
+    color: var(--module-bg); /* Blanco */
+}
+
+.user-profile-sidebar {
+    text-align: center;
+    margin-top: auto;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.user-profile-sidebar img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 0.5rem;
+    border: 2px solid var(--text-color-light); /* Borde blanco para el avatar */
+}
+
+.user-profile-sidebar span {
+    display: block;
+    color: var(--text-color-light);
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+/* --- Main Content Area --- */
+.main-content {
+    flex-grow: 1;
+    padding: 2rem;
+    background-color: var(--background-light);
+}
+
+.dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid var(--border-color); /* Usamos la variable */
+}
+
+.dashboard-header h1 {
+    margin: 0;
+    color: var(--text-color-dark); /* Usamos la variable */
+}
+
+.header-actions .btn-primary,
+.header-actions .btn-secondary {
+    display: inline-block;
+    padding: 10px 15px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+    margin-left: 10px;
+}
+
+/* Botones de acción del header */
+.header-actions .btn-primary {
+    background-color: var(--primary-color); /* Azul oficial */
+    color: white;
+}
+.header-actions .btn-primary:hover {
+    background-color: var(--accent-color); /* Tono más oscuro */
+}
+
+.header-actions .btn-secondary {
+    background-color: #6c757d; /* Color gris para el secundario */
+    color: white;
+}
+.header-actions .btn-secondary:hover {
+    background-color: #5a6268;
+}
+
+.header-actions .btn-primary i,
+.header-actions .btn-secondary i {
+    margin-right: 8px;
+}
+
+/* --- Dashboard Grid & Modules --- */
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 25px;
+}
+
+.dashboard-module {
+    background-color: var(--module-bg);
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: var(--shadow-light); /* Usamos la variable de sombra */
+    display: flex;
+    flex-direction: column;
+}
+
+.dashboard-module h3 {
+    color: var(--text-color-dark);
+    margin-top: 0;
+    margin-bottom: 20px;
+    border-bottom: 2px solid var(--border-color); /* Usamos la variable */
+    padding-bottom: 10px;
+}
+
+.dashboard-module .no-data {
+    text-align: center;
+    color: #888;
+    font-style: italic;
+    padding: 2rem 0;
+}
+
+/* --- Module: Mascotas en Adopción --- */
+.module-mascotas {
+    grid-column: span 2;
+}
+
+.grid-mascotas-panel {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1.25rem;
+}
+
+.tarjeta-mascota-panel {
+    background: var(--module-bg);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    position: relative;
+    border: 1px solid var(--border-color);
+}
+
+.tarjeta-mascota-panel:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-medium); /* Sombra más pronunciada al hover */
+}
+
+.tarjeta-mascota-panel img {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.tarjeta-mascota-panel .info {
+    padding: 0.8rem 1rem;
+    display: flex;
+    flex-direction: column;
+    height: calc(100% - 160px);
+}
+
+.tarjeta-mascota-panel h4 {
+    margin: 0 0 0.4rem;
+    color: var(--primary-color); /* Nombre de mascota en azul oficial */
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.tarjeta-mascota-panel p {
+    margin: 0.2rem 0;
+    color: #555;
+    font-size: 0.85rem;
+}
+
+.estado-switch-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 0.5rem;
+    margin-bottom: 0.8rem;
+}
+
+.estado-switch-container p {
+    margin: 0;
+    font-weight: 600;
+    color: var(--text-color-dark);
+}
+
+/* --- Estilos para Módulo de Perfil --- */
+.profile-details-module {
+    text-align: center;
+}
+
+.profile-summary {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.profile-image-wrapper {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 3px solid var(--primary-color); /* Color de tu marca */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.profile-dashboard-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.profile-dashboard-icon-placeholder {
+    font-size: 60px;
+    color: #6c757d;
+}
+
+.profile-info-summary p {
+    margin: 5px 0;
+    color: #555;
+    font-size: 0.95em;
+}
+
+.profile-info-summary strong {
+    color: #333;
+}
+
+/* Usando las variables de estado */
+.status-active {
+    color: var(--status-success);
+    font-weight: bold;
+}
+
+.status-inactive {
+    color: var(--status-warning);
+    font-weight: bold;
+}
+
+.profile-actions {
+    margin-top: auto;
+    padding-top: 15px;
+    border-top: 1px solid var(--border-color);
+    width: 100%;
+}
+
+.btn-edit-profile {
+    display: inline-block;
+    background-color: var(--primary-color);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.btn-edit-profile:hover {
+    background-color: var(--accent-color);
+}
+
+/* Switch */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 48px;
+    height: 24px;
+    flex-shrink: 0;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: 0.4s;
+    border-radius: 24px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    transition: 0.4s;
+    border-radius: 50%;
+}
+
+input:checked + .slider {
+    background-color: var(--primary-color); /* Switch activado en el color oficial */
+}
+
+input:checked + .slider:before {
+    transform: translateX(24px);
+}
+
+.form-eliminar-panel {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    z-index: 10;
+}
+
+.btn-eliminar-tarjeta {
+    background: none;
+    border: none;
+    color: var(--status-danger); /* Rojo */
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 50%;
+    transition: background-color 0.2s ease, color 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-eliminar-tarjeta:hover {
+    color: #c53030;
+    background-color: rgba(244, 67, 54, 0.1); /* Usando el status-danger con opacidad */
+}
+
+/* --- Module: Nueva Publicación de Mascota --- */
+.module-nueva-mascota {
+    text-align: center;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.module-nueva-mascota h3 {
+    text-align: center;
+}
+
+.btn-call-to-action {
+    display: inline-flex;
+    align-items: center;
+    background-color: var(--primary-color); /* Botón de call-to-action en el azul oficial */
+    color: var(--module-bg);
+    padding: 1rem 1.75rem;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1.1rem;
+    margin-top: 1.5rem;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 4px 10px rgba(123, 192, 227, 0.2); /* Sombra basada en el nuevo color */
+}
+
+.btn-call-to-action i {
+    margin-right: 10px;
+    font-size: 1.3rem;
+}
+
+.btn-call-to-action:hover {
+    background-color: var(--accent-color); /* Tono más oscuro al pasar el mouse */
+    transform: translateY(-3px);
+}
+
+.module-nueva-mascota .info-placeholder {
+    font-size: 0.9rem;
+    color: #777;
+    margin-top: 1.5rem;
+    border-top: 1px dashed var(--border-color);
+    padding-top: 1rem;
+}
+
+/* --- Module: Reservas Recibidas --- */
+.module-reservas {
+    grid-column: span 2;
+}
+
+.tabla-scroll {
+    overflow-x: auto;
+    max-height: 400px; /* Asegura que la tabla tenga un scroll si excede la altura */
+    margin-bottom: 1rem;
+}
+
+.module-reservas table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: var(--module-bg);
+    border-radius: 12px;
+    overflow: hidden; /* Asegura que los bordes redondeados se apliquen a la tabla */
+}
+
+.module-reservas th,
+.module-reservas td {
+    padding: 0.8rem 1.2rem;
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+    font-size: 0.9rem;
+}
+
+.module-reservas th {
+    background-color: var(--primary-color); /* Encabezado de tabla en el azul oficial */
+    color: var(--text-color-light);
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    letter-spacing: 0.05em;
+    position: sticky; /* Permite que el encabezado se mantenga visible al hacer scroll */
+    top: 0;
+    z-index: 1;
+}
+
+.module-reservas tbody tr:nth-child(even) {
+    background-color: var(--blue-light); /* Un azul muy claro para filas pares */
+}
+
+.module-reservas tbody tr:hover {
+    background-color: #d1e8f5; /* Un azul claro un poco más oscuro al pasar el mouse */
+}
+
+/* Estilos para el estado de reserva */
+.estado-reserva-pendiente {
+    color: var(--status-warning);
+    font-weight: 600;
+}
+.estado-reserva-confirmada {
+    color: var(--status-success);
+    font-weight: 600;
+}
+.estado-reserva-cancelada {
+    color: var(--status-danger);
+    font-weight: 600;
+}
+.estado-reserva-completada {
+    color: var(--blue-dark);
+    font-weight: 600;
+}
+
+.ver-mas-link {
+    text-align: right;
+    margin-top: 1rem;
+}
+
+.ver-mas-link a {
+    color: var(--primary-color); /* Enlace "ver más" en azul oficial */
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+.ver-mas-link a:hover {
+    color: var(--accent-color);
+}
+
+/* --- Module: Registro de Horas Médicas --- */
+.module-horas-medicas {
+    display: flex;
+    flex-direction: column;
+}
+
+.module-horas-medicas .form-group {
+    margin-bottom: 1rem;
+}
+
+.module-horas-medicas label {
+    display: block;
+    margin-bottom: 0.4rem;
+    font-weight: 500;
+    color: var(--text-color-dark);
+}
+
+.module-horas-medicas .form-control {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    box-sizing: border-box;
+}
+
+.module-horas-medicas .form-control:focus {
+    outline: none;
+    border-color: var(--primary-color); /* Borde de enfoque en azul oficial */
+    box-shadow: 0 0 0 3px rgba(123, 192, 227, 0.2); /* Sombra de enfoque en azul */
+}
+
+.btn-submit-horas {
+    background-color: var(--primary-color); /* Botón de envío en azul oficial */
+    color: var(--module-bg);
+    padding: 0.8rem 1.5rem;
+    border: none;
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    margin-top: 1rem;
+    width: 100%;
+}
+
+.btn-submit-horas:hover {
+    background-color: var(--accent-color); /* Tono más oscuro al pasar el mouse */
+    transform: translateY(-2px);
+}
+
+.recent-hours {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px dashed var(--border-color);
+}
+
+.recent-hours h4 {
+    font-size: 1.1rem;
+    color: var(--primary-color); /* Título de horas recientes en azul oficial */
+    margin-bottom: 1rem;
+}
+
+.recent-hours ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.recent-hours ul li {
+    background-color: var(--background-dark); /* Fondo de lista en tono más oscuro de fondo */
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+    color: #444;
+}
+
+.module-full-width {
+  grid-column: 1 / -1;
+}
+
+/* --- Responsive Adjustments --- */
+@media (max-width: 992px) {
+    .panel-clinica-container {
+        flex-direction: column;
+    }
+
+    .sidebar-menu {
+        width: 100%;
+        padding: 1rem;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .sidebar-menu .clinic-logo {
+        margin-bottom: 0;
+        display: flex;
+        align-items: center;
+    }
+
+    .sidebar-menu .clinic-logo img {
+        width: 50px;
+        height: 50px;
+        margin-right: 1rem;
+    }
+
+    .sidebar-menu nav {
+        display: none;
+    }
+
+    .sidebar-menu .user-profile-sidebar {
+        margin-top: 0;
+        padding-top: 0;
+        border-top: none;
+    }
+
+    .main-content {
+        padding: 1.5rem;
+    }
+
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .module-mascotas,
+    .module-reservas {
+        grid-column: span 1;
+    }
+
+    .dashboard-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+
+    .dashboard-header .header-actions {
+        width: 100%;
+        display: flex;
+        justify-content: space-around;
+    }
+
+    .header-actions .btn-primary,
+    .header-actions .btn-secondary {
+        flex: 1;
+        text-align: center;
+        justify-content: center;
+        margin: 0 0.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .grid-mascotas-panel {
+        grid-template-columns: 1fr;
+    }
+
+    .tarjeta-mascota-panel img {
+        height: 180px;
+    }
+}
+
+

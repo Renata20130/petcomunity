@@ -1,100 +1,89 @@
-{% extends "base.html" %}
+{% extends "core/base_panel.html" %}
 {% load static %}
+
+{% block title %}Panel Farmacia | PetComunity{% endblock %}
+
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'productos/css/panel_farmacia.css' %}">
 {% endblock %}
-{% block content %}
-<div class="panel-farmacia">
-  <h2>🛍️ Panel de Farmacia</h2>
-  <a href="{% url 'productos:subir_producto' %}" class="btn btn-primary">➕ Subir nuevo producto</a>
 
-  {% if productos %}
-  <div class="productos-lista">
-    <table>
+{% block content %}
+<div class="dashboard">
+
+  <!-- Módulo Perfil -->
+  <div class="dashboard-module profile-details-module">
+    <h3>📋 Mi Perfil</h3>
+    <div class="profile-summary">
+      <div class="profile-image-wrapper">
+        {% if user.profile.imagen %}
+          <img src="{{ user.profile.imagen.url }}" alt="Foto de perfil" class="profile-dashboard-image">
+        {% else %}
+          <img src="{% static 'img/default-profile.png' %}" alt="Foto por defecto" class="profile-dashboard-image">
+        {% endif %}
+      </div>
+
+      <div class="profile-info">
+        <p><strong>Nombre:</strong> {{ user.profile.nombre_clinica|default:user.username }}</p>
+        <p><strong>Email:</strong> {{ user.email }}</p>
+        <p><strong>Teléfono:</strong> {{ user.profile.telefono|default:"No especificado" }}</p>
+        <p><strong>Dirección:</strong> {{ user.profile.direccion|default:"No especificada" }}</p>
+
+        <form id="form-estado-perfil" method="post" action="{% url 'editar_perfil_farmacia' %}" style="margin-top: 1rem;">
+          {% csrf_token %}
+          <div class="estado-switch-container">
+            <p><strong>Perfil público:</strong></p>
+            <label class="switch">
+              <input type="checkbox" name="perfil_publicado" {% if user.profile.perfil_publicado %}checked{% endif %} onchange="document.getElementById('form-estado-perfil').submit();">
+              <span class="slider"></span>
+            </label>
+            <span style="margin-left: 10px;">
+              {% if user.profile.perfil_publicado %}✅ Sí{% else %}❌ No{% endif %}
+            </span>
+          </div>
+        </form>
+
+        <a href="{% url 'editar_perfil_farmacia' %}" class="btn" style="margin-top: 1rem;">✏️ Editar Perfil</a>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Módulo Pedidos -->
+  <div class="dashboard-module">
+    <h3>📦 Pedidos Recibidos</h3>
+    {% if pedidos %}
+      <table class="tabla-pedidos">
         <thead>
-            <tr>
-            <th>Imagen</th>
-            <th>Nombre</th>
-            <th>Precio</th>
-            <th>Stock</th>
-            <th>Descripción</th>
-            <th>Acciones</th> <!-- Nueva columna -->
-            </tr>
+          <tr>
+            <th>ID Pedido</th>
+            <th>Cliente</th>
+            <th>Fecha</th>
+            <th>Estado</th>
+            <th>Items</th>
+          </tr>
         </thead>
         <tbody>
-            {% for producto in productos %}
+          {% for pedido in pedidos %}
             <tr>
-            <td>
-                {% if producto.imagen %}
-                <img src="{{ producto.imagen.url }}" alt="{{ producto.nombre }}" style="width: 80px; height: auto;">
-                {% else %}
-                Sin imagen
-                {% endif %}
-            </td>
-            <td>{{ producto.nombre }}</td>
-            <td>${{ producto.precio }}</td>
-            <td>{{ producto.stock }}</td>
-            <td>{{ producto.descripcion|default:"-" }}</td>
-            <td>
-                <a href="{% url 'productos:editar_producto' producto.id %}" class="btn btn-sm btn-warning">Editar</a>
-                <form action="{% url 'productos:eliminar_producto' producto.id %}" method="POST" style="display:inline;" onsubmit="return confirmarEliminacion();">
-                    {% csrf_token %}
-                    <button type="submit" class="btn btn-sm btn-danger">Eliminar</button>
-                </form>
-
-            </td>
+              <td>{{ pedido.id }}</td>
+              <td>{{ pedido.cliente.username }}</td>
+              <td>{{ pedido.creado|date:"d M Y H:i" }}</td>
+              <td>{{ pedido.estado }}</td>
+              <td>
+                <ul>
+                  {% for item in pedido.items.all %}
+                    <li>{{ item.producto.nombre }} - Cantidad: {{ item.cantidad }}</li>
+                  {% endfor %}
+                </ul>
+              </td>
             </tr>
-            {% endfor %}
+          {% endfor %}
         </tbody>
-    </table>
+      </table>
+    {% else %}
+      <p>📭 No tienes pedidos aún.</p>
+    {% endif %}
   </div>
-  {% else %}
-    <p>No tienes productos subidos aún.</p>
-  {% endif %}
-
-  <hr>
-
-  <h2>📦 Pedidos recibidos</h2>
-
-  {% if pedidos %}
-  <table>
-    <thead>
-      <tr>
-        <th>ID Pedido</th>
-        <th>Cliente</th>
-        <th>Fecha</th>
-        <th>Productos</th>
-        <th>Estado</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for pedido in pedidos %}
-      <tr>
-        <td>{{ pedido.id }}</td>
-        <td>{{ pedido.cliente.username }}</td>
-        <td>{{ pedido.creado|date:"d/m/Y H:i" }}</td>
-        <td>
-          <ul>
-            {% for item in pedido.items.all %}
-            <li>{{ item.producto.nombre }} — Cantidad: {{ item.cantidad }}</li>
-            {% endfor %}
-          </ul>
-        </td>
-        <td>{{ pedido.completado|yesno:"Completado,Pendiente" }}</td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
-  {% else %}
-  <p>No tienes pedidos aún.</p>
-  {% endif %}
 
 </div>
-{% block extra_js %}
-<script>
-function confirmarEliminacion() {
-    return confirm("¿Estás seguro de que quieres eliminar este producto?");
-}
-</script>
-{% endblock %}
 {% endblock %}

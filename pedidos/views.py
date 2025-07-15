@@ -5,6 +5,11 @@ from pedidos.models import Pedido, ItemPedido
 from productos.models import Producto
 from pedidos.models import Pedido
 from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib import messages
+import locale
+locale.setlocale(locale.LC_ALL, 'es_CL.UTF-8') 
+
+
 
 @login_required
 def panel_farmacia_pedidos(request):
@@ -86,18 +91,68 @@ def panel_farmacia_pedidos(request):
 
 @login_required
 def finalizar_pedido(request):
-    # Obtener el pedido incompleto del usuario
-    pedido = Pedido.objects.filter(cliente=request.user, completado=False).first()
-    if pedido:
-        pedido.completado = True
-        pedido.estado = 'pendiente'  # o 'procesando' según tu flujo
-        pedido.save()
-    return redirect('pedidos:ver_carrito')  # o a la página que desees
+    if request.method == 'POST':
+        carrito = request.session.get('carrito', {})
 
+        if not carrito:
+            messages.error(request, "Tu carrito está vacío.")
+            return redirect('pedidos:ver_carrito')
+
+        # Crear pedido
+        pedido = Pedido.objects.create(
+            cliente=request.user,
+            completado=True,
+            estado='pendiente'
+        )
+
+        # Crear los items del pedido
+        for producto_id, cantidad in carrito.items():
+            producto = get_object_or_404(Producto, id=producto_id)
+            ItemPedido.objects.create(
+                pedido=pedido,
+                producto=producto,
+                cantidad=cantidad
+            )
+
+        # Vaciar el carrito
+        request.session['carrito'] = {}
+
+        messages.success(request, "¡Tu pedido fue finalizado con éxito!")
+        return redirect('pedidos:pedido_confirmado')  # esta será la página de gracias
+
+    return redirect('pedidos:ver_carrito')
 
 @login_required
 def mis_pedidos(request):
     pedidos = Pedido.objects.filter(cliente=request.user).order_by('-creado')
-    return render(request, 'pedidos/mis_pedidos.html', {'pedidos': pedidos})
 
+    # Agregar un atributo total a cada pedido
+    for pedido in pedidos:
+        total = 0
+        for item in pedido.items.all():
+            total += item.cantidad * item.producto.precio
+        pedido.total_formateado = f"${total:,.0f}".replace(',', '.')
 
+    context = {
+        'pedidos': pedidos,
+    }
+    return render(request, 'pedidos/mis_pedidos.html', context)
+
+@login_required
+def pedido_confirmado(request):
+    return render(request, 'pedidos/pedido_confirmado.html')
+
+def listado_productos(request):
+    productos = Producto.objects.all()
+    return render(request, 'productos/listado.html', {'productos': productos})
+
+@login_required
+def cancelar_pedido(request, pedido_id):
+    pedido = get_object_or_404(Pedido, id=pedido_id, cliente=request.user)
+    if pedido.estado not in ['cancelado', 'enviado']:
+        pedido.estado = 'cancelado'
+        pedido.save()
+        messages.success(request, 'Tu pedido ha sido cancelado correctamente.')
+    else:
+        messages.error(request, 'Este pedido no puede ser cancelado.')
+    return redirect('pedidos:mis_pedidos')

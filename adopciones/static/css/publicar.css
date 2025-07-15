@@ -2,9 +2,11 @@
 
 
 .form-wrapper {
-    width: 100%;
-    max-width: 900px; /* Un poco más ancho para la estética de la imagen */
+    width: 90%;
+    max-width: 1800px; /* Un poco más ancho para la estética de la imagen */
     margin: auto;
+    margin-top: 20px;
+    margin-left: 20px;
     display: flex;
     justify-content: center;
     align-items: center; /* Centrar para que la tarjeta no quede "flotando" arriba */
@@ -282,7 +284,7 @@
 /* --- Botón de Enviar (Publicar Mascota) --- */
 .btn-submit {
     display: block;
-    width: 100%;
+    width: 20%;
     padding: 16px;
     background-color: #28a745;
     color: white;
@@ -294,6 +296,7 @@
     transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
     letter-spacing: 0.5px;
     margin-top: 40px; /* Más espacio para separarlo del contenido */
+    margin-left: 40%;
 }
 
 .btn-submit:hover {

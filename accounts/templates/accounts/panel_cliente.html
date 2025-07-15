@@ -1,87 +1,132 @@
-{% extends "base.html" %}
+{% extends "core/base_panel.html" %}
 {% load static %}
 
+{% block title %}Panel del Cliente{% endblock %}
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'accounts/css/panel_cliente.css' %}">
 {% endblock %}
 
 {% block content %}
+<main class="main-content">
+  <header class="dashboard-header">
+    <h1>Bienvenido, {{ request.user.get_username }}</h1>
+  </header>
 
-<div class="panel-cliente">
-  <h2>👋 Bienvenido, {{ request.user.get_username }}</h2>
-  <section class="panel-section">
-    <h3>🐶 Mis adopciones favoritas</h3>
-    {% if mascotas_favoritas %}
-      <ul>
-        {% for mascota in mascotas_favoritas %}
-          <li>{{ mascota.nombre }} - {{ mascota.especie }}</li>
-        {% endfor %}
-      </ul>
-    {% else %}
-      <p>No tienes mascotas marcadas aún.</p>
-    {% endif %}
-  </section>
+  <div class="dashboard-grid">
 
-  <section class="panel-section">
-    <h3>📅 Mis Reservas</h3>
-    {% if reservas %}
-      <ul>
-        {% for reserva in reservas %}
-          <li>
-            {{ reserva.fecha }} a las {{ reserva.hora }} con 
-            {{ reserva.clinica.profile.nombre_clinica }} – 
-            Estado: <strong>{{ reserva.estado|capfirst }}</strong>
-          </li>
-        {% endfor %}
-      </ul>
-    {% else %}
-      <p>No tienes reservas registradas.</p>
-    {% endif %}
-  </section>
+    <!-- Módulo: Perfil -->
+    <div class="dashboard-module profile-details-module">
+      <h3>📋 Mi Perfil</h3>
+      <div class="profile-summary">
+        {% if request.user.profile.imagen %}
+          <div class="profile-image-wrapper">
+            <img src="{{ request.user.profile.imagen.url }}" alt="Mi foto" class="profile-dashboard-image">
+          </div>
+        {% else %}
+          <img src="{% static 'perfiles/default.png' %}" alt="Mi foto" class="profile-dashboard-image">
+        {% endif %}
+        <div class="profile-info-summary">
+          <p><strong>Usuario:</strong> {{ request.user.get_username }}</p>
+          <p><strong>Email:</strong> {{ request.user.email }}</p>
+        </div>
+      </div>
+      <div class="profile-actions">
+        <a href="{% url 'editar_perfil' %}" class="btn-edit-profile"><i class="fas fa-edit"></i> Editar perfil</a>
+      </div>
+    </div>
 
-  <section class="panel-section">
-    <h3>🛍️ Mis pedidos</h3>
-    {% if pedidos %}
-  <table>
-    <thead>
-      <tr>
-        <th>ID Pedido</th>
-        <th>Fecha</th>
-        <th>Estado</th>
-        <th>Productos</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for pedido in pedidos %}
-      <tr>
-        <td>{{ pedido.id }}</td>
-        <td>{{ pedido.creado|date:"d/m/Y H:i" }}</td>
-        <td>{{ pedido.estado }}</td>
-        <td>
-          <ul>
-            {% for item in pedido.items.all %}
-              <li>{{ item.producto.nombre }} — Cantidad: {{ item.cantidad }}</li>
+    <!-- Módulo: Solicitudes de adopción -->
+    <div class="dashboard-module">
+      <h3>📄 Mis Solicitudes de Adopción</h3>
+      {% if solicitudes_adopcion %}
+        <ul class="lista-solicitudes-adopcion">
+          {% for solicitud in solicitudes_adopcion %}
+            <li>
+              <strong>Mascota:</strong> {{ solicitud.mascota.nombre }}<br>
+              <strong>Estado:</strong> 
+              <span class="estado-{{ solicitud.estado }}">{{ solicitud.get_estado_display }}</span><br>
+              <strong>Enviada el:</strong> {{ solicitud.fecha_envio|date:"d/m/Y" }}
+              {% if solicitud.estado == 'rechazada' and solicitud.fecha_rechazo %}
+                <br><small>(Rechazada el {{ solicitud.fecha_rechazo|date:"d/m/Y H:i" }})</small>
+              {% elif solicitud.estado == 'contactado' and solicitud.fecha_contacto %}
+                <br><small>(Contactado el {{ solicitud.fecha_contacto|date:"d/m/Y H:i" }})</small>
+              {% endif %}
+            </li>
+            <hr>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <p class="no-data">No has enviado ninguna solicitud aún.</p>
+      {% endif %}
+    </div>
+
+    <!-- Módulo: Reservas -->
+    <div class="dashboard-module">
+      <h3>📅 Mis Reservas</h3>
+      {% if reservas %}
+        <table class="tabla-simple">
+          <thead>
+            <tr>
+              <th>Fecha</th>
+              <th>Hora</th>
+              <th>Clínica</th>
+              <th>Estado</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for reserva in reservas %}
+              <tr>
+                <td>{{ reserva.fecha }}</td>
+                <td>{{ reserva.hora }}</td>
+                <td>{{ reserva.clinica.profile.nombre_clinica }}</td>
+                <td><span class="estado-reserva-{{ reserva.estado|lower }}">{{ reserva.estado|capfirst }}</span></td>
+              </tr>
             {% endfor %}
-          </ul>
-        </td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
-{% else %}
-  <p>No tienes pedidos realizados.</p>
-{% endif %}
-  </section>
+          </tbody>
+        </table>
+      {% else %}
+        <p class="no-data">No tienes reservas registradas.</p>
+      {% endif %}
+    </div>
 
-  <section class="panel-section">
-    <h3>📋 Mi perfil</h3>
-    <p>Nombre: {{ request.user.get_username }}</p>
-    <p>Email: {{ user.email }}</p>
-    <!-- Botón para editar perfil -->
-    <a href="{% url 'editar_perfil' %}" class="btn">Editar perfil</a>
-  </section>
-</div>
+    <!-- Módulo: Pedidos -->
+    <div class="dashboard-module module-full-width">
+      <h3>🛍️ Mis Pedidos</h3>
+      {% if pedidos %}
+        <table class="tabla-simple">
+          <thead>
+            <tr>
+              <th>ID Pedido</th>
+              <th>Fecha</th>
+              <th>Estado</th>
+              <th>Productos</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for pedido in pedidos %}
+              <tr>
+                <td>{{ pedido.id }}</td>
+                <td>{{ pedido.creado|date:"d/m/Y H:i" }}</td>
+                <td>{{ pedido.estado }}</td>
+                <td>
+                  <ul>
+                    {% for item in pedido.items.all %}
+                      <li>{{ item.producto.nombre }} — x{{ item.cantidad }}</li>
+                    {% endfor %}
+                  </ul>
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      {% else %}
+        <p class="no-data">No tienes pedidos realizados.</p>
+      {% endif %}
+    </div>
 
-</div>
+    
+
+  </div>
+</main>
 {% endblock %}

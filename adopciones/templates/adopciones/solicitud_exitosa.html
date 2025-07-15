@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/solicitud_exitosa.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="solicitud-exitosa-container">
+    <h2>¡Solicitud enviada!</h2>
+    <p>La clínica se pondrá en contacto contigo para la respuesta.</p>
+    <a href="{% url 'core:home' %}">Volver al inicio</a>
+</div>
+{% endblock %}

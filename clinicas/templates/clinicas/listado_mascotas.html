@@ -1,0 +1,40 @@
+{% extends 'base_panel.html' %}
+
+{% block title %}Mascotas registradas{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>Mascotas registradas</h2>
+
+    <a href="{% url 'clinica:registrar_mascota' %}" class="btn btn-primary mb-3">Registrar nueva mascota</a>
+
+    {% if mascotas %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Especie</th>
+                <th>Edad</th>
+                <th>Propietario</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for mascota in mascotas %}
+            <tr>
+                <td>{{ mascota.nombre }}</td>
+                <td>{{ mascota.especie }}</td>
+                <td>{{ mascota.edad }}</td>
+                <td>{{ mascota.propietario.username }}</td>
+                <td>
+                    <a href="{% url 'clinica:ficha_clinica' mascota.id %}" class="btn btn-sm btn-primary">Ver ficha</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+        <p>No hay mascotas registradas.</p>
+    {% endif %}
+</div>
+{% endblock %}

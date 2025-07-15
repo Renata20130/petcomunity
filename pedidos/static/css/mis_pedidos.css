@@ -1,0 +1,129 @@
+.pedidos-container {
+  background-color: white;
+  width: 100%;
+  padding: 30px 50px;
+  box-sizing: border-box;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+}
+
+.pedidos-content {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+h2 {
+  margin-top: 40px;
+  margin-bottom: 15px;
+  color: #222;
+  text-align: center;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+thead {
+  background-color: #0066cc;
+  color: white;
+}
+
+th, td {
+  padding: 16px 20px;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+}
+
+.lista-productos {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.lista-productos li {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+
+  padding-bottom: 8px;
+}
+
+.lista-productos li:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.imagen-producto {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-right: 15px;
+  border: 1px solid #ccc;
+  flex-shrink: 0;
+}
+
+.producto-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  font-size: 14px;
+  color: #333;
+  max-width: 280px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Última fila sin borde */
+tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* Hover en filas */
+tbody tr:hover {
+  background-color: #115497;
+}
+
+tbody tr:nth-child(odd) {
+  background-color: #f3f2f2; /* color muy suave azul claro */
+}
+
+tbody tr:nth-child(even) {
+  background-color: rgba(154, 223, 235, 0.664);
+}
+
+/* Mensaje si no hay pedidos */
+p {
+  text-align: center;
+  font-size: 16px;
+  margin-top: 50px;
+  color: #666;
+}
+
+.btn-cancelar {
+  background-color: transparent;
+  color: #e74c3c; /* rojo para alerta */
+  border: 2px solid #e74c3c;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-block;
+  text-align: center;
+  margin-left: 30px;
+
+}
+
+.btn-cancelar:hover {
+  background-color: #e74c3c;
+  color: white;
+  box-shadow: 0 4px 12px rgba(231, 76, 60, 0.5);
+}
+

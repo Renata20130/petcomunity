@@ -5,17 +5,45 @@
 {% endblock %}
 
 {% block content %}
-<h2>
-    {% if filtro_especie == 'perro' %}
-        🐶 Perros en Adopción
-    {% elif filtro_especie == 'gato' %}
-        🐱 Gatos en Adopción
-    {% elif filtro_especie == 'otro' %}
-        🐾 Otras especies en Adopción
-    {% else %}
-        🐾 Todas las Mascotas en Adopción
-    {% endif %}
-</h2>
+
+{# formulario de filtro #}
+<div class="form-wrapper">
+    <form method="get" action="." class="filtro-form">
+    <div class="filter-item">
+        <label for="{{ form.especie.id_for_label }}">Especie</label>
+        {{ form.especie }}
+    </div>
+    <div class="filter-item">
+        <label for="{{ form.sexo.id_for_label }}">Sexo</label>
+        {{ form.sexo }}
+    </div>
+    <div class="filter-item">
+        <label for="{{ form.edad_min.id_for_label }}">Edad mínima</label>
+        {{ form.edad_min }}
+    </div>
+    <div class="filter-item">
+        <label for="{{ form.edad_max.id_for_label }}">Edad máxima</label>
+        {{ form.edad_max }}
+    </div>
+    <div class="filter-item">
+        <label for="{{ form.unidad_edad.id_for_label }}">Meses/Años</label>
+        {{ form.unidad_edad }}
+    </div>
+    <div class="filter-item">
+        <label for="{{ form.region.id_for_label }}">Región</label>
+        {{ form.region }}
+    </div>
+    <div class="filter-item">
+        <label for="{{ form.ciudad.id_for_label }}">Ciudad</label>
+        {{ form.ciudad }}
+    </div>
+
+    <div class="filter-item filter-buttons">
+        <button type="submit" class="btn-filtrar">Filtrar</button>
+        <a href="." class="btn-reset">Mostrar todas</a>
+    </div>
+    </form>
+</div>
 
 <div class="main-content-wrapper"> {# Contenedor principal para la cuadrícula y el panel lateral #}
 
@@ -23,21 +51,35 @@
         {% for mascota in mascotas %}
             {# Mantenemos los atributos data- para que JS pueda leer la información #}
             <div class="tarjeta-mascota"
-                 data-id="{{ mascota.id }}" {# Añadimos el ID para identificarla #}
+                 data-id="{{ mascota.id }}" 
                  data-nombre="{{ mascota.nombre }}"
                  data-especie="{{ mascota.get_especie_display }}"
                  data-edad="{{ mascota.edad }}"
+                 data-unidad-edad="{{ mascota.unidad_edad }}"
                  data-descripcion="{{ mascota.descripcion }}"
                  data-imagen="{{ mascota.imagen.url }}"
-                 data-clinica="{{ mascota.clinica.nombre }}"
-                 data-contacto-url="#"
+                 data-clinica="{% if mascota.publicada_por.profile.nombre_clinica %}{{ mascota.publicada_por.profile.nombre_clinica }}{% else %}No especificada{% endif %}"
                  data-sexo="{{ mascota.get_sexo_display }}"
                  data-raza="{{ mascota.raza|default:'Desconocida' }}">
+                 
                 <img src="{{ mascota.imagen.url }}" alt="{{ mascota.nombre }}">
                 <div class="info">
                     <h3>{{ mascota.nombre }}</h3>
                     <p><strong>Especie:</strong> {{ mascota.get_especie_display }}</p>
-                    <p><strong>Edad:</strong> {{ mascota.edad }} años</p>
+                    <p><strong>Edad:</strong> 
+                        {{ mascota.edad }} 
+                        {% if mascota.unidad_edad == 'meses' %}
+                            meses
+                        {% else %}
+                            años
+                        {% endif %}
+                        {# Hemos quitado: | {{ mascota.raza|default:"Mestizo" }} #}
+                    </p>
+                    {% if mascota.publicada_por.profile.nombre_clinica %}
+                        <p><strong>Clínica:</strong> {{ mascota.publicada_por.profile.nombre_clinica }}</p>
+                    {% else %}
+                        <p><strong>Clínica:</strong> No especificada</p>
+                    {% endif %}
                 </div>
             </div>
         {% empty %}
@@ -57,10 +99,16 @@
                 <p><strong>Especie:</strong> <span id="panel-especie"></span></p>
                 <p><strong>Raza:</strong> <span id="panel-raza"></span></p>
                 <p><strong>Sexo:</strong> <span id="panel-sexo"></span></p>
-                <p><strong>Edad:</strong> <span id="panel-edad"></span> años</p>
+                <p><strong>Edad:</strong> <span id="panel-edad"></span></p>
                 <p><strong>Descripción:</strong> <span id="panel-descripcion"></span></p>
                 <p><strong>Clínica:</strong> <span id="panel-clinica"></span></p>
-                <a id="panel-contacto" href="#" target="_blank" class="btn-contacto">Contactar Clínica</a>
+                <a id="panel-contacto" href="#"  class="btn-contacto">
+                {% if user.is_authenticated %}
+                    Quiero Adoptar
+                {% else %}
+                    Inicia sesión para adoptar
+                {% endif %}
+                </a>
             </div>
         </div>
     </div>
@@ -68,6 +116,12 @@
 </div> {# Cierre de main-content-wrapper #}
 
 {# Agrega aquí el enlace a tu nuevo archivo JavaScript #}
+
+<script>
+  const urlLogin = "{% url 'login' %}";
+  const usuarioEstaLogueado = {{ user.is_authenticated|yesno:"true,false" }};
+</script>
+
 <script src="{% static 'js/adopciones.js' %}" defer></script>
 {% endblock %}
 

@@ -1,0 +1,27 @@
+{% extends "core/base_panel.html" %}
+
+{% block content %}
+<main class="main-content">
+    <h1>Mis Solicitudes de Adopción</h1>
+
+    {% if solicitudes %}
+        <ul class="lista-solicitudes">
+            {% for solicitud in solicitudes %}
+                <li class="item-solicitud">
+                    <strong>{{ solicitud.mascota.nombre }}</strong> – Estado: <strong>{{ solicitud.estado|capfirst }}</strong>
+                    <br>
+                    Enviada el {{ solicitud.fecha_envio|date:"d/m/Y H:i" }}
+                    <br>
+                    {% if solicitud.estado == 'contactado' and solicitud.fecha_contacto %}
+                        <small>(Contactado: {{ solicitud.fecha_contacto|date:"d/m/Y H:i" }})</small>
+                    {% elif solicitud.estado == 'rechazada' and solicitud.fecha_rechazo %}
+                        <small>(Rechazado: {{ solicitud.fecha_rechazo|date:"d/m/Y H:i" }})</small>
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No has enviado solicitudes aún.</p>
+    {% endif %}
+</main>
+{% endblock %}

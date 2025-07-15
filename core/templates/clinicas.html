@@ -51,16 +51,14 @@
                         {% endif %}
                     </div>
                     <div class="card-clinica-info">
-                        <h3>{{ clinica.first_name }} {{ clinica.last_name }}</h3> {# Asumo que first/last_name es el nombre de la clínica #}
+                        <h3>{{ clinica.profile.nombre_clinica }}</h3> {# Asumo que first/last_name es el nombre de la clínica #}
                         <p class="direccion">{{ clinica.profile.direccion_completa }}</p> {# Asumo que tienes un campo de dirección #}
                         <div class="rating">
                             {# Aquí iría tu sistema de estrellas, por ejemplo: #}
                             <span class="star">&#9733;</span><span class="star">&#9733;</span><span class="star">&#9733;</span><span class="star">&#9733;</span><span class="star-empty">&#9734;</span>
                             <span class="rating-text">(4.0)</span> {# Reemplazar con el valor dinámico #}
                         </div>
-                        <a href="#" class="btn-ver-perfil">
-                            Ver más <i class="fas fa-arrow-right"></i> {# Para Font Awesome #}
-                        </a>
+                        
                     </div>
                 </div>
                 {% endfor %}

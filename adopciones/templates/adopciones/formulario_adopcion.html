@@ -1,0 +1,160 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/formulario_adopcion.css' %}">
+{% endblock %}
+
+
+{% block content %}
+<div class="adoption-form-wrapper"> {# Nuevo contenedor #}
+        <h1>Solicitud de Adopción para {{ mascota.nombre }}</h1>
+        <p>Completa los siguientes datos para comenzar el proceso de adopción. Toda la información será tratada con confidencialidad.</p>
+   
+
+    <form action="{% url 'procesar_solicitud' %}" method="POST">
+        {% csrf_token %}
+        <input type="hidden" name="mascota_id" value="{{ mascota.id }}">
+        {# --- CONTENEDOR PRINCIPAL PARA EL ACORDEÓN --- #}
+        <div class="accordion-container">
+
+            <div class="accordion-item">
+                <button type="button" class="accordion-header" data-target="datos-solicitante">
+                    1. Datos del Solicitante
+                </button>
+                <div id="datos-solicitante" class="accordion-content">
+                    <fieldset> {# Mantenemos el fieldset para semántica y estilos de borde/fondo #}
+                        <label for="nombre_completo">Nombre Completo:</label>
+                        <input type="text" id="nombre_completo" name="nombre_completo" required>
+                        <label for="dni">Número de Identificación (DNI/RUT):</label>
+                        <input type="text" id="dni" name="dni">
+                        <label for="fecha_nacimiento">Fecha de Nacimiento:</label>
+                        <input type="date" id="fecha_nacimiento" name="fecha_nacimiento" required>
+                        <label for="email">Correo Electrónico:</label>
+                        <input type="email" id="email" name="email" required>
+                        <label for="telefono">Número de Teléfono:</label>
+                        <input type="tel" id="telefono" name="telefono" required>
+                        <label for="direccion">Dirección Completa (Calle, número, comuna, ciudad):</label>
+                        <input type="text" id="direccion" name="direccion" required>
+                    </fieldset>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <button type="button" class="accordion-header" data-target="info-hogar">
+                    2. Información del Hogar
+                </button>
+                <div id="info-hogar" class="accordion-content">
+                    <fieldset>
+                        <label for="tipo_vivienda">Tipo de Vivienda:</label>
+                        <select id="tipo_vivienda" name="tipo_vivienda" required>
+                            <option value="">Selecciona...</option>
+                            <option value="casa_patio">Casa con Patio</option>
+                            <option value="casa_sin_patio">Casa sin Patio</option>
+                            <option value="departamento">Departamento</option>
+                            <option value="otros">Otros</option>
+                        </select>
+
+                        <p class="radio-group-title">Situación de la Vivienda:</p>
+                        <div class="radio-option">
+                            <input type="radio" id="propietario" name="situacion_vivienda" value="propietario" required>
+                            <label for="propietario">Soy Propietario(a)</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="arrendatario" name="situacion_vivienda" value="arrendatario">
+                            <label for="arrendatario">Soy Arrendatario(a)</label>
+                        </div>
+
+                        <p class="radio-group-title">Si arrienda, ¿tiene permiso para mascotas?</p>
+                        <div class="radio-option">
+                            <input type="radio" id="permiso_si" name="permiso_arrendador" value="si">
+                            <label for="permiso_si">Sí</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="permiso_no" name="permiso_arrendador" value="no">
+                            <label for="permiso_no">No</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="permiso_no_aplica" name="permiso_arrendador" value="no">
+                            <label for="permiso_no_aplica">No Aplica</label>
+                        </div>
+
+                        <label for="num_adultos">Número de Adultos en el hogar:</label>
+                        <input type="number" id="num_adultos" name="num_adultos" min="1" required>
+
+                        <label for="num_ninos">Número de Niños (menores de 18 años):</label>
+                        <input type="number" id="num_ninos" name="num_ninos" min="0">
+
+                        <label for="edades_ninos">Edades de los niños (si aplica):</label>
+                        <textarea id="edades_ninos" name="edades_ninos" rows="2"></textarea>
+
+                        <label for="otras_mascotas">¿Hay otras mascotas en casa?</label>
+                        <input type="text" id="otras_mascotas" name="otras_mascotas" placeholder="Ej: Sí, 2 gatos. No">
+
+                        <label for="tiempo_solo">¿Cuánto tiempo pasará la mascota sola en casa al día?</label>
+                        <select id="tiempo_solo" name="tiempo_solo" required>
+                            <option value="">Selecciona...</option>
+                            <option value="0-2">0-2 horas</option>
+                            <option value="2-4">2-4 horas</option>
+                            <option value="4-6">4-6 horas</option>
+                            <option value="6+">Más de 6 horas</option>
+                        </select>
+                    </fieldset>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <button type="button" class="accordion-header" data-target="experiencia-compromiso">
+                    3. Experiencia y Compromiso
+                </button>
+                <div id="experiencia-compromiso" class="accordion-content">
+                    <fieldset>
+                        <label for="experiencia_previa">¿Ha tenido mascotas anteriormente? Describa brevemente:</label>
+                        <textarea id="experiencia_previa" name="experiencia_previa" rows="4" required></textarea>
+
+                        <label for="gastos_compromiso">¿Está dispuesto a cubrir los gastos de la mascota (veterinario, alimentación, etc.)?</label>
+                        <select id="gastos_compromiso" name="gastos_compromiso" required>
+                            <option value="si">Sí, completamente</option>
+                            <option value="limitado">Sí, con algunas limitaciones</option>
+                            <option value="no_seguro">No estoy seguro(a)</option>
+                        </select>
+
+                        <p class="radio-group-title">¿Comprende la importancia de la esterilización/castración?</p>
+                        <div class="radio-option">
+                            <input type="radio" id="esterilizacion_si" name="esterilizacion_compromiso" value="si" required>
+                            <label for="esterilizacion_si">Sí, lo comprendo y estoy dispuesto(a)</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="esterilizacion_no" name="esterilizacion_compromiso" value="no">
+                            <label for="esterilizacion_no">No</label>
+                        </div>
+
+                        <label for="planes_futuro">¿Qué planes tiene para la mascota si su situación de vida cambia?</label>
+                        <textarea id="planes_futuro" name="planes_futuro" rows="4" required></textarea>
+                    </fieldset>
+                </div>
+            </div>
+
+        </div> {# --- FIN DEL accordion-container --- #}
+        
+        <fieldset class="full-width-fieldset"> {# <-- Nueva clase para estilos #}
+            <legend>4. Declaración y Consentimiento</legend>
+
+            <div class="checkbox-option">
+                <input type="checkbox" id="declaracion_verdadera" name="declaracion_verdadera" required>
+                <label for="declaracion_verdadera">Declaro que toda la información proporcionada es verdadera y completa.</label>
+            </div>
+
+            <div class="checkbox-option">
+                <input type="checkbox" id="acepto_terminos" name="acepto_terminos" required>
+                <label for="acepto_terminos">Acepto los <a href="/terminos-adopcion" target="_blank">términos y condiciones de adopción</a>.</label>
+            </div>
+        </fieldset>
+
+        <button type="submit">Enviar Solicitud de Adopción</button>
+
+    </form>
+</div>
+    {# --- ENLACE AL ARCHIVO JAVASCRIPT --- #}
+    <script src="{% static 'js/formulario_adopciones.js' %}"></script>
+{% endblock %}

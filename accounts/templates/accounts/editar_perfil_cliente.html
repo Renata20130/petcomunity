@@ -1,0 +1,76 @@
+{% extends "core/base_panel.html" %}
+{% load static %}
+
+{% block title %}Editar Perfil{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'accounts/css/panel_cliente.css' %}">
+<link rel="stylesheet" href="{% static 'accounts/css/editar_perfil_cliente.css' %}">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<div class="perfil-content">
+  <form method="post" enctype="multipart/form-data" class="perfil-form">
+    {% csrf_token %}
+
+    <div class="columns-container">
+      <div class="perfil-card">
+        <h2>Mi Información</h2>
+
+        <div class="imagen-perfil">
+          <label for="id_foto" title="Haz clic para cambiar la imagen">
+            <img id="preview-imagen"
+                src="{% if user.profile.imagen %}{{ user.profile.imagen.url }}{% else %}{% static 'perfiles/default.png' %}{% endif %}"
+                alt="Imagen de perfil">
+          </label>
+          {{ form_profile.foto.errors }}
+          <input id="id_foto" type="file" name="foto" style="display: none;">
+        </div>
+
+        <div class="form-grid-compact">
+          <div class="campo-formulario-compact">
+            <label for="id_username">Nombre de usuario</label>
+            {{ form_user.username }}
+          </div>
+
+          <div class="campo-formulario-compact">
+            <label for="id_email">Correo electrónico</label>
+            {{ form_user.email }}
+          </div>
+
+          <div class="campo-formulario-compact">
+            <label for="id_first_name">Nombre</label>
+            {{ form_user.first_name }}
+          </div>
+
+          <div class="campo-formulario-compact">
+            <label for="id_last_name">Apellido</label>
+            {{ form_user.last_name }}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-actions-compact">
+      <button type="submit" class="boton-guardar-compact">Guardar cambios</button>
+    </div>
+  </form>
+</div>
+
+<script>
+  const inputFoto = document.getElementById('id_foto');
+  const preview = document.getElementById('preview-imagen');
+
+  inputFoto.addEventListener('change', function () {
+    const file = inputFoto.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = e => {
+        preview.src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+  });
+</script>
+{% endblock %}

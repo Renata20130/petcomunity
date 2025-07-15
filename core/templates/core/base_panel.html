@@ -1,49 +1,64 @@
-{# accounts/templates/accounts/base_panel.html #}
 {% load static %}
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Panel de Clínica{% endblock %}</title>
-    
-    {# CSS global para el panel #}
-    <link rel="stylesheet" href="{% static 'accounts/css/panel_clinica.css' %}">
+
+    <title>
+      {% block title %}
+        {% if request.user.profile.tipo == "clinica" %}
+          Panel de Clínica
+        {% elif request.user.profile.tipo == "cliente" %}
+          Panel de Cliente
+        {% elif request.user.profile.tipo == "farmacia" %}
+          Panel de Farmacia
+        {% else %}
+          Panel
+        {% endif %}
+      {% endblock %}
+    </title>
+
+    {# Cambiar el CSS según el tipo de usuario, si quieres #}
+    {% if request.user.profile.tipo == "clinica" %}
+      <link rel="stylesheet" href="{% static 'accounts/css/panel_clinica.css' %}">
+    {% elif request.user.profile.tipo == "cliente" %}
+      <link rel="stylesheet" href="{% static 'accounts/css/panel_cliente.css' %}">
+    {% elif request.user.profile.tipo == "farmacia" %}
+      <link rel="stylesheet" href="{% static 'accounts/css/panel_farmacia.css' %}">
+    {% endif %}
     <link rel="stylesheet" href="{% static 'css/base_panel.css' %}">
   
-    {# CSS específicos de la página, si los hay #}
-    {% block extra_css %}{% endblock %} 
+    {% block extra_css %}{% endblock %}
 
-    {# Font Awesome para los íconos (siempre necesario para el menú) #}
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </head>
 <body>
     <header>
-        <nav class="main-nav"> {# Añade una clase para el estilo de la navegación principal #}
+        <nav class="main-nav">
             <div class="nav-brand">
-                {# Tu logo o título pueden ir aquí, por ejemplo: <a href="/">Mi Sitio</a> #}
-                <h3>Pet Community</h3> {# Ejemplo de texto de marca #}
+                <h3>Pet Community</h3>
             </div>
 
             {% if request.user.is_authenticated %}
-            <div class="profile-menu-container"> {# Este es el contenedor principal para el botón de perfil/imagen y el desplegable #}
+            <div class="profile-menu-container">
                 <button class="profile-toggle">
-                    {% if request.user.profile.imagen %} {# **IMPORTANTE: Usamos 'imagen' aquí** #}
+                    {% if request.user.profile.imagen %}
                         <img src="{{ request.user.profile.imagen.url }}" alt="Foto de perfil" class="profile-picture-thumbnail">
                     {% else %}
-                        <i class="fas fa-user-circle profile-icon-placeholder"></i> {# Ícono de marcador de posición si no hay foto #}
+                        <i class="fas fa-user-circle profile-icon-placeholder"></i>
                     {% endif %}
                     <span class="username-display">{{ request.user.get_username }}</span>
                     <i class="fas fa-chevron-down dropdown-arrow"></i>
                 </button>
-                <ul class="submenu profile-dropdown"> {# Añade profile-dropdown para estilos específicos #}
-                    {# Los enlaces de perfil específicos por tipo de usuario #}
+                <ul class="submenu profile-dropdown">
                     {% if request.user.profile.tipo == "clinica" %}
-                        <li><a href="{% url 'editar_perfil_clinica' %}">Mi perfil</a></li>
+                        <li><a href="{% url 'core:home' %}">Inicio</a></li>
                         <li><a href="{% url 'panel_clinica' %}">Panel de Clínica</a></li>
                         <li><a href="{% url 'publicar_adopcion' %}">Publicar mascota</a></li>
                     {% elif request.user.profile.tipo == "cliente" %}
-                        <li><a href="{% url 'panel_cliente' %}">Mi perfil</a></li>
+                        <li><a href="{% url 'core:home' %}">Inicio</a></li>
+                        <li><a href="{% url 'panel_cliente' %}">Panel de Cliente</a></li>
                         <li><a href="{% url 'reservas:cliente_pedir_hora' %}">Mis citas</a></li>
                         <li><a href="{% url 'pedidos:mis_pedidos' %}">Mis Pedidos</a></li>
                         <li><a href="#">Mis Adopciones</a></li>
@@ -55,48 +70,81 @@
                 </ul>
             </div>
             {% endif %}
-
-            {# Si usas un menú hamburguesa para móviles, aquí iría el botón para toggle #}
-            {# <div class="menu-toggle"> <i class="fas fa-bars"></i> </div> #}
         </nav>
     </header>
 
     <div class="panel-clinica-container">
-        {# EL MENÚ LATERAL SE COLOCA AQUÍ #}
         <aside class="sidebar-menu">
             <div class="clinic-logo">
                 <h2>Bienvenido</h2>
                 <div class="user-profile-sidebar">
-                    <span> <strong>{{ request.user.username }}</strong></span>
+                    <span><strong>{{ request.user.username }}</strong></span>
                 </div>
             </div>
+
             <nav>
                 <ul>
-                    {# Lógica para marcar el enlace activo #}
-                    <li {% if request.resolver_match.url_name == 'panel_clinica' %}class="active"{% endif %}><a href="{% url 'panel_clinica' %}"><i class="fas fa-home"></i> Dashboard</a></li>
-                    <li {% if request.resolver_match.url_name == 'mis_publicaciones_clinica' %}class="active"{% endif %}><a href="{% url 'mis_publicaciones_clinica' %}"><i class="fas fa-paw"></i> Mis Mascotas en Adopción</a></li>
-                    <li {% if request.resolver_match.url_name == 'publicar_adopcion' %}class="active"{% endif %}><a href="{% url 'publicar_adopcion' %}"><i class="fas fa-plus-circle"></i> Publicar Nueva Mascota</a></li>
-                    <li {% if request.resolver_match.url_name == 'panel_reservas_clinica' %}class="active"{% endif %}><a href="{% url 'panel_reservas_clinica' %}"><i class="fas fa-calendar-alt"></i> Gestionar Reservas</a></li>
-                    <li><a href="#"><i class="fas fa-clock"></i> Horas Médicas</a></li> {# Reemplaza '#' con tu URL real si la tienes #}
-                    <li><a href="#"><i class="fas fa-user-cog"></i> Ajustes</a></li> {# Reemplaza '#' con tu URL real si la tienes #}
+                    {% if request.user.profile.tipo == "clinica" %}
+                        <li {% if request.resolver_match.url_name == 'panel_clinica' %}class="active"{% endif %}>
+                            <a href="{% url 'panel_clinica' %}"><i class="fas fa-home"></i> Panel de control</a>
+                        </li>
+                        <li {% if request.resolver_match.url_name == 'editar_perfil_clinica' %}class="active"{% endif %}>
+                            <a href="{% url 'editar_perfil_clinica' %}"><i class="fas fa-user"></i> Mi Perfil</a>
+                        </li>
+                        <li {% if request.resolver_match.url_name == 'mis_publicaciones_clinica' %}class="active"{% endif %}>
+                            <a href="{% url 'mis_publicaciones_clinica' %}"><i class="fas fa-paw"></i> Mis Mascotas en Adopción</a>
+                        </li>
+                        <li {% if request.resolver_match.url_name == 'publicar_adopcion' %}class="active"{% endif %}>
+                            <a href="{% url 'publicar_adopcion' %}"><i class="fas fa-plus-circle"></i> Publicar Nueva Mascota</a>
+                        </li>
+                        <li {% if request.resolver_match.url_name == 'panel_reservas_clinica' %}class="active"{% endif %}>
+                            <a href="{% url 'panel_reservas_clinica' %}"><i class="fas fa-calendar-alt"></i> Gestionar Reservas</a>
+                        </li>
+                        <li><a href="#"><i class="fas fa-clock"></i> Horas Médicas</a></li>
+                        <li><a href="#"><i class="fas fa-user-cog"></i> Ajustes</a></li>
+                    {% elif request.user.profile.tipo == "cliente" %}
+                        <li {% if request.resolver_match.url_name == 'panel_cliente' %}class="active"{% endif %}>
+                            <a href="{% url 'panel_cliente' %}"><i class="fas fa-user"></i> Panel Cliente</a>
+                        </li>
+                        <li {% if request.resolver_match.url_name == 'editar_perfil_cliente' %}class="active"{% endif %}>
+                            <a href="{% url 'editar_perfil_cliente' %}"><i class="fas fa-user"></i> Mi Perfil</a>
+                        </li>
+                        <li {% if request.resolver_match.url_name == 'cliente_pedir_hora' %}class="active"{% endif %}>
+                            <a href="{% url 'reservas:cliente_pedir_hora' %}"><i class="fas fa-calendar-check"></i> Mis citas</a>
+                        </li>
+                        <li {% if request.resolver_match.url_name == 'mis_pedidos' %}class="active"{% endif %}>
+                            <a href="{% url 'pedidos:mis_pedidos' %}"><i class="fas fa-box"></i> Mis pedidos</a>
+                        </li>
+                        <li {% if request.resolver_match.url_name == 'mis_postulaciones' %}class="active"{% endif %}>
+                            <a href="{% url 'mis_postulaciones' %}"><i class="fas fa-paw"></i> Mis adopciones</a>
+                        </li>
+                        {# Aquí ya quité "mis_solicitudes" porque no existe la URL #}
+                        <li><a href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i> Cerrar sesión</a></li>
+                    {% elif request.user.profile.tipo == "farmacia" %}
+                        <li {% if request.resolver_match.url_name == 'panel_farmacia' %}class="active"{% endif %}>
+                            <a href="{% url 'productos:panel_farmacia' %}"><i class="fas fa-prescription-bottle-alt"></i> Panel Farmacia</a>
+                        </li>
+                        <li {% if request.resolver_match.url_name == 'pedidos_farmacia' %}class="active"{% endif %}>
+                            <a href="{% url 'productos:pedidos_farmacia' %}"><i class="fas fa-box"></i> Pedidos</a>
+                        </li>
+                        <li {% if request.resolver_match.url_name == 'stock_farmacia' %}class="active"{% endif %}>
+                            <a href="{% url 'productos:stock_farmacia' %}"><i class="fas fa-warehouse"></i> Stock</a>
+                        </li>
+                    {% endif %}
                     <li><a href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a></li>
                 </ul>
             </nav>
+
             <div class="user-profile-sidebar">
                 <span>Hola, <strong>{{ request.user.username }}</strong></span>
             </div>
         </aside>
 
-        {# Aquí se insertará el contenido de las plantillas que extiendan esta base #}
         {% block content %}{% endblock %}
+    </div>
 
-    </div> {# Cierre del panel-clinica-container #}
-
-    {# Scripts JS que sean comunes a todo el panel #}
-    {# Tu JavaScript panel_clinica.js se carga aquí una vez para todo el panel #}
     <script src="{% static 'accounts/js/panel_clinica.js' %}" defer></script>
     <script src="{% static 'js/base_panel.js' %}" defer></script>
     {% block extra_js %}{% endblock %}
-
 </body>
 </html>

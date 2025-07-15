@@ -1,0 +1,102 @@
+{% extends "core/base_panel.html" %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'accounts/css/panel_cliente.css' %}">
+<link rel="stylesheet" href="{% static 'accounts/css/editar_perfil_cliente.css' %}">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+  
+
+      <div class="perfil-content">
+          <form method="post" enctype="multipart/form-data" class="perfil-form">
+              {% csrf_token %}
+
+              <div class="columns-container">
+                  <div class="perfil-card">
+                      <h2>Información de Contacto</h2>
+
+                      <div class="imagen-perfil">
+                          <label for="id_imagen" title="Haz clic para cambiar la imagen">
+                              <img id="preview-imagen" src="{% if user.profile.imagen %}{{ user.profile.imagen.url }}{% else %}{% static 'path/to/default_profile_image.png' %}{% endif %}" alt="Imagen de perfil">
+                          </label>
+                          {{ form.imagen.errors }}
+                          <input id="id_imagen" type="file" name="imagen" style="display: none;">
+                      </div>
+
+                      <div class="form-grid-compact">
+                          <div class="campo-formulario-compact">
+                              <label for="id_first_name">Nombre</label>
+                              {{ form.first_name }}
+                          </div>
+
+                          <div class="campo-formulario-compact">
+                              <label for="id_last_name">Apellido</label>
+                              {{ form.last_name }}
+                          </div>
+
+                          <div class="campo-formulario-compact">
+                              <label for="id_email">Correo electrónico</label>
+                              {{ form.email }}
+                          </div>
+
+                          <div class="campo-formulario-compact">
+                              <label for="id_telefono">Teléfono de contacto</label>
+                              {{ form.telefono }}
+                              {{ form.telefono.errors }}
+                          </div>
+
+                          <div class="campo-formulario-compact switch-container-compact">
+                              {{ form.perfil_publicado.label_tag }}
+                              {{ form.perfil_publicado }}
+                              <label for="id_perfil_publicado" class="switch-compact"></label>
+                          </div>
+                      </div> {# /form-grid-compact #}
+                  </div> {# /perfil-card #}
+
+                  <div class="perfil-card">
+                      <h2>Horarios de Atención</h2>
+
+                      <div class="horarios-formset-compact" id="formset-container">
+                          {{ formset.management_form }}
+                          <div class="horario-header-compact">
+                              <span>Día</span>
+                              <span>Inicio</span>
+                              <span>Fin</span>
+                              <span>Eliminar</span>
+                          </div>
+                          {% for horario in formset %}
+                              <div class="horario-item-compact formset-form">
+                                  {{ horario.id }}
+                                  <div class="campo-horario-compact">
+                                      {{ horario.dia }}
+                                  </div>
+                                  <div class="campo-horario-compact">
+                                      {{ horario.hora_inicio }}
+                                  </div>
+                                  <div class="campo-horario-compact">
+                                      {{ horario.hora_fin }}
+                                  </div>
+                                  <div class="campo-horario-compact delete-checkbox-compact">
+                                      {{ horario.DELETE }} <label for="{{ horario.DELETE.id_for_label }}"></label>
+                                  </div>
+                              </div>
+                          {% endfor %}
+                      </div>
+
+                      <button type="button" id="agregar-dia" class="boton-agregar-dia-compact">➕ Agregar día</button>
+                  </div> {# /perfil-card #}
+              </div> <div class="form-actions-compact">
+                  <button type="submit" class="boton-guardar-compact"> Guardar cambios</button>
+              </div>
+          </form>
+          
+      </div> {# /perfil-content #}
+  </div> {# /perfil-container-main #}
+
+<script src="{% static 'js/editar_perfil_clinica.js' %}" defer></script>
+{% endblock %}

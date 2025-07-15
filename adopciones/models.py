@@ -7,6 +7,7 @@ class MascotaEnAdopcion(models.Model):
     ESPECIE_CHOICES = [
         ('perro', 'Canino'),
         ('gato', 'Felino'),
+        ('otro', 'Otro'),
     ]
 
     SEXO_CHOICES = [
@@ -49,3 +50,60 @@ class MascotaEnAdopcion(models.Model):
 
     def __str__(self):
         return self.nombre
+
+
+
+class SolicitudAdopcion(models.Model):
+
+    ESTADOS_SOLICITUD = [
+        ('pendiente', 'Pendiente'),
+        ('aprobada', 'Aprobada'),
+        ('rechazada', 'Rechazada'),
+        ('contactado', 'Contactado'),
+    ]
+
+    mascota = models.ForeignKey(
+    'MascotaEnAdopcion', 
+    on_delete=models.CASCADE, 
+    related_name='solicitudes',
+    null=True,  # permite que sea NULL en DB
+    blank=True, # permite que el formulario lo deje vacío
+    )
+
+    nombre_completo = models.CharField(max_length=100)
+    dni = models.CharField(max_length=20, blank=True, null=True)
+    fecha_nacimiento = models.DateField()
+    email = models.EmailField()
+    telefono = models.CharField(max_length=20)
+    direccion = models.TextField()
+
+    tipo_vivienda = models.CharField(max_length=50)
+    situacion_vivienda = models.CharField(max_length=20)
+    permiso_arrendador = models.CharField(max_length=10, blank=True, null=True)
+    num_adultos = models.IntegerField()
+    num_ninos = models.IntegerField()
+    edades_ninos = models.TextField(blank=True, null=True)
+    otras_mascotas = models.CharField(max_length=100, blank=True, null=True)
+    tiempo_solo = models.CharField(max_length=20)
+
+    experiencia_previa = models.TextField()
+    gastos_compromiso = models.CharField(max_length=30)
+    esterilizacion_compromiso = models.CharField(max_length=10)
+    planes_futuro = models.TextField()
+
+    declaracion_verdadera = models.BooleanField()
+    acepto_terminos = models.BooleanField()
+
+    fecha_envio = models.DateTimeField(auto_now_add=True)
+
+    estado = models.CharField(
+        max_length=20,
+        choices=ESTADOS_SOLICITUD,
+        default='pendiente'
+    )
+
+    fecha_contacto = models.DateTimeField(null=True, blank=True)
+    fecha_rechazo = models.DateTimeField(null=True, blank=True)
+
+    def __str__(self):
+        return f"Solicitud para {self.mascota.nombre} por {self.nombre_completo}"

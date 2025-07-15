@@ -1,0 +1,56 @@
+{% extends "core/base_panel.html" %}
+{% load static %}
+
+{% block title %}Detalle de Solicitud{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/detalle_solicitud.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="detalle-solicitud-wrapper">
+    <h2>Solicitud de {{ solicitud.nombre_completo }}</h2>
+    <p><strong>Mascota postulada:</strong> 
+        <a href="{% url 'detalle_mascota' solicitud.mascota.id %}">{{ solicitud.mascota.nombre }}</a>
+    </p>
+
+    <h3>Información del Solicitante</h3>
+    <ul>
+        <li><strong>Nombre completo:</strong> {{ solicitud.nombre_completo }}</li>
+        <li><strong>DNI/RUT:</strong> {{ solicitud.dni }}</li>
+        <li><strong>Fecha de nacimiento:</strong> {{ solicitud.fecha_nacimiento }}</li>
+        <li><strong>Email:</strong> {{ solicitud.email }}</li>
+        <li><strong>Teléfono:</strong> {{ solicitud.telefono }}</li>
+        <li><strong>Dirección:</strong> {{ solicitud.direccion }}</li>
+    </ul>
+
+    <h3>Información del Hogar</h3>
+    <ul>
+        <li><strong>Tipo de vivienda:</strong> {{ solicitud.tipo_vivienda }}</li>
+        <li><strong>Situación vivienda:</strong> {{ solicitud.situacion_vivienda }}</li>
+        <li><strong>Permiso para mascotas:</strong> {{ solicitud.permiso_arrendador|default:"No aplica" }}</li>
+        <li><strong>Adultos:</strong> {{ solicitud.num_adultos }}</li>
+        <li><strong>Niños:</strong> {{ solicitud.num_ninos }}</li>
+        <li><strong>Edades niños:</strong> {{ solicitud.edades_ninos|default:"-" }}</li>
+        <li><strong>Otras mascotas:</strong> {{ solicitud.otras_mascotas|default:"No" }}</li>
+        <li><strong>Tiempo sola la mascota:</strong> {{ solicitud.tiempo_solo }}</li>
+    </ul>
+
+    <h3>Compromiso</h3>
+    <ul>
+        <li><strong>Experiencia previa:</strong> {{ solicitud.experiencia_previa }}</li>
+        <li><strong>Gastos compromiso:</strong> {{ solicitud.gastos_compromiso }}</li>
+        <li><strong>Entiende esterilización:</strong> {{ solicitud.esterilizacion_compromiso }}</li>
+        <li><strong>Planes a futuro:</strong> {{ solicitud.planes_futuro }}</li>
+    </ul>
+
+    <h3>Consentimiento</h3>
+    <ul>
+        <li><strong>Declaración verdadera:</strong> {{ solicitud.declaracion_verdadera|yesno:"Sí,No" }}</li>
+        <li><strong>Aceptó términos:</strong> {{ solicitud.acepto_terminos|yesno:"Sí,No" }}</li>
+        <li><strong>Fecha de envío:</strong> {{ solicitud.fecha_envio }}</li>
+    </ul>
+
+    <a href="{% url 'panel_solicitudes' %}" class="btn-secondary">← Volver al panel de solicitudes</a>
+</div>
+{% endblock %}

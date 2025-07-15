@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "core/base_panel.html" %}
 {% load static %}
 
 {% block extra_css %}
@@ -15,6 +15,22 @@
         </div>
     {% else %}
         <form method="post">
+            {% if form.errors %}
+                <div class="error-summary">
+                    <p><strong>⚠️ Corrige los siguientes errores:</strong></p>
+                    <ul>
+                        {% for field in form %}
+                            {% for error in field.errors %}
+                                <li>{{ field.label }}: {{ error }}</li>
+                            {% endfor %}
+                        {% endfor %}
+                        {% for error in form.non_field_errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+
             {% csrf_token %}
 
             <div class="form-section">
@@ -29,8 +45,18 @@
                     {% endif %}
                 </div>
             </div>
-
+            {# Nombre Cliente #}
+            <div class="form-group">
+                <label for="{{ form.nombre_cliente.id_for_label }}">Nombre del tutor</label>
+                {{ form.nombre_cliente }}
+                {% if form.nombre_cliente.errors %}
+                    <div class="error-message">
+                        {% for error in form.nombre_cliente.errors %}{{ error }}{% endfor %}
+                    </div>
+                {% endif %}
+            </div>
             <div class="form-section">
+
                 {# Datos de la Mascota #}
                 <div class="form-group">
                     <label for="{{ form.nombre_mascota.id_for_label }}">Nombre de la Mascota</label>
@@ -93,6 +119,14 @@
                             {% for error in form.motivo.errors %}{{ error }}{% endfor %}
                         </div>
                     {% endif %}
+                </div>
+            </div>
+
+            <div class="form-section">
+                <div class="form-group full-width" style="margin-top: 15px;">
+                    <label for="{{ form.es_urgente.id_for_label }}" style="font-weight: bold; display: flex; align-items: center;">
+                        {{ form.es_urgente }} <span style="margin-left: 10px;">¿Es una atención urgente?</span>
+                    </label>
                 </div>
             </div>
 

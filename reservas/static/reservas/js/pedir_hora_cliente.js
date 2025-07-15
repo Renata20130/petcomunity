@@ -4,11 +4,11 @@ document.addEventListener('DOMContentLoaded', function() {
     // Accede a las variables globales definidas en el HTML
     const especieSelect = document.getElementById(ESPECIE_SELECT_ID);
     const razaSelect = document.getElementById(RAZA_SELECT_ID);
-    const apiRazasUrl = API_RAZAS_URL; // La URL de tu API
+    const API_RAZAS_URL = '/api/api/razas/';
     const otrosEspecieValue = OTROS_ESPECIE_VALUE; // El valor para "otros"
 
     // Verificaciones para depurar (mantenlas por ahora)
-    if (!especieSelect) {
+    if (!especieSelect) { 
         console.error(`Error JS: El elemento 'especieSelect' (ID: ${ESPECIE_SELECT_ID}) no se encontró en el DOM.`);
         return; // Salir para evitar el error
     }
@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', function() {
             razaSelect.removeAttribute('disabled');
         } else {
             // Usa la URL de la API
-            fetch(`${apiRazasUrl}?especie_slug=${especieValue}`)
+            fetch(`${API_RAZAS_URL}?especie=${especieValue}`)
                 .then(response => {
                     if (!response.ok) {
                         throw new Error(`HTTP error! status: ${response.status}`);

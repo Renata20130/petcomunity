@@ -1,0 +1,38 @@
+{% extends 'core/base_panel.html' %}
+{% load static %}
+
+{% block title %}Nueva Consulta{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'clinicas/css/nueva_consulta.css' %}">
+{% endblock %}
+
+{% block content %}
+<main class="main-content">
+  <div class="form-container">
+    <h1 class="form-title">Registrar Nueva Consulta</h1>
+
+    <form method="POST" novalidate class="form-style">
+      {% csrf_token %}
+      
+      {{ form.non_field_errors }}
+
+      {% for field in form %}
+        <div class="form-group">
+          {{ field.label_tag }}
+          {{ field }}
+          {% if field.help_text %}
+            <small class="form-text">{{ field.help_text }}</small>
+          {% endif %}
+          {{ field.errors }}
+        </div>
+      {% endfor %}
+
+      <button type="submit" class="btn-submit-form">
+        Guardar
+      </button>
+    </form>
+
+  </div>
+</main>
+{% endblock %}

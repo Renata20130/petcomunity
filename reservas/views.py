@@ -11,6 +11,9 @@ from django.core.mail import send_mail
 from django.conf import settings
 from django.core.mail import EmailMultiAlternatives
 from .models import Raza
+from .serializers import RazaSerializer
+from rest_framework import generics
+
 
 @login_required
 def agendar_reserva(request):
@@ -133,10 +136,21 @@ def cambiar_estado_reserva(request, reserva_id, nuevo_estado):
         messages.success(request, f"Reserva {nuevo_estado} correctamente y notificación enviada al cliente.")
     return redirect('panel_reservas_clinica')
 
+class RazaListAPIView(generics.ListAPIView):
+    serializer_class = RazaSerializer # Solo necesitamos el serializador aquí
 
-
-
-
-
-
-
+    def get_queryset(self):
+        """
+        Este método permite filtrar las razas por el parámetro 'especie' en la URL.
+        Ejemplo de URL: /api/api/razas/?especie=perro
+        """
+        queryset = Raza.objects.all() # Empieza con todas las razas
+        
+        # Obtiene el valor del parámetro 'especie' de la URL (si existe)
+        especie = self.request.query_params.get('especie', None)
+        
+        # Si se proporcionó una especie, filtra el queryset
+        if especie is not None and especie != '': # Asegúrate de que no sea None o una cadena vacía
+            queryset = queryset.filter(especie=especie)
+            
+        return queryset

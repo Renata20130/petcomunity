@@ -13,63 +13,61 @@
     
 </head>
 <body>
-    <header>
+    <header class="site-header">
         <nav>
             <div class="logo">
-                <a href="{% url 'home' %}">
+                <a href="{% url 'core:home' %}">
                     <img src="{% static 'img/logo-petcommunity.png' %}" alt="PetComunity Logo" class="logo-img">
                 </a>
             </div>
 
             <ul class="nav-links">
-                <li><a href="{% url 'home' %}">Inicio</a></li>
-                <li><a href="{% url 'adopciones' %}">Adopciones</a></li> {# Mover Adopciones más adelante ya que es un pilar #}
-                <li><a href="{% url 'clinicas' %}">Clínicas</a></li>
-                <li><a href="{% url 'productos_publicados' %}">Tienda</a></li> {# Cambiar "Productos" por "Tienda" o "Farmacia" #}
-                <li><a href="{% url 'contacto' %}">Contacto</a></li>
+                <li><a href="{% url 'core:home' %}">Inicio</a></li>
+                <li><a href="{% url 'core:adopciones' %}">Adopciones</a></li> {# Mover Adopciones más adelante ya que es un pilar #}
+                <li><a href="{% url 'core:clinicas' %}">Clínicas</a></li>
+                <li><a href="{% url 'core:farmacias' %}">Farmacias</a></li>
+                <li><a href="{% url 'core:productos_publicados' %}">Tienda</a></li> {# Cambiar "Productos" por "Tienda" o "Farmacia" #}
+                <li><a href="{% url 'core:contacto' %}">Contacto</a></li>
             </ul>
 
-            <div class="nav-icons-actions"> {# Nuevo contenedor para íconos y botones #}
-                <a href="{% url 'reservas:cliente_pedir_hora' %}" class="btn-primary-header">Pedir Cita</a> {# Botón CTA #}
-                
+            <div class="nav-icons-actions">
+                <a href="{% url 'reservas:cliente_pedir_hora' %}" class="btn-primary-header">Pedir Cita</a>
+
                 <div class="search-container">
-                    <i class="fas fa-search search-icon"></i> {# Ícono de búsqueda #}
-                    {# Opcional: Un input de búsqueda que aparece al hacer click en el ícono #}
-                    <input type="text" placeholder="Buscar..." class="search-input"> 
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" placeholder="Buscar..." class="search-input">
                 </div>
 
                 {% if request.user.is_authenticated and request.user.profile.tipo == "cliente" %}
                     <a href="{% url 'pedidos:ver_carrito' %}" class="cart-icon-link">
-                        <i class="fas fa-shopping-cart"></i> {# Ícono de carrito #}
+                        <i class="fas fa-shopping-cart"></i>
                         {# <span class="cart-count">3</span> Opcional: para mostrar número de ítems #}
                     </a>
                 {% endif %}
 
                 {% if request.user.is_authenticated %}
-                    <li class="menu-perfil-li"> {# Mantener como li para consistencia con nav-links, o cambiar a div si prefieres #}
-                        <button class="btn-perfil">{{ request.user.get_username }} <i class="fas fa-chevron-down"></i></button>
-                        <ul class="submenu">
-                            {# Los enlaces de perfil específicos por tipo de usuario #}
-                            {% if request.user.profile.tipo == "clinica" %}
-                                <li><a href="{% url 'editar_perfil_clinica' %}">Mi perfil</a></li>
-                                <li><a href="{% url 'panel_clinica' %}">Panel de Clínica</a></li>
-                                <li><a href="{% url 'publicar_adopcion' %}">Publicar mascota</a></li>
-                            {% elif request.user.profile.tipo == "cliente" %}
-                                <li><a href="{% url 'panel_cliente' %}">Mi perfil</a></li>
-                                <li><a href="{% url 'reservas:cliente_pedir_hora' %}">Mis citas</a></li> {# Si ya hay un CTA principal, aquí es "mis citas" #}
-                                <li><a href="{% url 'pedidos:mis_pedidos' %}">Mis Pedidos</a></li>
-                                {# <li><a href="{% url 'pedidos:ver_carrito' %}">Carrito de compras</a></li> Se mueve a ícono #}
-                                <li><a href="#">Mis Adopciones</a></li> {# Si el cliente puede seguir el estado de adopciones #}
-                            {% elif request.user.profile.tipo == "farmacia" %}
-                                <li><a href="{% url 'productos:panel_farmacia' %}">Panel Farmacia</a></li>
-                                <li><a href="{% url 'panel_farmacia' %}">Panel Pedidos Farmacia</a></li>
-                                {# <li><a href="#">Productos</a></li> Este parece redundante, ¿quizás "Gestionar Productos"? #}
-                            {% endif %}
-                            <li><a href="{% url 'logout' %}">Cerrar sesión</a></li>
-                        </ul>
-                    </li>
+                    <ul class="user-menu-wrapper"> {# Nuevo UL para envolver el ítem de perfil #}
+                        <li class="menu-perfil-li">
+                            <button class="btn-perfil">{{ request.user.get_username }} <i class="fas fa-chevron-down"></i></button>
+                            <ul class="submenu">
+                                {# Los enlaces de perfil específicos por tipo de usuario #}
+                                {% if request.user.profile.tipo == "clinica" %}
+                                    <li><a href="{% url 'panel_clinica' %}">Panel de Clínica</a></li>
+                                {% elif request.user.profile.tipo == "cliente" %}
+                                    <li><a href="{% url 'panel_cliente' %}">Mi perfil</a></li>
+                                    <li><a href="{% url 'reservas:cliente_pedir_hora' %}">Mis citas</a></li>
+                                    <li><a href="{% url 'pedidos:mis_pedidos' %}">Mis Pedidos</a></li>
+                                    <li><a href="#">Mis Adopciones</a></li>
+                                {% elif request.user.profile.tipo == "farmacia" %}
+                                    <li><a href="{% url 'productos:panel_farmacia' %}">Panel Farmacia</a></li>
+                                    <li><a href="{% url 'productos:pedidos_farmacia' %}">Pedidos</a></li>
+                                {% endif %}
+                                <li><a href="{% url 'logout' %}">Cerrar sesión</a></li>
+                            </ul>
+                        </li>
+                    </ul> {# Cierra el UL #}
                 {% else %}
-                    <ul class="auth-links"> {# Puedes mantenerlo dentro de nav-links o separarlo #}
+                    <ul class="auth-links">
                         <li><a href="{% url 'registro' %}">Registrarse</a></li>
                         <li><a href="{% url 'login' %}">Iniciar sesión</a></li>
                     </ul>
@@ -86,7 +84,7 @@
         {% block content %}{% endblock %}
     </main>
 
-    <footer>
+    <footer class="site-footer">
         <div class="footer-content">
             <div class="footer-section about">
                 <h3>Sobre PetCommunity</h3>
@@ -98,12 +96,12 @@
             <div class="footer-section links">
                 <h3>Navegación Rápida</h3>
                 <ul>
-                    <li><a href="{% url 'home' %}">Inicio</a></li>
-                    <li><a href="{% url 'adopciones' %}">Adopciones</a></li>
-                    <li><a href="{% url 'clinicas' %}">Clínicas Veterinarias</a></li>
-                    <li><a href="{% url 'productos_publicados' %}">Tienda / Farmacia</a></li>
-                    <li><a href="{% url 'contacto' %}">Contacto</a></li>
-                    <li><a href="{% url 'home' %}">Preguntas Frecuentes</a></li> {# Ejemplo de enlace adicional #}
+                    <li><a href="{% url 'core:home' %}">Inicio</a></li>
+                    <li><a href="{% url 'core:adopciones' %}">Adopciones</a></li>
+                    <li><a href="{% url 'core:clinicas' %}">Clínicas Veterinarias</a></li>
+                    <li><a href="{% url 'core:productos_publicados' %}">Tienda / Farmacia</a></li>
+                    <li><a href="{% url 'core:contacto' %}">Contacto</a></li>
+                    <li><a href="{% url 'core:home' %}">Preguntas Frecuentes</a></li> {# Ejemplo de enlace adicional #}
                 </ul>
             </div>
 
@@ -136,9 +134,9 @@
         <div class="footer-bottom">
             <p>&copy; 2025 PetCommunity - Todos los derechos reservados.</p>
             <ul class="legal-links">
-                <li><a href="{% url 'home' %}">Política de Privacidad</a></li> {# Asegúrate de tener estas páginas #}
-                <li><a href="{% url 'home' %}">Términos y Condiciones</a></li>
-                <li><a href="{% url 'home' %}">Política de Cookies</a></li>
+                <li><a href="{% url 'core:home' %}">Política de Privacidad</a></li> {# Asegúrate de tener estas páginas #}
+                <li><a href="{% url 'core:home' %}">Términos y Condiciones</a></li>
+                <li><a href="{% url 'core:home' %}">Política de Cookies</a></li>
             </ul>
         </div>
     </footer>

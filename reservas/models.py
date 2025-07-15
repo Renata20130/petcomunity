@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from datetime import datetime
 from adopciones.models import MascotaEnAdopcion
+from django.db.models import UniqueConstraint
 
 class Raza(models.Model):
     nombre = models.CharField(max_length=100, unique=False) # El nombre de la raza (ej: Labrador)
@@ -11,9 +12,9 @@ class Raza(models.Model):
     especie = models.CharField(max_length=20, choices=MascotaEnAdopcion.ESPECIE_CHOICES)
 
     class Meta:
-        # Esto asegura que no puedas tener dos veces "Labrador" para "perro"
-        unique_together = ('nombre', 'especie')
-
+        constraints = [
+            UniqueConstraint(fields=['nombre', 'especie'], name='unique_raza_especie')
+        ]
     def __str__(self):
         # Muestra el nombre de la raza y el nombre legible de la especie (ej: "Labrador (Canino)")
         return f"{self.nombre} ({self.get_especie_display()})"
@@ -48,6 +49,7 @@ class Reserva(models.Model):
     
     cliente = models.ForeignKey(User, on_delete=models.CASCADE, related_name='reservas', null=True, blank=True)
 
+    es_urgente = models.BooleanField(default=False)
 
     class Meta:
         ordering = ['-fecha', '-hora']

@@ -1,0 +1,73 @@
+/* detalle_solicitud.css */
+
+.detalle-solicitud-wrapper {
+  max-width: 700px;
+  margin: 40px auto;
+  padding: 30px 40px;
+  background-color: #fff;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+  border-radius: 12px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
+}
+
+.detalle-solicitud-wrapper h2 {
+  text-align: center;
+  color: #4a90e2;
+  margin-bottom: 25px;
+  font-weight: 700;
+}
+
+.detalle-solicitud-wrapper h3 {
+  border-bottom: 2px solid #4a90e2;
+  padding-bottom: 8px;
+  margin-top: 30px;
+  margin-bottom: 15px;
+  color: #2c3e50;
+  font-weight: 600;
+}
+
+.detalle-solicitud-wrapper ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.detalle-solicitud-wrapper ul li {
+  padding: 8px 12px;
+  border-bottom: 1px solid #e1e8f0;
+  font-size: 1rem;
+}
+
+.detalle-solicitud-wrapper ul li strong {
+  color: #34495e;
+  width: 170px;
+  display: inline-block;
+}
+
+.detalle-solicitud-wrapper a.btn-secondary {
+  display: inline-block;
+  margin-top: 35px;
+  padding: 12px 25px;
+  background-color: #4a90e2;
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+}
+
+.detalle-solicitud-wrapper a.btn-secondary:hover {
+  background-color: #357abd;
+}
+
+@media (max-width: 480px) {
+  .detalle-solicitud-wrapper {
+    padding: 20px 15px;
+    margin: 20px 10px;
+  }
+
+  .detalle-solicitud-wrapper ul li strong {
+    width: 140px;
+    font-size: 0.95rem;
+  }
+}

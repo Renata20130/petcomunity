@@ -215,6 +215,8 @@ body {
 .services-overview {
     padding: 80px 0; 
     background-color: var(--neutral-light); 
+    margin-left: 100px;
+    margin-right: 100px;
 }
 
 .service-cards-grid {
@@ -268,6 +270,8 @@ body {
 .featured-adoptions-section {
     padding: 80px 0;
     background-color: #F0F4F8; 
+    margin-left: 100px;
+    margin-right: 100px;
     
 }
 
@@ -328,6 +332,8 @@ body {
 .testimonials-section {
     padding: 80px 0;
     background-color: var(--neutral-light);
+    margin-left: 100px;
+    margin-right: 100px;
 }
 
 .testimonial-grid {

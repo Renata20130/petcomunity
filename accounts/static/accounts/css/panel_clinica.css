@@ -1,9 +1,10 @@
-/* Importar fuentes o variables si es necesario */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
 
 :root {
     --primary-color: #7BC0E3; /* Azul oficial de la página */
     --accent-color: #5BA7CD; /* Un tono más oscuro del azul para acentos */
+    --secondary-accent-color: #3880b3; /* Un tono más oscuro para botones o elementos más destacados */
+    
     --background-light: #f8fbfd; /* Fondo ligeramente azulado */
     --background-dark: #eef5f8; /* Fondo más oscuro para elementos */
     --text-color-dark: #333;
@@ -13,9 +14,14 @@
     --shadow-light: 0 4px 12px rgba(0, 0, 0, 0.06);
     --shadow-medium: 0 8px 24px rgba(0, 0, 0, 0.08);
 
-    /* Nuevos colores para armonizar con el azul */
+    /* Colores para armonizar con el azul */
     --blue-dark: #2F80ED; /* Un azul más intenso para enlaces o íconos */
     --blue-light: #DBEEF7; /* Un azul muy claro para fondos sutiles */
+
+    /* Colores de estado (manteniendo coherencia) */
+    --status-success: #28a745; /* Verde para éxito/activo */
+    --status-warning: #ffc107; /* Amarillo para advertencia/pendiente */
+    --status-danger: #f44336; /* Rojo para peligro/cancelado */
 }
 
 body {
@@ -133,12 +139,12 @@ body {
     align-items: center;
     margin-bottom: 30px;
     padding-bottom: 15px;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid var(--border-color); /* Usamos la variable */
 }
 
 .dashboard-header h1 {
     margin: 0;
-    color: #343a40;
+    color: var(--text-color-dark); /* Usamos la variable */
 }
 
 .header-actions .btn-primary,
@@ -152,17 +158,17 @@ body {
     margin-left: 10px;
 }
 
-
+/* Botones de acción del header */
 .header-actions .btn-primary {
-    background-color: #007bff;
+    background-color: var(--primary-color); /* Azul oficial */
     color: white;
 }
 .header-actions .btn-primary:hover {
-    background-color: #0056b3;
+    background-color: var(--accent-color); /* Tono más oscuro */
 }
 
 .header-actions .btn-secondary {
-    background-color: #6c757d;
+    background-color: #6c757d; /* Color gris para el secundario */
     color: white;
 }
 .header-actions .btn-secondary:hover {
@@ -177,27 +183,26 @@ body {
 /* --- Dashboard Grid & Modules --- */
 .dashboard-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Columnas responsivas */
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 25px;
 }
 
 .dashboard-module {
-    background-color: #ffffff;
+    background-color: var(--module-bg);
     padding: 25px;
     border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    box-shadow: var(--shadow-light); /* Usamos la variable de sombra */
     display: flex;
     flex-direction: column;
 }
 
 .dashboard-module h3 {
-    color: #343a40;
+    color: var(--text-color-dark);
     margin-top: 0;
     margin-bottom: 20px;
-    border-bottom: 2px solid #eee;
+    border-bottom: 2px solid var(--border-color); /* Usamos la variable */
     padding-bottom: 10px;
 }
-
 
 .dashboard-module .no-data {
     text-align: center;
@@ -218,7 +223,7 @@ body {
 }
 
 .tarjeta-mascota-panel {
-    background: #fdfdfd;
+    background: var(--module-bg);
     border-radius: 10px;
     overflow: hidden;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
@@ -229,7 +234,7 @@ body {
 
 .tarjeta-mascota-panel:hover {
     transform: translateY(-3px);
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+    box-shadow: var(--shadow-medium); /* Sombra más pronunciada al hover */
 }
 
 .tarjeta-mascota-panel img {
@@ -275,8 +280,6 @@ body {
 
 /* --- Estilos para Módulo de Perfil --- */
 .profile-details-module {
-    /* Puedes ajustar el grid-column para que ocupe más espacio si quieres */
-    /* grid-column: 1 / -1; /* Esto lo haría ocupar todo el ancho */
     text-align: center;
 }
 
@@ -293,7 +296,7 @@ body {
     height: 100px;
     border-radius: 50%;
     overflow: hidden;
-    border: 3px solid #7BC0E3; /* Color de tu marca */
+    border: 3px solid var(--primary-color); /* Color de tu marca */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -307,7 +310,7 @@ body {
 }
 
 .profile-dashboard-icon-placeholder {
-    font-size: 60px; /* Tamaño del ícono si no hay imagen */
+    font-size: 60px;
     color: #6c757d;
 }
 
@@ -321,26 +324,27 @@ body {
     color: #333;
 }
 
+/* Usando las variables de estado */
 .status-active {
-    color: #28a745; /* Verde para 'Publicado' */
+    color: var(--status-success);
     font-weight: bold;
 }
 
 .status-inactive {
-    color: #ffc107; /* Amarillo/naranja para 'Pendiente' */
+    color: var(--status-warning);
     font-weight: bold;
 }
 
 .profile-actions {
-    margin-top: auto; /* Empuja el botón hacia abajo si el contenido es variable */
+    margin-top: auto;
     padding-top: 15px;
-    border-top: 1px solid #eee;
+    border-top: 1px solid var(--border-color);
     width: 100%;
 }
 
 .btn-edit-profile {
     display: inline-block;
-    background-color: #007bff;
+    background-color: var(--primary-color);
     color: white;
     padding: 10px 20px;
     border-radius: 5px;
@@ -349,9 +353,8 @@ body {
 }
 
 .btn-edit-profile:hover {
-    background-color: #0056b3;
+    background-color: var(--accent-color);
 }
-
 
 /* Switch */
 .switch {
@@ -410,7 +413,7 @@ input:checked + .slider:before {
 .btn-eliminar-tarjeta {
     background: none;
     border: none;
-    color: #e53e3e; /* Rojo */
+    color: var(--status-danger); /* Rojo */
     font-size: 1.2rem;
     cursor: pointer;
     padding: 5px;
@@ -423,7 +426,7 @@ input:checked + .slider:before {
 
 .btn-eliminar-tarjeta:hover {
     color: #c53030;
-    background-color: rgba(229, 62, 62, 0.1);
+    background-color: rgba(244, 67, 54, 0.1); /* Usando el status-danger con opacidad */
 }
 
 /* --- Module: Nueva Publicación de Mascota --- */
@@ -477,7 +480,7 @@ input:checked + .slider:before {
 
 .tabla-scroll {
     overflow-x: auto;
-    max-height: 400px;
+    max-height: 400px; /* Asegura que la tabla tenga un scroll si excede la altura */
     margin-bottom: 1rem;
 }
 
@@ -486,7 +489,7 @@ input:checked + .slider:before {
     border-collapse: collapse;
     background-color: var(--module-bg);
     border-radius: 12px;
-    overflow: hidden;
+    overflow: hidden; /* Asegura que los bordes redondeados se apliquen a la tabla */
 }
 
 .module-reservas th,
@@ -504,7 +507,7 @@ input:checked + .slider:before {
     text-transform: uppercase;
     font-size: 0.8rem;
     letter-spacing: 0.05em;
-    position: sticky;
+    position: sticky; /* Permite que el encabezado se mantenga visible al hacer scroll */
     top: 0;
     z-index: 1;
 }
@@ -519,19 +522,19 @@ input:checked + .slider:before {
 
 /* Estilos para el estado de reserva */
 .estado-reserva-pendiente {
-    color: #ff9800; /* Naranja */
+    color: var(--status-warning);
     font-weight: 600;
 }
 .estado-reserva-confirmada {
-    color: #4caf50; /* Verde */
+    color: var(--status-success);
     font-weight: 600;
 }
 .estado-reserva-cancelada {
-    color: #f44336; /* Rojo */
+    color: var(--status-danger);
     font-weight: 600;
 }
 .estado-reserva-completada {
-    color: var(--blue-dark); /* Azul oscuro para completado */
+    color: var(--blue-dark);
     font-weight: 600;
 }
 
@@ -628,7 +631,6 @@ input:checked + .slider:before {
     font-size: 0.9rem;
     color: #444;
 }
-
 
 /* --- Responsive Adjustments --- */
 @media (max-width: 992px) {

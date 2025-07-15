@@ -104,3 +104,31 @@ document.getElementById('id_imagen').addEventListener('change', function(event) 
         // Mostrar la primera sección por defecto al cargar la página
         // showSection('info-personal'); // Ya lo está haciendo el HTML si tiene 'active' en el primero
     });
+    regionSelect.addEventListener('change', function () {
+        const regionSelect = document.getElementById('id_region');
+        const ciudadSelect = document.getElementById('id_ciudad');
+
+        if (regionSelect && ciudadSelect) {
+            regionSelect.addEventListener('change', function () {
+                const regionId = this.value;
+
+            ciudadSelect.innerHTML = '<option value="">---------</option>';
+
+            if (!regionId) return;
+
+            fetch(`/ubicacion/ajax/cargar-ciudades/?region_id=${regionId}`)
+                .then(response => response.json())
+                .then(data => {
+                    data.ciudades.forEach(ciudad => {
+                        const option = document.createElement('option');
+                        option.value = ciudad.id;
+                        option.textContent = ciudad.nombre;
+                        ciudadSelect.appendChild(option);
+                    });
+                })
+                .catch(error => {
+                    console.error("Error al cargar ciudades:", error);
+                });
+        });
+    }
+});

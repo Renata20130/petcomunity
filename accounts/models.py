@@ -4,6 +4,8 @@ from django.db import models
 from django.db import models
 from django.contrib.auth.models import User
 
+from ubicacion.models import Region, Ciudad
+
 class Profile(models.Model):
     USER_TYPES = [
         ('cliente', 'Cliente'),
@@ -25,6 +27,8 @@ class Profile(models.Model):
     nombre_clinica = models.CharField(max_length=100, blank=True, null=True)
     direccion = models.CharField(max_length=200, blank=True, null=True)
     telefono = models.CharField(max_length=20, blank=True, null=True)
-
+    region = models.ForeignKey(Region, on_delete=models.SET_NULL, null=True, blank=True)
+    ciudad = models.ForeignKey(Ciudad, on_delete=models.SET_NULL, null=True, blank=True)
+    
     def __str__(self):
         return f"{self.user.username} - {self.tipo}"
