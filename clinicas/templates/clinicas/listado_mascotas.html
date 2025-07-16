@@ -1,40 +1,72 @@
-{% extends 'base_panel.html' %}
+{% extends 'core/base_panel.html' %}
+{% load static %}
 
-{% block title %}Mascotas registradas{% endblock %}
+{% block title %}Mascotas Registradas{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'clinicas/css/listado_mascota.css' %}">
+{% endblock %}
 
 {% block content %}
-<div class="container">
-    <h2>Mascotas registradas</h2>
+<div class="container no-margin-top"> {# Añadimos margen superior para separación #}
+    <h2 class="mb-4">Mascotas Registradas</h2> {# Añadimos margen inferior al título #}
 
-    <a href="{% url 'clinica:registrar_mascota' %}" class="btn btn-primary mb-3">Registrar nueva mascota</a>
+    {# Botón para registrar nueva mascota #}
+    <div class="boton-derecha">
+        <a href="{% url 'clinica:registrar_mascota' %}" class="btn btn-primary">Registrar Nueva Mascota</a>
+    </div>
+
+    {# --- INICIO: BARRA DE BÚSQUEDA --- #}
+    <form class="mb-4" method="GET" action="{% url 'clinica:listado_mascotas' %}">
+        <div class="input-group">
+            <input type="text" class="form-control" placeholder="Buscar por nombre de mascota o tutor..." name="q" value="{{ query|default:'' }}">
+            <button class="btn btn-primary" type="submit">Buscar</button>
+            {% if query %}
+                {# Muestra el botón 'Limpiar Búsqueda' solo si hay un término de búsqueda activo #}
+                <a href="{% url 'clinica:listado_mascotas' %}" class="btn btn-secondary ms-2">Limpiar Búsqueda</a>
+            {% endif %}
+        </div>
+    </form>
+    {# --- FIN: BARRA DE BÚSQUEDA --- #}
 
     {% if mascotas %}
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Nombre</th>
-                <th>Especie</th>
-                <th>Edad</th>
-                <th>Propietario</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for mascota in mascotas %}
-            <tr>
-                <td>{{ mascota.nombre }}</td>
-                <td>{{ mascota.especie }}</td>
-                <td>{{ mascota.edad }}</td>
-                <td>{{ mascota.propietario.username }}</td>
-                <td>
-                    <a href="{% url 'clinica:ficha_clinica' mascota.id %}" class="btn btn-sm btn-primary">Ver ficha</a>
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    <div class="table-responsive">
+        <table class="table table-striped table-hover"> {# Añadimos estilos de Bootstrap para mejor apariencia #}
+            <thead class="table-dark"> {# Cabecera de tabla oscura para contraste #}
+                <tr>
+                    <th>Nombre Mascota</th> {# Cambiado a 'Nombre Mascota' para mayor claridad #}
+                    <th>Especie</th>
+                    <th>Edad</th>
+                    <th>Tutor</th>
+                    <th>Teléfono Tutor</th> {# Añadimos esta columna para la información del tutor #}
+                    <th>Email Tutor</th> {# Añadimos esta columna para la información del tutor #}
+                    <th>Propietario</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for mascota in mascotas %}
+                <tr>
+                    <td>{{ mascota.nombre_mascota }}</td>            {# Nombre de la mascota #}
+                    <td>{{ mascota.get_especie_display }}</td>  {# Especie #}
+                    <td>{{ mascota.edad }} años</td>        {# Edad #}
+                    <td>{{ mascota.tutor.nombre_tutor }}</td>     {# Nombre del tutor, usando el campo correcto #}
+                    <td>{{ mascota.tutor.telefono|default:"N/A" }}</td> {# Teléfono del tutor #}
+                    <td>{{ mascota.tutor.email|default:"N/A" }}</td> {# Email del tutor #}
+                    <td>{{ mascota.propietario.username|default:"N/A" }}</td>  {# Propietario #}
+                    <td>
+                        <a href="{% url 'clinica:ficha_clinica' mascota.id %}" class="btn btn-sm btn-info">Ver ficha</a> {# Color de botón Bootstrap #}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
     {% else %}
-        <p>No hay mascotas registradas.</p>
+        {# Mensaje cuando no hay mascotas o la búsqueda no arroja resultados #}
+        <div class="alert alert-info" role="alert">
+            No hay mascotas registradas o no se encontraron resultados para tu búsqueda.
+        </div>
     {% endif %}
 </div>
 {% endblock %}

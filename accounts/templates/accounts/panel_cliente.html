@@ -11,9 +11,11 @@
 <main class="main-content">
   <header class="dashboard-header">
     <h1>Bienvenido, {{ request.user.get_username }}</h1>
+    
   </header>
 
   <div class="dashboard-grid">
+    <a href="{% url 'adopciones:registrar_mascota_abandonada' %}" class="btn btn-outline-primary">➕ Registrar Mascota Abandonada</a>
 
     <!-- Módulo: Perfil -->
     <div class="dashboard-module profile-details-module">

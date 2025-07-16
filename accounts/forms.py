@@ -130,14 +130,77 @@ class EditarPerfilExtendidoForm(forms.ModelForm):
         model = Profile
         fields = ['imagen', 'telefono']  
 
+from django import forms
+from accounts.models import Profile
+from ubicacion.models import Region, Ciudad
+
 class EditarPerfilFarmaciaForm(forms.ModelForm):
+    first_name = forms.CharField(max_length=30, required=True, label='Nombre')
+    last_name = forms.CharField(max_length=30, required=True, label='Apellido')
+    email = forms.EmailField(required=True, label='Correo electrónico')
+
+    region = forms.ModelChoiceField(queryset=Region.objects.all(), required=False, label='Región')
+    ciudad = forms.ModelChoiceField(queryset=Ciudad.objects.none(), required=False, label='Ciudad')
+
     class Meta:
         model = Profile
-        fields = ['nombre_clinica', 'direccion', 'telefono', 'imagen', 'perfil_publicado']
+        fields = [
+            'nombre_clinica', 'direccion', 'telefono', 'imagen',
+            'perfil_publicado', 'region', 'ciudad'
+        ]
         labels = {
             'nombre_clinica': 'Nombre de la Farmacia',
-            'perfil_publicado': '¿Deseas mostrar tu perfil públicamente?',
+            'direccion': 'Dirección',
+            'telefono': 'Teléfono de contacto',
+            'imagen': 'Imagen de perfil',
+            'perfil_publicado': '¿Mostrar perfil públicamente?',
         }
+
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop('user', None)
+        super().__init__(*args, **kwargs)
+
+        if self.instance and self.instance.region:
+            self.fields['ciudad'].queryset = Ciudad.objects.filter(region=self.instance.region).order_by('nombre')
+        else:
+            self.fields['ciudad'].queryset = Ciudad.objects.none()
+
+        if user:
+            self.fields['first_name'].initial = user.first_name
+            self.fields['last_name'].initial = user.last_name
+            self.fields['email'].initial = user.email
+            self.fields['nombre_clinica'].initial = user.profile.nombre_clinica
+            self.fields['direccion'].initial = user.profile.direccion
+            self.fields['telefono'].initial = user.profile.telefono
+            self.fields['region'].initial = user.profile.region
+            self.fields['ciudad'].initial = user.profile.ciudad
+            self.fields['perfil_publicado'].initial = user.profile.perfil_publicado
+            self.fields['imagen'].initial = user.profile.imagen
+
+        if 'region' in self.data:
+            try:
+                region_id = int(self.data.get('region'))
+                self.fields['ciudad'].queryset = Ciudad.objects.filter(region_id=region_id).order_by('nombre')
+            except (ValueError, TypeError):
+                self.fields['ciudad'].queryset = Ciudad.objects.none()
+        elif self.instance and self.instance.region:
+            self.fields['ciudad'].queryset = Ciudad.objects.filter(region=self.instance.region).order_by('nombre')
+            if self.instance.ciudad and self.instance.ciudad not in self.fields['ciudad'].queryset:
+                self.fields['ciudad'].queryset |= Ciudad.objects.filter(id=self.instance.ciudad.id)
+
+    def save(self, commit=True):
+        profile = super().save(commit=False)
+        user = self.instance.user
+
+        user.first_name = self.cleaned_data['first_name']
+        user.last_name = self.cleaned_data['last_name']
+        user.email = self.cleaned_data['email']
+
+        if commit:
+            user.save()
+            profile.save()
+        return profile
+
 
 class EditarPerfilClinicaForm(forms.ModelForm):
     first_name = forms.CharField(max_length=30, required=True, label='Nombre')

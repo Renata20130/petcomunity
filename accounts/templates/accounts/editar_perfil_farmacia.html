@@ -28,7 +28,14 @@
                           <input id="id_imagen" type="file" name="imagen" style="display: none;">
                       </div>
 
+
                       <div class="form-grid-compact">
+
+                        <div class="campo-formulario-compact">
+                            <label for="{{ form.nombre_clinica.id_for_label }}">Nombre de la Farmacia</label>
+                            {{ form.nombre_clinica }}
+                            {{ form.nombre_clinica.errors }}
+                        </div>   
                           <div class="campo-formulario-compact">
                               <label for="id_first_name">Nombre</label>
                               {{ form.first_name }}
@@ -49,6 +56,18 @@
                               {{ form.telefono }}
                               {{ form.telefono.errors }}
                           </div>
+
+                          <div class="campo-formulario-compact">
+                                <label for="id_region">Región</label>
+                                {{ form.region }}
+                                {{ form.region.errors }}
+                            </div>
+
+                            <div class="campo-formulario-compact">
+                                <label for="id_ciudad">Ciudad</label>
+                                {{ form.ciudad }}
+                                {{ form.ciudad.errors }}
+                            </div>
 
                           <div class="campo-formulario-compact switch-container-compact">
                               {{ form.perfil_publicado.label_tag }}

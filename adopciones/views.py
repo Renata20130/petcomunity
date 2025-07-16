@@ -24,8 +24,8 @@ from django.utils import timezone
 
 
 from .forms import FiltroMascotaForm
-
-
+from .forms import MascotaAbandonadaForm
+from .models import MascotaAbandonada
 
 def adopciones(request):
     especie = request.GET.get('especie')  # obtiene lo que viene en ?especie=
@@ -391,6 +391,82 @@ def lista_mascotas_adopcion(request):
     return render(request, 'adopciones/lista_mascotas.html', context)
 
 
+@login_required
+def registrar_mascota_abandonada(request):
+    if request.user.profile.tipo != 'cliente':
+        return redirect('home')  # o mostrar un error
+
+    if request.method == 'POST':
+        form = MascotaAbandonadaForm(request.POST, request.FILES)
+        if form.is_valid():
+            mascota = form.save(commit=False)
+            mascota.registrada_por = request.user
+            mascota.save()
+            return redirect('mis_mascotas_abandonadas')  # redirige donde quieras
+    else:
+        form = MascotaAbandonadaForm()
+
+    return render(request, 'adopciones/registrar_mascota_abandonada.html', {'form': form})
+
+@login_required
+def panel_revision_mascotas(request):
+    if request.user.profile.tipo != 'clinica':
+        return redirect('home')  # O mostrar mensaje de error
+
+    mascotas_pendientes = MascotaAbandonada.objects.filter(estado='pendiente')
+
+    return render(request, 'adopciones/panel_revision.html', {
+        'mascotas': mascotas_pendientes
+    })
+
+@login_required
+def aprobar_mascota(request, mascota_id):
+    mascota = get_object_or_404(MascotaAbandonada, id=mascota_id)
+    if request.user.profile.tipo != 'clinica':
+        return redirect('home')
+
+    mascota.estado = 'aprobada'
+    mascota.aprobada_por = request.user
+    mascota.fecha_aprobacion = timezone.now()
+    mascota.save()
+    return redirect('adopciones:panel_revision')
+
+
+@login_required
+def rechazar_mascota(request, mascota_id):
+    mascota = get_object_or_404(MascotaAbandonada, id=mascota_id)
+    if request.user.profile.tipo != 'clinica':
+        return redirect('home')
+
+    mascota.estado = 'rechazada'
+    mascota.aprobada_por = request.user
+    mascota.fecha_aprobacion = timezone.now()
+    mascota.save()
+    return redirect('adopciones:panel_revision')
+
+def lista_mascotas_adopcion(request):
+    mascotas = MascotaAbandonada.objects.filter(
+        estado='aprobada',
+        adoptada=False
+    ).order_by('-fecha_aprobacion')
+
+    return render(request, 'adopciones/lista_mascotas.html', {
+        'mascotas': mascotas
+    })
+
+@login_required
+def registrar_mascota_abandonada(request):
+    if request.method == 'POST':
+        form = MascotaAbandonadaForm(request.POST, request.FILES)
+        if form.is_valid():
+            mascota = form.save(commit=False)
+            mascota.registrada_por = request.user
+            mascota.save()
+            return redirect('cliente:panel_cliente')  # o donde desees llevarlo después
+    else:
+        form = MascotaAbandonadaForm()
+
+    return render(request, 'adopciones/registrar_mascota_abandonada.html', {'form': form})
 
 
 

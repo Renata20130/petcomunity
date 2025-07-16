@@ -1,35 +1,87 @@
-{% extends "core/base_panel.html" %}
-
+{% extends 'core/base_panel.html' %}
 {% load static %}
 
-{% block title %}Dashboard Clínica{% endblock %} {# Opcional: título específico #}
+{% block title %}Ficha clínica editable - {{ mascota.nombre }}{% endblock %}
 
 {% block extra_css %}
-{# Si tienes CSS específicos adicionales SOLO para el dashboard, van aquí #}
-{# <link rel="stylesheet" href="{% static 'accounts/css/dashboard_especifico.css' %}"> #}
+<link rel="stylesheet" href="{% static 'clinicas/css/registrar_mascota.css' %}">
+<link rel="stylesheet" href="{% static 'clinicas/css/ficha_clinica.css' %}">
 {% endblock %}
 
 {% block content %}
-    <h2>Ficha clínica de {{ mascota.nombre }}</h2>
+<main class="main-content">
+    <h1>Ficha clínica de {{ mascota.nombre_mascota }}</h1>
 
-    <h3>Vacunas aplicadas</h3>
-    <ul>
-    {% for vacuna in vacunas %}
-        <li>{{ vacuna.vacuna.nombre }} - {{ vacuna.fecha_aplicacion }} (Próxima: {{ vacuna.proxima_dosis }})</li>
-    {% empty %}
-        <li>No hay vacunas registradas.</li>
-    {% endfor %}
-    </ul>
-    <a href="{% url 'clinica:agregar_vacuna' mascota.id %}">Agregar vacuna</a>
+    <form method="POST">
+        {% csrf_token %}
 
-    <h3>Consultas médicas</h3>
-    <ul>
-    {% for consulta in consultas %}
-        <li><strong>{{ consulta.fecha }}</strong>: {{ consulta.motivo }} - {{ consulta.diagnostico }}</li>
-    {% empty %}
-        <li>No hay consultas registradas.</li>
-    {% endfor %}
-    </ul>
-    <a href="{% url 'clinica:agregar_consulta' mascota.id %}">Agregar consulta</a>
+        <div class="form-columns">
+            <fieldset class="form-section">
+                <legend><strong>Datos del Tutor</strong></legend>
+                {{ tutor_form.non_field_errors }}
+                {{ tutor_form.as_p }}
+            </fieldset>
 
+            <fieldset class="form-section">
+                <legend><strong>Datos de la Mascota</strong></legend>
+                {{ mascota_form.non_field_errors }}
+                {{ mascota_form.as_p }}
+            </fieldset>
+        </div>
+
+        <button type="submit" name="guardar_tutor_mascota" class="btn-submit-form">
+            <i class="fas fa-save"></i> Guardar Datos Tutor y Mascota
+        </button>
+    </form>
+
+    <hr>
+
+    <section class="consultas-section">
+        <h2>Consultas</h2>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Fecha</th>
+                    <th>Tipo</th>
+                    <th>Motivo</th>
+                    <th>Diagnóstico</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for consulta in consultas %}
+                <tr>
+                    <td>{{ consulta.fecha|date:"d/m/Y H:i" }}</td>
+                    <td>{{ consulta.get_tipo_consulta_display }}</td>
+                    <td>{{ consulta.motivo }}</td>
+                    <td>{{ consulta.diagnostico|default:"-" }}</td>
+                    <td>
+                        <a href="{% url 'clinica:editar_consulta' consulta.id %}" class="btn btn-sm btn-warning">Editar</a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="5">No hay consultas registradas.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <h3>Agregar nueva consulta</h3>
+
+        <form method="POST">
+            {% csrf_token %}
+            {{ consulta_form.non_field_errors }}
+            {{ consulta_form.as_p }}
+            <button type="submit" name="agregar_consulta" class="btn-submit-form">
+                <i class="fas fa-plus"></i> Agregar Consulta
+            </button>
+        </form>
+    </section>
+
+    <div class="back-link">
+        <a href="{% url 'panel_clinica' %}" class="btn-secondary">
+            <i class="fas fa-arrow-left"></i> Volver al Panel
+        </a>
+    </div>
+</main>
 {% endblock %}

@@ -10,47 +10,37 @@
 {% block content %}
 <main class="main-content">
     <div class="form-container">
-        <h1 class="form-title">Registrar Nueva Mascota</h1>
+        <h1 class="form-title">Registrar Nueva Mascota y Tutor</h1>
+
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li class="{{ message.tags }}">{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
 
         <form method="POST" action="{% url 'clinica:registrar_mascota' %}">
             {% csrf_token %}
-            
-            <label for="id_nombre">Nombre:</label>
-            <input type="text" name="nombre" id="id_nombre" required>
 
-            <label for="id_especie">Especie:</label>
-            <select name="especie" id="id_especie" required>
+            <div class="form-columns">
+                <fieldset class="form-section">
+                    <legend><strong>Datos del Tutor</strong></legend>
+                    {{ tutor_form.non_field_errors }}
+                    {{ tutor_form.as_p }}
+                </fieldset>
 
-                <option value="">-- Selecciona una especie --</option>
-                <option value="perro">Perro</option>
-                <option value="gato">Gato</option>
-                <option value="otro">Otro</option>
-            </select>
-
-            <label for="id_raza">Raza:</label>
-            <select name="raza" id="id_raza" disabled required>
-
-                <option value="">Primero selecciona especie</option>
-            </select>
-
-            <label for="id_edad">Edad (años):</label>
-            <input type="number" name="edad" id="id_edad" min="0" required>
-
-            <label for="id_sexo">Sexo:</label>
-            <select name="sexo" id="id_sexo" required>
-                <option value="">-- Selecciona sexo --</option>
-                <option value="Macho">Macho</option>
-                <option value="Hembra">Hembra</option>
-            </select>
-
-            <label for="id_propietario">Propietario (opcional):</label>
-            <input type="text" name="propietario" id="id_propietario" placeholder="Usuario propietario">
+                <fieldset class="form-section">
+                    <legend><strong>Datos de la Mascota</strong></legend>
+                    {{ mascota_form.non_field_errors }}
+                    {{ mascota_form.as_p }}
+                </fieldset>
+            </div>
 
             <button type="submit" class="btn-submit-form">
                 <i class="fas fa-save"></i> Registrar Mascota
             </button>
         </form>
-
         <div class="back-link">
             <a href="{% url 'panel_clinica' %}" class="btn-secondary">
                 <i class="fas fa-arrow-left"></i> Volver al Panel

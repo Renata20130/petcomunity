@@ -1,7 +1,7 @@
 /* registrar_mascota.css */
 
 .main-content {
-    max-width: 600px;
+    max-width: 1500px;
     margin: 2rem auto;
     padding: 1rem;
     background-color: #fff;
@@ -39,7 +39,7 @@ label {
 input[type="text"],
 input[type="number"],
 select {
-    width: 100%;
+    width: 90%;
     padding: 0.5rem 0.8rem;
     border: 1.8px solid #bdc3c7;
     border-radius: 5px;
@@ -94,4 +94,29 @@ button.btn-submit-form:hover {
 i.fas.fa-save,
 i.fas.fa-arrow-left {
     font-size: 1.1rem;
+}
+
+.form-columns {
+    display: flex;
+    gap: 2rem;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.form-section {
+    flex: 1;
+    min-width: 320px;
+}
+
+fieldset {
+    border: 1px solid #ccc;
+    padding: 1rem;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+}
+
+legend {
+    font-weight: bold;
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
 }

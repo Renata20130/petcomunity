@@ -5,6 +5,9 @@ from .models import HorarioAtencion, HistorialVacuna, Consulta
 from django.forms import inlineformset_factory
 from accounts.models import Profile
 from .models import Mascota
+from .models import Tutor
+from .models import Servicio
+
 
 
 class HorarioAtencionForm(forms.ModelForm):
@@ -51,15 +54,39 @@ class ConsultaForm(forms.ModelForm):
             'notas': forms.Textarea(attrs={'class': 'form-control'}),
         }
 
+class TutorForm(forms.ModelForm):
+    class Meta:
+        model = Tutor
+        fields = ['nombre_tutor', 'telefono', 'email', 'direccion']
+        widgets = {
+            # ¡ELIMINA el atributo 'name' de aquí! Django lo manejará automáticamente
+            'nombre_tutor': forms.TextInput(attrs={'id': 'id_tutor_nombre'}),
+            'telefono': forms.TextInput(attrs={'id': 'id_tutor_telefono'}),
+            'email': forms.EmailInput(attrs={'id': 'id_tutor_email'}),
+            'direccion': forms.TextInput(attrs={'id': 'id_tutor_direccion'}),
+        }
+
 class MascotaForm(forms.ModelForm):
     class Meta:
         model = Mascota
-        fields = ['nombre', 'especie', 'raza', 'edad', 'sexo', 'propietario']
+        fields = ['nombre_mascota', 'especie', 'raza', 'edad', 'sexo', 'propietario']
         widgets = {
+            # ¡ELIMINA el atributo 'name' de aquí! Django lo manejará automáticamente
+            'nombre_mascota': forms.TextInput(attrs={'id': 'id_mascota_nombre'}),
             'especie': forms.Select(attrs={'id': 'id_especie'}),
             'raza': forms.Select(attrs={'id': 'id_raza', 'disabled': True}),
-            'nombre': forms.TextInput(attrs={'id': 'id_nombre'}),
             'edad': forms.NumberInput(attrs={'id': 'id_edad'}),
             'sexo': forms.Select(attrs={'id': 'id_sexo'}),
             'propietario': forms.Select(attrs={'id': 'id_propietario'}),
+        }
+
+class ServicioForm(forms.ModelForm):
+    class Meta:
+        model = Servicio
+        fields = ['nombre', 'tipo', 'descripcion', 'precio']
+        widgets = {
+            'nombre': forms.TextInput(attrs={'class': 'form-control'}),
+            'tipo': forms.Select(attrs={'class': 'form-control'}),
+            'descripcion': forms.Textarea(attrs={'class': 'form-control', 'rows': 3}),
+            'precio': forms.NumberInput(attrs={'class': 'form-control'}),
         }

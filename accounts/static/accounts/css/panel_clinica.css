@@ -139,7 +139,8 @@ body {
     align-items: center;
     margin-bottom: 30px;
     padding-bottom: 15px;
-    border-bottom: 1px solid var(--border-color); /* Usamos la variable */
+    border-bottom: 1px solid var(--border-color);
+    
 }
 
 .dashboard-header h1 {
@@ -183,17 +184,21 @@ body {
 /* --- Dashboard Grid & Modules --- */
 .dashboard-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 25px;
+    /* Cambiado: Dos columnas de igual ancho. `1fr 1fr` es ideal para dividir en mitades. */
+    grid-template-columns: 1fr 1fr;
+    gap: 20px; /* Espacio entre los módulos */
+    align-items: start; /* Alinea los módulos desde la parte superior */
 }
 
 .dashboard-module {
     background-color: var(--module-bg);
     padding: 25px;
     border-radius: 8px;
-    box-shadow: var(--shadow-light); /* Usamos la variable de sombra */
+    box-shadow: var(--shadow-light);
     display: flex;
     flex-direction: column;
+    /* Quitamos cualquier propiedad 'grid-column' específica de aquí si existe */
+    /* Lo manejaremos con el nuevo 'dashboard-row' */
 }
 
 .dashboard-module h3 {
@@ -211,14 +216,21 @@ body {
     padding: 2rem 0;
 }
 
-/* --- Module: Mascotas en Adopción --- */
-.module-mascotas {
-    grid-column: span 2;
+.dashboard-row {
+    /* Ocupa ambas columnas del grid padre (.dashboard-grid) */
+    grid-column: 1 / -1; /* Esto hace que el contenedor de fila ocupe todo el ancho del grid */
+    display: grid; /* Y este contenedor de fila se convierte en un nuevo grid */
+    grid-template-columns: 1fr 1fr; /* Con dos columnas propias para sus hijos */
+    gap: 20px; /* Espacio entre los módulos dentro de la fila */
 }
+
+/* --- Module: Mascotas en Adopción --- */
+
 
 .grid-mascotas-panel {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    /* Ajusta el minmax para que las tarjetas de mascotas sean un poco más compactas si es necesario */
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); /* Ejemplo: de 220px a 180px */
     gap: 1.25rem;
 }
 
@@ -276,52 +288,6 @@ body {
     margin: 0;
     font-weight: 600;
     color: var(--text-color-dark);
-}
-
-/* --- Estilos para Módulo de Perfil --- */
-.profile-details-module {
-    text-align: center;
-}
-
-.profile-summary {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 15px;
-    margin-bottom: 20px;
-}
-
-.profile-image-wrapper {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    overflow: hidden;
-    border: 3px solid var(--primary-color); /* Color de tu marca */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-}
-
-.profile-dashboard-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.profile-dashboard-icon-placeholder {
-    font-size: 60px;
-    color: #6c757d;
-}
-
-.profile-info-summary p {
-    margin: 5px 0;
-    color: #555;
-    font-size: 0.95em;
-}
-
-.profile-info-summary strong {
-    color: #333;
 }
 
 /* Usando las variables de estado */

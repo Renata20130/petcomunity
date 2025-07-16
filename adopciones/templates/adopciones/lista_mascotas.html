@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<h1>🐶 Mascotas en Adopción</h1>
+
+<div class="grid-mascotas">
+  {% for mascota in mascotas %}
+    <div class="card-mascota">
+      {% if mascota.foto %}
+        <img src="{{ mascota.foto.url }}" alt="Foto de {{ mascota.nombre }}">
+      {% endif %}
+      <h3>{{ mascota.nombre }}</h3>
+      <p>{{ mascota.descripcion|truncatewords:20 }}</p>
+      <p><strong>Registrada por:</strong> {{ mascota.registrada_por.username }}</p>
+      {% if mascota.aprobada_por %}
+        <p><strong>Revisada por:</strong> {{ mascota.aprobada_por.profile.nombre_clinica }}</p>
+      {% endif %}
+    </div>
+  {% empty %}
+    <p>No hay mascotas en adopción por ahora.</p>
+  {% endfor %}
+</div>
+{% endblock %}

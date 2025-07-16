@@ -107,3 +107,35 @@ class SolicitudAdopcion(models.Model):
 
     def __str__(self):
         return f"Solicitud para {self.mascota.nombre} por {self.nombre_completo}"
+
+
+class MascotaAbandonada(models.Model):
+    ESTADO_REVISION = [
+        ('pendiente', 'Pendiente de revisión'),
+        ('aprobada', 'Aprobada'),
+        ('rechazada', 'Rechazada'),
+    ]
+
+    nombre = models.CharField(max_length=100)
+    descripcion = models.TextField()
+    foto = models.ImageField(upload_to='mascotas_abandonadas/')
+    estado = models.CharField(max_length=10, choices=ESTADO_REVISION, default='pendiente')
+    fecha_registro = models.DateTimeField(auto_now_add=True)
+    adoptada = models.BooleanField(default=False)
+
+    # Usuario que reporta la mascota (cliente)
+    registrada_por = models.ForeignKey(User, on_delete=models.CASCADE, related_name='mascotas_reportadas')
+
+    # Clínica que revisa y aprueba
+    aprobada_por = models.ForeignKey(
+        User,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name='mascotas_aprobadas'
+    )
+
+    fecha_aprobacion = models.DateTimeField(null=True, blank=True)
+
+    def __str__(self):
+        return self.nombre

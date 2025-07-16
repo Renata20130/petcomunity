@@ -1,0 +1,15 @@
+{% extends 'core/base_panel.html' %}
+{% load static %}
+
+{% block title %}Registrar Mascota Abandonada{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>🐾 Registrar Mascota Abandonada</h2>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Enviar para revisión</button>
+    </form>
+</div>
+{% endblock %}

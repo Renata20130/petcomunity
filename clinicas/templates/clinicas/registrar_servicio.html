@@ -1,0 +1,19 @@
+{% extends 'core/base_panel.html' %}
+{% load static %}
+
+{% block title %}Registrar Servicio{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'clinicas/css/registrar_servicio.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2 class="mb-4">Registrar Nuevo Servicio</h2>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Guardar Servicio</button>
+    </form>
+</div>
+{% endblock %}

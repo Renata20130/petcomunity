@@ -169,13 +169,18 @@ def panel_farmacia(request):
         form = ProductoForm(request.POST, request.FILES)
         if form.is_valid():
             producto = form.save(commit=False)
-            producto.farmacia = request.user  # Asumiendo que el usuario es la farmacia
+            producto.farmacia = request.user
             producto.save()
-            # Mensaje o redirección
+            # Puedes agregar un mensaje de éxito aquí
     else:
         form = ProductoForm()
 
-    return render(request, 'accounts/panel_farmacia.html', {'form': form})
+    productos = Producto.objects.filter(farmacia=request.user)
+
+    return render(request, 'accounts/panel_farmacia.html', {
+        'form': form,
+        'productos': productos,
+    })
 
 @login_required
 @tipo_requerido('cliente')
@@ -305,18 +310,17 @@ def editar_perfil_farmacia(request):
         return redirect('home')
 
     if request.method == 'POST':
-        form = EditarPerfilFarmaciaForm(request.POST, request.FILES, instance=profile)
+        form = EditarPerfilFarmaciaForm(request.POST, request.FILES, instance=profile, user=request.user)
         if form.is_valid():
             form.save()
             messages.success(request, "Perfil actualizado correctamente.")
             return redirect('productos:pedidos_farmacia')
     else:
-        form = EditarPerfilFarmaciaForm(instance=profile)
+        form = EditarPerfilFarmaciaForm(instance=profile, user=request.user)  # <--- Aquí pasas user
 
     return render(request, 'accounts/editar_perfil_farmacia.html', {
         'form': form
     })
-
 
 
 

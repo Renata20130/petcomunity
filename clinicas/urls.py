@@ -14,8 +14,12 @@ urlpatterns = [
 
     path('consulta/nueva/', views.nueva_consulta, name='nueva_consulta'),
 
+    path('pacientes/', views.listado_mascotas, name='listado_mascotas'),
 
+    path('mascota/<int:mascota_id>/ficha/', views.ficha_clinica, name='ficha_clinica'),
 
+    path('servicios/registrar/', views.registrar_servicio, name='registrar_servicio'),
 
-    
+    path('servicios/', views.listado_servicios, name='listado_servicios'),
+
 ]

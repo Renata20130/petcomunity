@@ -47,6 +47,49 @@
     </div>
   </div>
 
+  <!-- Módulo Productos -->
+  <div class="dashboard-module">
+    <h3>🛍️ Productos publicados</h3>
+    
+    <div class="boton-agregar-producto" style="text-align: right; margin-bottom: 1rem;">
+      <a href="{% url 'productos:subir_producto' %}" class="btn btn-primary">+ Subir Producto</a>
+
+    </div>
+    
+    {% if productos %}
+    <table class="tabla-productos" style="width: 100%; border-collapse: collapse;">
+      <thead style="background-color: #f0f0f0;">
+        <tr>
+          <th>Imagen</th>
+          <th>Nombre</th>
+          <th>Precio</th>
+          <th>Stock</th>
+          <th>Estado</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for producto in productos %}
+        <tr>
+          <td>
+            {% if producto.imagen %}
+              <img src="{{ producto.imagen.url }}" alt="{{ producto.nombre }}" width="60" height="60" style="object-fit: cover; border-radius: 6px;">
+            {% else %}
+              <span style="color: #999;">Sin imagen</span>
+            {% endif %}
+          </td>
+          <td>{{ producto.nombre }}</td>
+          <td>${{ producto.precio }}</td>
+          <td>{{ producto.stock }}</td>
+          <td>{{ producto.estado }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+      <p>No tienes productos registrados aún.</p>
+    {% endif %}
+  </div>
+
 
   <!-- Módulo Pedidos -->
   <div class="dashboard-module">
@@ -64,19 +107,19 @@
         </thead>
         <tbody>
           {% for pedido in pedidos %}
-            <tr>
-              <td>{{ pedido.id }}</td>
-              <td>{{ pedido.cliente.username }}</td>
-              <td>{{ pedido.creado|date:"d M Y H:i" }}</td>
-              <td>{{ pedido.estado }}</td>
-              <td>
-                <ul>
-                  {% for item in pedido.items.all %}
-                    <li>{{ item.producto.nombre }} - Cantidad: {{ item.cantidad }}</li>
-                  {% endfor %}
-                </ul>
-              </td>
-            </tr>
+          <tr>
+            <td>{{ pedido.id }}</td>
+            <td>{{ pedido.cliente.username }}</td>
+            <td>{{ pedido.creado|date:"d M Y H:i" }}</td>
+            <td>{{ pedido.estado }}</td>
+            <td>
+              <ul>
+                {% for item in pedido.items.all %}
+                <li>{{ item.producto.nombre }} - Cantidad: {{ item.cantidad }}</li>
+                {% endfor %}
+              </ul>
+            </td>
+          </tr>
           {% endfor %}
         </tbody>
       </table>

@@ -35,7 +35,8 @@ def panel_farmacia(request):
      # Filtrar pedidos que tengan productos de esta farmacia
     pedidos = Pedido.objects.filter(
         items__producto__farmacia=request.user
-    ).distinct().prefetch_related('items', 'cliente')
+    ).distinct().prefetch_related('items').select_related('cliente')
+
 
     return render(request, 'productos/panel_farmacia.html', {
         'productos': productos,
@@ -59,7 +60,7 @@ def editar_producto(request, producto_id):
         if form.is_valid():
             form.save()
             messages.success(request, 'Producto actualizado correctamente.')
-            return redirect('panel_farmacia')
+            return redirect('productos:panel_farmacia')
     else:
         form = ProductoForm(instance=producto)
 
@@ -97,6 +98,24 @@ def editar_perfil_farmacia(request):
         return redirect('productos:pedidos_farmacia')  # O a donde corresponda
 
     return render(request, 'accounts/editar_perfil_farmacia.html', {'profile': profile})
+
+@login_required
+@tipo_requerido('farmacia')
+def mis_productos(request):
+    productos = Producto.objects.filter(farmacia=request.user).order_by('-fecha_creacion')
+    return render(request, 'productos/mis_productos.html', {'productos': productos})
+
+from django.contrib import messages
+
+@login_required
+@tipo_requerido('farmacia')
+def eliminar_producto(request, producto_id):
+    producto = get_object_or_404(Producto, id=producto_id, farmacia=request.user)
+    if request.method == 'POST':
+        producto.delete()
+        messages.success(request, 'Producto eliminado correctamente.')
+        return redirect('productos:mis_productos')
+    return render(request, 'productos/confirmar_eliminar.html', {'producto': producto})
 
 
 

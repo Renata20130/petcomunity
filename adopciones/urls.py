@@ -6,6 +6,8 @@ from .views import eliminar_adopcion
 from .views import mis_postulaciones
 from accounts import views as accounts_views
 
+app_name = 'adopciones'
+
 urlpatterns = [
     path('panel-clinica/', accounts_views.panel_clinica, name='panel_clinica'),
     
@@ -32,5 +34,14 @@ urlpatterns = [
 
     path('mis-postulaciones/', mis_postulaciones, name='mis_postulaciones'),
 
+    path('registrar-abandono/', views.registrar_mascota_abandonada, name='registrar_abandono'),
+
+    path('revisar/', views.panel_revision_mascotas, name='panel_revision'),
+    path('aprobar/<int:mascota_id>/', views.aprobar_mascota, name='aprobar_mascota'),
+    path('rechazar/<int:mascota_id>/', views.rechazar_mascota, name='rechazar_mascota'),
+
+    path('', views.lista_mascotas_adopcion, name='lista_adopciones'),
+
+    path('registrar/', views.registrar_mascota_abandonada, name='registrar_mascota'),
 
 ]

@@ -63,6 +63,7 @@
                         <li><a href="{% url 'pedidos:mis_pedidos' %}">Mis Pedidos</a></li>
                         <li><a href="#">Mis Adopciones</a></li>
                     {% elif request.user.profile.tipo == "farmacia" %}
+                        <li><a href="{% url 'core:home' %}">Inicio</a></li>
                         <li><a href="{% url 'productos:panel_farmacia' %}">Panel Farmacia</a></li>
                         <li><a href="{% url 'panel_farmacia' %}">Panel Pedidos Farmacia</a></li>
                     {% endif %}
@@ -86,22 +87,27 @@
                 <ul>
                     {% if request.user.profile.tipo == "clinica" %}
                         <li {% if request.resolver_match.url_name == 'panel_clinica' %}class="active"{% endif %}>
-                            <a href="{% url 'panel_clinica' %}"><i class="fas fa-home"></i> Panel de control</a>
+                            <a href="{% url 'panel_clinica' %}"><i class="fas fa-home"></i> Página principal</a>
                         </li>
                         <li {% if request.resolver_match.url_name == 'editar_perfil_clinica' %}class="active"{% endif %}>
                             <a href="{% url 'editar_perfil_clinica' %}"><i class="fas fa-user"></i> Mi Perfil</a>
                         </li>
-                        <li {% if request.resolver_match.url_name == 'mis_publicaciones_clinica' %}class="active"{% endif %}>
-                            <a href="{% url 'mis_publicaciones_clinica' %}"><i class="fas fa-paw"></i> Mis Mascotas en Adopción</a>
-                        </li>
-                        <li {% if request.resolver_match.url_name == 'publicar_adopcion' %}class="active"{% endif %}>
-                            <a href="{% url 'publicar_adopcion' %}"><i class="fas fa-plus-circle"></i> Publicar Nueva Mascota</a>
+                        <li {% if request.resolver_match.url_name == 'clinica:listado_servicios' %}class="active"{% endif %}>
+                            <a href="{% url 'clinica:listado_servicios' %}"><i class="fas fa-user"></i> Servicios</a>
                         </li>
                         <li {% if request.resolver_match.url_name == 'panel_reservas_clinica' %}class="active"{% endif %}>
-                            <a href="{% url 'panel_reservas_clinica' %}"><i class="fas fa-calendar-alt"></i> Gestionar Reservas</a>
+                            <a href="{% url 'panel_reservas_clinica' %}"><i class="fas fa-calendar-alt"></i> Citas y reservas</a>
+                        </li> 
+                        <li {% if request.resolver_match.url_name == 'clinicas:listado_mascotas' %}class="active"{% endif %}>
+                            <a href="{% url 'clinicas:listado_mascotas' %}"><i class="fas fa-calendar-alt"></i> Pacientes</a>
+                        </li>     
+                        <li {% if request.resolver_match.url_name == 'mis_publicaciones_clinica' %}class="active"{% endif %}>
+                            <a href="{% url 'adopciones:mis_publicaciones_clinica' %}"><i class="fas fa-paw"></i> Mascotas en Adopción</a>
                         </li>
-                        <li><a href="#"><i class="fas fa-clock"></i> Horas Médicas</a></li>
-                        <li><a href="#"><i class="fas fa-user-cog"></i> Ajustes</a></li>
+                        <li {% if request.resolver_match.url_name == 'panel_solicitudes' %}class="active"{% endif %}>
+                            <a href="{% url 'panel_solicitudes' %}"><i class="fas fa-paw"></i> Solicitudes de adopción</a>
+                        </li>
+                    
                     {% elif request.user.profile.tipo == "cliente" %}
                         <li {% if request.resolver_match.url_name == 'panel_cliente' %}class="active"{% endif %}>
                             <a href="{% url 'panel_cliente' %}"><i class="fas fa-user"></i> Panel Cliente</a>
@@ -116,13 +122,20 @@
                             <a href="{% url 'pedidos:mis_pedidos' %}"><i class="fas fa-box"></i> Mis pedidos</a>
                         </li>
                         <li {% if request.resolver_match.url_name == 'mis_postulaciones' %}class="active"{% endif %}>
-                            <a href="{% url 'mis_postulaciones' %}"><i class="fas fa-paw"></i> Mis adopciones</a>
+                            <a href="{% url 'adopciones:mis_postulaciones' %}"><i class="fas fa-paw"></i> Mis adopciones</a>
                         </li>
                         {# Aquí ya quité "mis_solicitudes" porque no existe la URL #}
                         <li><a href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i> Cerrar sesión</a></li>
                     {% elif request.user.profile.tipo == "farmacia" %}
+                    
                         <li {% if request.resolver_match.url_name == 'panel_farmacia' %}class="active"{% endif %}>
                             <a href="{% url 'productos:panel_farmacia' %}"><i class="fas fa-prescription-bottle-alt"></i> Panel Farmacia</a>
+                        </li>
+                        <li {% if request.resolver_match.url_name == 'editar_perfil_farmacia' %}class="active"{% endif %}>
+                            <a href="{% url 'editar_perfil_farmacia' %}"><i class="fas fa-box"></i> Mi perfil</a>
+                        </li>
+                        <li {% if request.resolver_match.url_name == 'mis_productos' %}class="active"{% endif %}>
+                            <a href="{% url 'productos:mis_productos' %}"><i class="fas fa-box"></i> Productos</a>
                         </li>
                         <li {% if request.resolver_match.url_name == 'pedidos_farmacia' %}class="active"{% endif %}>
                             <a href="{% url 'productos:pedidos_farmacia' %}"><i class="fas fa-box"></i> Pedidos</a>

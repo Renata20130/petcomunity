@@ -1,0 +1,86 @@
+/* Contenedor principal */
+.container {
+    max-width: 600px;
+    background-color: #fff;
+    padding: 2.5rem 3rem;
+    margin: 3rem auto;
+    border-radius: 20px;
+    box-shadow: 0 12px 30px rgba(100, 80, 180, 0.12);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Título */
+h2 {
+    color: #6a4bcf;
+    font-weight: 700;
+    font-size: 2.1rem;
+    margin-bottom: 1.8rem;
+    text-align: center;
+}
+
+/* Formulario: etiquetas y campos */
+form label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: #4b3f96;
+}
+
+form input[type="text"],
+form input[type="number"],
+form select,
+form textarea {
+    width: 100%;
+    padding: 12px 14px;
+    margin-bottom: 1.4rem;
+    border-radius: 12px;
+    border: 1.7px solid #a59fe1;
+    font-size: 1rem;
+    color: #4b4b4b;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    font-family: inherit;
+}
+
+form input[type="text"]:focus,
+form input[type="number"]:focus,
+form select:focus,
+form textarea:focus {
+    border-color: #6a4bcf;
+    box-shadow: 0 0 8px #6a4bcf;
+    outline: none;
+}
+
+/* Botón guardar */
+button.btn-primary {
+    background-color: #8e72dc;
+    border: none;
+    border-radius: 16px;
+    padding: 0.8rem 2rem;
+    font-weight: 700;
+    font-size: 1.15rem;
+    color: white;
+    cursor: pointer;
+    display: block;
+    margin: 0 auto;
+    transition: background-color 0.3s ease;
+}
+
+button.btn-primary:hover {
+    background-color: #6a4bcf;
+}
+
+/* Ajuste para los párrafos generados por form.as_p */
+form p {
+    margin-bottom: 1rem;
+}
+
+/* Para mostrar placeholders (si usas en los widgets) */
+::placeholder {
+    color: #b0a9e6;
+}
+
+/* Textarea tamaño */
+textarea {
+    resize: vertical;
+    min-height: 80px;
+}

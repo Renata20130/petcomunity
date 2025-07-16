@@ -1,0 +1,48 @@
+{% extends "core/base_panel.html" %}
+{% load static %}
+
+{% block title %}Revisión de Mascotas Abandonadas{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>📋 Mascotas Pendientes de Revisión</h2>
+
+    {% if mascotas %}
+        <table class="table table-bordered table-hover mt-3">
+            <thead class="table-dark">
+                <tr>
+                    <th>Foto</th>
+                    <th>Nombre</th>
+                    <th>Descripción</th>
+                    <th>Registrado por</th>
+                    <th>Fecha</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for mascota in mascotas %}
+                    <tr>
+                        <td>
+                            {% if mascota.foto %}
+                                <img src="{{ mascota.foto.url }}" alt="{{ mascota.nombre }}" width="60" height="60" style="object-fit: cover;">
+                            {% else %}
+                                Sin foto
+                            {% endif %}
+                        </td>
+                        <td>{{ mascota.nombre }}</td>
+                        <td>{{ mascota.descripcion|truncatewords:10 }}</td>
+                        <td>{{ mascota.registrada_por.username }}</td>
+                        <td>{{ mascota.fecha_registro|date:"d M Y" }}</td>
+                        <td>
+                            <a href="{% url 'adopciones:aprobar_mascota' mascota.id %}" class="btn btn-success btn-sm">Aprobar</a>
+                            <a href="{% url 'adopciones:rechazar_mascota' mascota.id %}" class="btn btn-danger btn-sm">Rechazar</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No hay mascotas pendientes.</p>
+    {% endif %}
+</div>
+{% endblock %}

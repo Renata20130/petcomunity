@@ -12,211 +12,161 @@
 {% block content %}
     <main class="main-content">
         <header class="dashboard-header">
-            <h1>Panel de Control</h1>
+            <h1>Página principal</h1>
             <div class="header-actions">
-                <a href="{% url 'publicar_adopcion' %}" class="btn-primary"><i class="fas fa-plus"></i> Nueva Publicación</a>
+                <a href="{% url 'publicar_adopcion' %}" class="btn-primary"><i class="fas fa-plus"></i> Publicar una mascota</a>
                 <a href="{% url 'panel_reservas_clinica' %}" class="btn-secondary"><i class="fas fa-calendar"></i> Ver Reservas</a>
+                <a href="{% url 'clinica:nueva_consulta' %}" class="btn-primary">Nueva Consulta</a>
+                <a href="{% url 'adopciones:panel_revision' %}" class="btn btn-outline-secondary">📋 Revisar Mascotas Abandonadas</a>
+
             </div>
         </header>
 
         <div class="dashboard-grid">
-            {# Aquí se mostrarán los módulos del dashboard #}
-            {% if request.user.profile.tipo == "clinica" %}
-            <div class="dashboard-module profile-details-module">
-                <h3>Mi Perfil de Clínica</h3>
-                <div class="profile-summary">
-                    {% if request.user.profile.imagen %}
-                        <div class="profile-image-wrapper">
-                            <img src="{{ request.user.profile.imagen.url }}" alt="Logo de {{ request.user.profile.nombre_clinica|default:'tu clínica' }}" class="profile-dashboard-image">
+            {# FILA 1: Mascotas en Adopción y Solicitudes de Adopción (al lado) #}
+            <div class="dashboard-row">
+                <div class="dashboard-module module-mascotas">
+                    <h3>Mascotas en Adopción (Resumen)</h3>
+                    {% if mascotas %}
+                        <div class="grid-mascotas-panel">
+                            {% for mascota in mascotas|slice:":4" %} {# Muestra solo 3 mascotas de resumen #}
+                                <div class="tarjeta-mascota-panel" id="mascota-{{ mascota.id }}">
+                                    <a href="{% url 'adopciones:detalle_mascota' mascota.id %}">
+                                        <img src="{{ mascota.imagen.url }}" alt="{{ mascota.nombre }}">
+                                    </a>
+                                    <div class="info">
+                                        <h4>{{ mascota.nombre }}</h4>
+                                        <p><strong>Especie:</strong> {{ mascota.especie }}</p>
+                                        <p><strong>Edad:</strong> {{ mascota.edad }} años</p>
+                                        
+                                        <form action="{% url 'adopciones:eliminar_adopcion' mascota.pk %}" method="POST" class="form-eliminar-panel" onsubmit="return confirmarEliminacion();">
+                                            {% csrf_token %}
+                                            <button type="submit" class="btn-eliminar-tarjeta" title="Eliminar publicación">
+                                                <i class="fas fa-trash-alt"></i>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                        <div class="ver-mas-link">
+                            <a href="{% url 'adopciones:mis_publicaciones_clinica' %}">Ver todas las mascotas <i class="fas fa-arrow-right"></i></a>
                         </div>
                     {% else %}
-                        <div class="profile-image-wrapper">
-                            <i class="fas fa-clinic-medical profile-dashboard-icon-placeholder"></i>
-                        </div>
+                        <p class="no-data">No has publicado ninguna mascota aún.</p>
                     {% endif %}
-
-                    <div class="profile-info-summary">
-                        <p><strong>Nombre:</strong> {{ request.user.profile.nombre_clinica|default:"No especificado" }}</p>
-                        <p><strong>Dirección:</strong> {{ request.user.profile.direccion|default:"No especificada" }}</p>
-                        <p><strong>Teléfono:</strong> {{ request.user.profile.telefono|default:"No especificado" }}</p>
-                        <p><strong>Estado del perfil:</strong>
-                            {% if request.user.profile.perfil_publicado %}
-                                <span class="status-active"><i class="fas fa-check-circle"></i> Publicado</span>
-                            {% else %}
-                                <span class="status-inactive"><i class="fas fa-exclamation-triangle"></i> Pendiente (No público)</span>
-                            {% endif %}
-                        </p>
-                    </div>
                 </div>
-                <div class="profile-actions">
-                    <a href="{% url 'editar_perfil_clinica' %}" class="btn-edit-profile">
-                        <i class="fas fa-cog"></i> Editar Perfil
-                    </a>
-                </div>
-            </div>
-            {% endif %}
-            
-            <div class="dashboard-module module-mascotas">
-                <h3>Mascotas en Adopción (Resumen)</h3>
-                {% if mascotas %}
-                    <div class="grid-mascotas-panel">
-                        {% for mascota in mascotas|slice:":3" %} {# Muestra solo 3 mascotas de resumen #}
-                            <div class="tarjeta-mascota-panel" id="mascota-{{ mascota.id }}">
-                                <a href="{% url 'detalle_mascota' mascota.id %}">
-                                    <img src="{{ mascota.imagen.url }}" alt="{{ mascota.nombre }}">
-                                </a>
-                                <div class="info">
-                                    <h4>{{ mascota.nombre }}</h4>
-                                    <p><strong>Especie:</strong> {{ mascota.especie }}</p>
-                                    <p><strong>Edad:</strong> {{ mascota.edad }} años</p>
-                                    <div class="estado-switch-container">
-                                        <p><strong>Estado:</strong></p>
-                                        <label class="switch">
-                                            <input type="checkbox" data-id="{{ mascota.id }}" {% if mascota.estado == 'publicada' %}checked{% endif %}>
-                                            <span class="slider round"></span>
-                                        </label>
-                                    </div>
-                                    <form action="{% url 'eliminar_adopcion' mascota.pk %}" method="POST" class="form-eliminar-panel" onsubmit="return confirmarEliminacion();">
-                                        {% csrf_token %}
-                                        <button type="submit" class="btn-eliminar-tarjeta" title="Eliminar publicación">
-                                            <i class="fas fa-trash-alt"></i>
-                                        </button>
-                                    </form>
-                                </div>
-                            </div>
-                        {% endfor %}
-                    </div>
-                    <div class="ver-mas-link">
-                        <a href="{% url 'mis_publicaciones_clinica' %}">Ver todas las mascotas <i class="fas fa-arrow-right"></i></a>
-                    </div>
-                {% else %}
-                    <p class="no-data">No has publicado ninguna mascota aún.</p>
-                {% endif %}
-            </div>
 
-            <a href="{% url 'clinica:nueva_consulta' %}" class="btn btn-primary">
-                Nueva Consulta
-            </a>
-            <div class="dashboard-module module-solicitudes-adopcion">
-                <h3>Solicitudes de Adopción Recibidas</h3>
-                {% if solicitudes %}
-                    <ul class="lista-solicitudes-adopcion">
-                        {% for solicitud in solicitudes|slice:":5" %}
-                            <li>
-                                <strong>Solicitante:</strong> {{ solicitud.nombre_completo }} <br>
-                                <strong>Email:</strong> {{ solicitud.email }} <br>
-                                <strong>Teléfono:</strong> {{ solicitud.telefono }} <br>
-                                <strong>Mascota:</strong> {{ solicitud.mascota.nombre }} <br>
-                                <strong>Fecha de solicitud:</strong> {{ solicitud.fecha_envio|date:"d/m/Y H:i" }}
-                            </li>
-                            <hr>
-                        {% endfor %}
-                    </ul>
-                    <div class="ver-mas-link">
-                        <a href="{% url 'panel_solicitudes' %}">Ver todas las solicitudes <i class="fas fa-arrow-right"></i></a>
-                    </div>
-                {% else %}
-                    <p>No tienes solicitudes nuevas.</p>
-                {% endif %}
-            </div>
-
-            <div class="dashboard-module module-reservas">
-                <h3>Reservas Recibidas</h3>
-                <p>TEST: Total reservas = {{ reservas|length }}</p>
-
-                {% if reservas %}
-                    <div class="tabla-scroll">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Cliente</th>
-                                    <th>Mascota</th>
-                                    <th>Fecha</th>
-                                    <th>Hora</th>
-                                    <th>Motivo</th>
-                                    <th>Estado</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% for reserva in reservas %}
+                <div class="dashboard-module module-solicitudes-adopcion">
+                    <h3>Solicitudes de Adopción Recibidas</h3>
+                    {% if solicitudes %}
+                        <div class="tabla-scroll">
+                            <table>
+                                <thead>
                                     <tr>
-                                        <td>{{ reserva.nombre_cliente }}</td>
-                                        <td>{{ reserva.nombre_mascota }}</td>
-                                        <td>{{ reserva.fecha }}</td>
-                                        <td>{{ reserva.hora }}</td>
-                                        <td>{{ reserva.motivo }}</td>
-                                        <td><span class="estado-reserva-{{ reserva.estado|lower }}">{{ reserva.estado|capfirst }}</span></td>
+                                        <th>Solicitante</th>
+                                        <th>Mascota</th>
+                                        <th>Fecha</th>
+                                        {# Puedes añadir más columnas aquí si son relevantes para el dashboard, ej. Estado #}
                                     </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
-                    </div>
-                {% else %}
-                    <p class="no-data">No hay reservas aún.</p>
-                {% endif %}
-
-            </div>
-
-            <div class="dashboard-module module-horas-medicas">
-                <h3>Registro de Horas Médicas</h3>
-                <form action="#" method="POST">
-                    {% csrf_token %}
-                    <div class="form-group">
-                        <label for="fecha_horas">Fecha:</label>
-                        <input type="date" id="fecha_horas" name="fecha_horas" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="horas_trabajadas">Horas Trabajadas:</label>
-                        <input type="number" id="horas_trabajadas" name="horas_trabajadas" class="form-control" min="0.5" step="0.5" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="descripcion_horas">Descripción (opcional):</label>
-                        <textarea id="descripcion_horas" name="descripcion_horas" class="form-control" rows="2"></textarea>
-                    </div>
-                    <button type="submit" class="btn-submit-horas">Registrar Horas</button>
-                </form>
-                <div class="recent-hours">
-                    <h4>Tus Últimos Registros</h4>
-                    <ul>
-                        <li>05/07/2025: 8 horas (Consulta general)</li>
-                        <li>04/07/2025: 7.5 horas (Cirugías y post-operatorios)</li>
-                    </ul>
+                                </thead>
+                                <tbody>
+                                    {# Mostrar solo las primeras 5 solicitudes para un resumen rápido #}
+                                    {% for solicitud in solicitudes|slice:":5" %}
+                                        <tr>
+                                            <td>{{ solicitud.nombre_completo }}</td>
+                                            <td>{{ solicitud.mascota.nombre }}</td>
+                                            <td>{{ solicitud.fecha_envio|date:"d/m/Y H:i" }}</td>
+                                            {# Opcional: <td><span class="estado-solicitud-{{ solicitud.estado|lower }}">{{ solicitud.estado|capfirst }}</span></td> #}
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="ver-mas-link">
+                            <a href="{% url 'panel_solicitudes' %}">Ver todas las solicitudes <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    {% else %}
+                        <p class="no-data">No tienes solicitudes nuevas.</p>
+                    {% endif %}
                 </div>
             </div>
 
-            <div class="dashboard-module module-mascotas-registradas">
-                <h3>Mascotas Registradas en la Clínica</h3>
-                {% if mascotas_clinica %}
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>Nombre</th><th>Especie</th><th>Edad</th><th>Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for mascota in mascotas_clinica %}
-                            <tr>
-                                <td>{{ mascota.nombre }}</td>
-                                <td>{{ mascota.especie }}</td>
-                                <td>{{ mascota.edad }}</td>
-                                <td>
-                                    <a href="{% url 'clinicas:ficha_clinica' mascota.id %}" class="btn btn-sm btn-primary">Ver ficha clínica</a>
-                                </td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                    <div class="ver-mas-link">
-                        <a href="{% url 'clinicas:listado_mascotas' %}">Ver todas las mascotas registradas <i class="fas fa-arrow-right"></i></a>
-                    </div>
-                {% else %}
-                    <p>No hay mascotas registradas para atención.</p>
-                {% endif %}
-           
-                <div class="acciones-module">
-                    <a href="{% url 'clinica:registrar_mascota' %}">Registrar nueva mascota</a>
+            {# FILA 2: Reservas Recibidas y Mascotas Registradas (al lado) #}
+            <div class="dashboard-row">
+                <div class="dashboard-module module-reservas">
+                    <h3>Reservas Recibidas</h3>
+                    {% if reservas %}
+                        <div class="tabla-scroll">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Cliente</th>
+                                        <th>Mascota</th>
+                                        <th>Fecha</th>
+                                        <th>Hora</th>
+                                        {# Mantengo Motivo y Estado comentados para no sobrecargar el espacio, descomenta si los necesitas #}
+                                        {# <th>Motivo</th> #}
+                                        {# <th>Estado</th> #}
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for reserva in reservas %}
+                                        <tr>
+                                            <td>{{ reserva.nombre_cliente }}</td>
+                                            <td>{{ reserva.nombre_mascota }}</td>
+                                            <td>{{ reserva.fecha }}</td>
+                                            <td>{{ reserva.hora }}</td>
+                                            {# <td>{{ reserva.motivo }}</td> #}
+                                            {# <td><span class="estado-reserva-{{ reserva.estado|lower }}">{{ reserva.estado|capfirst }}</span></td> #}
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% else %}
+                        <p class="no-data">No hay reservas aún.</p>
+                    {% endif %}
+                </div>
 
-                    </a>
+                <div class="dashboard-module module-mascotas-registradas">
+                    <h3>Mascotas Registradas en la Clínica</h3>
+                    {% if mascotas_clinica %}
+                        <div class="tabla-scroll">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Nombre</th>
+                                        <th>Especie</th>
+                                        <th>Edad</th>
+                                        <th>Propietario</th> {# Útil para identificar al dueño #}
+                                        <th>Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for mascota in mascotas_clinica|slice:":5" %} {# Limitar para el dashboard #}
+                                        <tr>
+                                            <td>{{ mascota.nombre_mascota }}</td>
+                                            <td>{{ mascota.especie }}</td>
+                                            <td>{{ mascota.edad }}</td>
+                                            <td>{{ mascota.tutor.nombre_tutor }}</td> {# Asumiendo que existe el campo `nombre_completo` #}
+                                            <td>
+                                                <a href="" class="btn btn-sm btn-primary">Ver ficha clínica</a>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="ver-mas-link">
+                            <a href="{% url 'clinicas:listado_mascotas' %}">Ver todas las mascotas registradas <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    {% else %}
+                        <p>No hay mascotas registradas para atención.</p>
+                    {% endif %}
+                    <div class="acciones-module">
+                        <a href="{% url 'clinica:registrar_mascota' %}" class="btn-primary">Registrar nueva mascota</a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -224,6 +174,5 @@
 {% endblock %}
 
 {% block extra_js %}
-{# Puedes poner aquí scripts JS específicos SOLO para el dashboard principal si son necesarios #}
-{# Por ejemplo: <script src="{% static 'accounts/js/dashboard_charts.js' %}" defer></script> #}
-{% endblock %} 
+{# Aquí puedes poner scripts JS específicos para el dashboard si son necesarios #}
+{% endblock %}

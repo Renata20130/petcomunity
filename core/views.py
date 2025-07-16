@@ -21,6 +21,8 @@ from adopciones.forms import FiltroMascotaForm
 
 import locale
 
+from clinicas.views import listado_servicios, registrar_servicio
+
 
 def adopciones(request):
     form = FiltroMascotaForm(request.GET or None)
@@ -174,4 +176,12 @@ def productos_publicados(request):
         })
 
     return render(request, 'core/productos_publicados.html', {'productos': productos_con_precio_formateado})
+
+
+def panel_listado_servicios(request):
+    return listado_servicios(request)
+
+def panel_registrar_servicio(request):
+    return registrar_servicio(request)
+
 

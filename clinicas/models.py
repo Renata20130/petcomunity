@@ -22,6 +22,16 @@ class HorarioAtencion(models.Model):
     def __str__(self):
         return f"{self.profile} - {self.dia}: {self.hora_inicio} a {self.hora_fin}"
 
+class Tutor(models.Model):
+    nombre_tutor = models.CharField(max_length=100)
+    telefono = models.CharField(max_length=20, blank=True)
+    email = models.EmailField(blank=True, null=True)
+    direccion = models.CharField(max_length=200, blank=True, null=True)
+
+    def __str__(self):
+        return self.nombre
+
+
 class Mascota(models.Model):
     ESPECIE_CHOICES = [
         ('perro', 'Canino'),
@@ -29,15 +39,26 @@ class Mascota(models.Model):
         ('otro', 'Otro'),
     ]
 
-    nombre = models.CharField(max_length=100)
+    nombre_mascota = models.CharField(max_length=100)
+
     especie = models.CharField(max_length=20, choices=ESPECIE_CHOICES)
     raza = models.CharField(max_length=100, blank=True, null=True) 
     edad = models.PositiveIntegerField()
     sexo = models.CharField(max_length=10, choices=[('Macho', 'Macho'), ('Hembra', 'Hembra')])
-    propietario = models.ForeignKey(
-        User,
+    
+    tutor = models.ForeignKey(
+        Tutor,
         on_delete=models.CASCADE,
         related_name='mascotas',
+        null=False,
+        blank=False
+    )
+
+    
+    propietario = models.ForeignKey(
+        User,
+        on_delete=models.SET_NULL,
+        related_name='mascotas_usuario',
         null=True,
         blank=True
     )
@@ -49,9 +70,9 @@ class Mascota(models.Model):
     )
 
     def __str__(self):
-        propietario_str = self.propietario.username if self.propietario else "Sin propietario"
-        return f"{self.nombre} - {propietario_str}"
-        
+        return f"{self.nombre_mascota} - Tutor: {self.tutor.nombre_tutor}"
+
+
 class Vacuna(models.Model):
     nombre = models.CharField(max_length=100)
     descripcion = models.TextField(blank=True, null=True)
@@ -108,3 +129,20 @@ class Consulta(models.Model):
     
     class Meta:
         ordering = ['-fecha']
+
+
+class Servicio(models.Model):
+    TIPO_CHOICES = [
+        ('consulta', 'Consulta'),
+        ('vacuna', 'Vacuna'),
+        ('cirugia', 'Cirugía'),
+        ('otro', 'Otro'),
+    ]
+
+    nombre = models.CharField(max_length=100)
+    tipo = models.CharField(max_length=20, choices=TIPO_CHOICES)
+    descripcion = models.TextField(blank=True)
+    precio = models.DecimalField(max_digits=8, decimal_places=2)
+
+    def __str__(self):
+        return f"{self.nombre} ({self.get_tipo_display()})"

@@ -3,6 +3,7 @@ from .models import MascotaEnAdopcion
 from django.forms.widgets import ClearableFileInput
 from reservas.models import Raza
 from ubicacion.models import Region, Ciudad
+from .models import MascotaAbandonada
 
 
 ESPECIE_ADOPCION_CHOICES = [
@@ -148,6 +149,17 @@ class FiltroMascotaForm(forms.Form):
         elif self.initial.get('region'):
             region = self.initial.get('region')
             self.fields['ciudad'].queryset = Ciudad.objects.filter(region=region).order_by('nombre')
+
+class MascotaAbandonadaForm(forms.ModelForm):
+    class Meta:
+        model = MascotaAbandonada
+        fields = ['nombre', 'descripcion', 'foto']
+        widgets = {
+            'nombre': forms.TextInput(attrs={'class': 'form-control'}),
+            'descripcion': forms.Textarea(attrs={'class': 'form-control', 'rows': 3}),
+            'foto': forms.ClearableFileInput(attrs={'class': 'form-control'}),
+        }
+
 
 
 
