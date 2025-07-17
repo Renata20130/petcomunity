@@ -325,6 +325,7 @@ nav {
     z-index: 1500;
     cursor: pointer;
     font-size: 1.6em;
+    color: white;
 }
 
 /* --- Media Queries para Responsividad del Header --- */

@@ -120,7 +120,7 @@ class EditarPerfilForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ['username', 'email']
+        fields = ['username', 'email', 'first_name', 'last_name']
 
     def clean_email(self):
         email = self.cleaned_data.get('email')
@@ -133,6 +133,25 @@ class EditarPerfilExtendidoForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ['imagen', 'telefono']  
+
+class EditarPerfilForm(forms.ModelForm):
+    email = forms.EmailField(required=True)
+
+    class Meta:
+        model = User
+        fields = ['first_name', 'last_name', 'email']
+
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        user_id = self.instance.id
+        if User.objects.filter(email=email).exclude(id=user_id).exists():
+            raise forms.ValidationError("Este correo ya está registrado por otro usuario.")
+        return email
+
+class ProfileForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ['imagen']
 
 from django import forms
 from accounts.models import Profile
@@ -267,7 +286,23 @@ class EditarPerfilClinicaForm(forms.ModelForm):
             user.save()
             profile.save()
         return profile
-    
+
+class UserForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['first_name', 'last_name', 'email']
+        
+class EditarPerfilClienteForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ['imagen', 'telefono', 'direccion']  # o los que tengas
+        widgets = {
+            'imagen': forms.ClearableFileInput(attrs={
+                'style': 'display: none;',
+                'id': 'id_imagen',  # para que el label funcione correctamente
+    }),
+        }
+
 class FiltroUbicacionForm(forms.Form):
     region = forms.ModelChoiceField(queryset=Region.objects.all(), required=False, label='Región')
     ciudad = forms.ModelChoiceField(queryset=Ciudad.objects.all(), required=False, label='Ciudad')

@@ -8,10 +8,11 @@
 {% endblock %}
 
 {% block content %}
-<h1 class="titulo-citas">Mis Citas Médicas</h1>
+
 
 {% if reservas %}
     <div class="lista-citas">
+        <h1 class="titulo-citas">Mis Citas Médicas</h1>
         {% for reserva in reservas %}
         <div class="cita-item">
             <div class="cita-info">

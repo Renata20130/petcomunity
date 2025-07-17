@@ -43,6 +43,10 @@ from .forms import FiltroUbicacionForm
 
 from django.contrib.auth.views import LoginView
 
+from .forms import EditarPerfilForm, ProfileForm, EditarPerfilClienteForm, UserForm
+from django.contrib.auth.forms import UserChangeForm
+
+
 def registro_view(request):
     if request.method == 'POST':
         form = RegistroForm(request.POST)
@@ -223,15 +227,28 @@ def cambiar_estado_mascota(request):
 
 @login_required
 def editar_perfil(request):
-    if request.method == 'POST':
-        user = request.user
-        user.first_name = request.POST.get('first_name')
-        user.last_name = request.POST.get('last_name')
-        user.email = request.POST.get('email')
-        user.save()
-        return redirect('panel_cliente')
+    user = request.user
+    profile = user.profile
 
-    return render(request, 'accounts/editar_perfil.html')
+    if request.method == 'POST':
+        form_user = EditarPerfilForm(request.POST, instance=user)
+        form_profile = ProfileForm(request.POST, request.FILES, instance=profile)
+
+        if form_user.is_valid() and form_profile.is_valid():
+            form_user.save()
+            form_profile.save()
+            return redirect('panel_cliente')
+        else:
+            print(form_user.errors)
+            print(form_profile.errors)
+    else:
+        form_user = EditarPerfilForm(instance=user)
+        form_profile = ProfileForm(instance=profile)
+
+    return render(request, 'accounts/editar_perfil.html', {
+        'form_user': form_user,
+        'form_profile': form_profile,
+    })
 
 @login_required
 def editar_perfil_clinica(request):
@@ -283,24 +300,30 @@ def panel_farmacia_pedidos(request):
     pedidos = Pedido.objects.filter(farmacia=request.user, completado=True).order_by('-creado')
 
     return render(request, 'accounts/panel_farmacia_pedidos.html', {'pedidos': pedidos})
-    
+
+
+
 @login_required
+@tipo_requerido('cliente')
 def editar_perfil_cliente(request):
-    user = request.user
+    perfil = request.user.profile
+    usuario = request.user
+
     if request.method == 'POST':
-        form_user = EditarPerfilForm(request.POST, instance=user)
-        form_profile = EditarPerfilExtendidoForm(request.POST, request.FILES, instance=user.profile)
-        if form_user.is_valid() and form_profile.is_valid():
-            form_user.save()
+        form_profile = EditarPerfilClienteForm(request.POST, request.FILES, instance=perfil)
+        form_user = UserForm(request.POST, instance=usuario)
+
+        if form_profile.is_valid() and form_user.is_valid():
             form_profile.save()
-            return redirect('panel_cliente')  # redirige al panel
+            form_user.save()
+            return redirect('editar_perfil_cliente')
     else:
-        form_user = EditarPerfilForm(instance=user)
-        form_profile = EditarPerfilExtendidoForm(instance=user.profile)
+        form_profile = EditarPerfilClienteForm(instance=perfil)
+        form_user = UserForm(instance=usuario)
 
     return render(request, 'accounts/editar_perfil_cliente.html', {
-        'form_user': form_user,
         'form_profile': form_profile,
+        'form_user': form_user,
     })
 
 @login_required

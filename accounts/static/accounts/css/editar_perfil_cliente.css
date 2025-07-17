@@ -10,7 +10,7 @@
   --button-bg: #7BC0E3;
   --button-hover: #5BA7CD;
 }
-
+ 
 body {
   font-family: 'Inter', sans-serif;
   background-color: var(--background);
@@ -19,7 +19,12 @@ body {
 
 /* Contenedor general */
 .perfil-content {
-  padding: 2rem;
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 20px;
+  background-color: white;
+  border-radius: var(--border-radius);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 /* Formulario */
@@ -36,16 +41,17 @@ body {
 }
 
 .perfil-card h2 {
-  font-size: 1.5rem;
-  border-bottom: 2px solid var(--border-color);
-  padding-bottom: 0.5rem;
-  margin-bottom: 1.5rem;
+  margin-bottom: 20px;
+  font-size: 1.8rem;
+  color: var(--primary-color);
+  font-weight: 600;
+  text-align: center;
 }
 
 /* Imagen de perfil */
 .imagen-perfil {
   text-align: center;
-  margin-bottom: 1.5rem;
+  margin-bottom: 20px;
 }
 
 .imagen-perfil img {
@@ -62,11 +68,19 @@ body {
   transform: scale(1.05);
 }
 
+.columns-container {
+  display: flex;
+  justify-content: center;
+}
+
+
+
+
 /* Grilla del formulario */
 .form-grid-compact {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 1rem;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
 }
 
 .campo-formulario-compact {
@@ -75,9 +89,20 @@ body {
 }
 
 .campo-formulario-compact label {
+  margin-bottom: 6px;
   font-weight: 500;
-  margin-bottom: 0.4rem;
+  font-size: 0.95rem;
 }
+
+.campo-formulario-compact input {
+  padding: var(--input-padding);
+  border: 1px solid #ccc;
+  border-radius: var(--border-radius);
+  font-size: 0.95rem;
+  transition: border-color 0.2s ease;
+}
+
+
 
 .campo-formulario-compact input,
 .campo-formulario-compact select,
@@ -91,35 +116,36 @@ body {
 }
 
 .campo-formulario-compact input:focus {
-  border-color: var(--primary-color);
   outline: none;
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 2px rgba(123, 192, 227, 0.3);
 }
+
 
 /* Botón guardar */
 .form-actions-compact {
+  margin-top: 30px;
   text-align: center;
-  margin-top: 2rem;
 }
 
 .boton-guardar-compact {
-  background-color: var(--button-bg);
+  background-color: var(--primary-color);
   color: white;
-  padding: 0.8rem 1.8rem;
-  border: none;
-  border-radius: 8px;
+  padding: 12px 24px;
   font-size: 1rem;
-  font-weight: 600;
+  border: none;
+  border-radius: var(--border-radius);
   cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease;
+  transition: background-color 0.3s ease;
 }
 
 .boton-guardar-compact:hover {
-  background-color: var(--button-hover);
-  transform: translateY(-2px);
+  background-color: #66afd2;
 }
 
-/* Responsivo */
-@media (max-width: 768px) {
+
+/* Responsive */
+@media screen and (max-width: 768px) {
   .form-grid-compact {
     grid-template-columns: 1fr;
   }

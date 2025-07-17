@@ -13,85 +13,63 @@
     <h1>Bienvenido, {{ request.user.get_username }}</h1>
     
   </header>
-
-  <div class="dashboard-grid">
-
-    <!-- Módulo: Perfil -->
-    <div class="dashboard-module profile-details-module">
-      <h3>📋 Mi Perfil</h3>
-      <div class="profile-summary">
-        {% if request.user.profile.imagen %}
-          <div class="profile-image-wrapper">
-            <img src="{{ request.user.profile.imagen.url }}" alt="Mi foto" class="profile-dashboard-image">
-          </div>
-        {% else %}
-          <img src="{% static 'perfiles/default.png' %}" alt="Mi foto" class="profile-dashboard-image">
-        {% endif %}
-        <div class="profile-info-summary">
-          <p><strong>Usuario:</strong> {{ request.user.get_username }}</p>
-          <p><strong>Email:</strong> {{ request.user.email }}</p>
+    
+      <div class="panel-container">
+        <!-- Módulo: Solicitudes de adopción -->
+        <div class="panel-section">
+          <h3>📄 Mis Solicitudes de Adopción</h3>
+          {% if solicitudes_adopcion %}
+            <ul class="lista-solicitudes-adopcion">
+              {% for solicitud in solicitudes_adopcion|slice:":3" %}
+                <li>
+                  <strong>Mascota:</strong> {{ solicitud.mascota.nombre }}<br>
+                  <strong>Estado:</strong> 
+                  <span class="estado-{{ solicitud.estado }}">{{ solicitud.get_estado_display }}</span><br>
+                  <strong>Enviada el:</strong> {{ solicitud.fecha_envio|date:"d/m/Y" }}
+                  {% if solicitud.estado == 'rechazada' and solicitud.fecha_rechazo %}
+                    <br><small>(Rechazada el {{ solicitud.fecha_rechazo|date:"d/m/Y H:i" }})</small>
+                  {% elif solicitud.estado == 'contactado' and solicitud.fecha_contacto %}
+                    <br><small>(Contactado el {{ solicitud.fecha_contacto|date:"d/m/Y H:i" }})</small>
+                  {% endif %}
+                </li>
+                <hr>
+              {% endfor %}
+            </ul>
+          {% else %}
+            <p class="no-data">No has enviado ninguna solicitud aún.</p>
+          {% endif %}
         </div>
-      </div>
-      <div class="profile-actions">
-        <a href="{% url 'editar_perfil' %}" class="btn-edit-profile"><i class="fas fa-edit"></i> Editar perfil</a>
-      </div>
-    </div>
 
-    <!-- Módulo: Solicitudes de adopción -->
-    <div class="dashboard-module">
-      <h3>📄 Mis Solicitudes de Adopción</h3>
-      {% if solicitudes_adopcion %}
-        <ul class="lista-solicitudes-adopcion">
-          {% for solicitud in solicitudes_adopcion %}
-            <li>
-              <strong>Mascota:</strong> {{ solicitud.mascota.nombre }}<br>
-              <strong>Estado:</strong> 
-              <span class="estado-{{ solicitud.estado }}">{{ solicitud.get_estado_display }}</span><br>
-              <strong>Enviada el:</strong> {{ solicitud.fecha_envio|date:"d/m/Y" }}
-              {% if solicitud.estado == 'rechazada' and solicitud.fecha_rechazo %}
-                <br><small>(Rechazada el {{ solicitud.fecha_rechazo|date:"d/m/Y H:i" }})</small>
-              {% elif solicitud.estado == 'contactado' and solicitud.fecha_contacto %}
-                <br><small>(Contactado el {{ solicitud.fecha_contacto|date:"d/m/Y H:i" }})</small>
-              {% endif %}
-            </li>
-            <hr>
-          {% endfor %}
-        </ul>
-      {% else %}
-        <p class="no-data">No has enviado ninguna solicitud aún.</p>
-      {% endif %}
-    </div>
-
-    <!-- Módulo: Reservas -->
-    <div class="dashboard-module">
-      <h3>📅 Mis Reservas</h3>
-      {% if reservas %}
-        <table class="tabla-simple">
-          <thead>
-            <tr>
-              <th>Fecha</th>
-              <th>Hora</th>
-              <th>Clínica</th>
-              <th>Estado</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for reserva in reservas %}
-              <tr>
-                <td>{{ reserva.fecha }}</td>
-                <td>{{ reserva.hora }}</td>
-                <td>{{ reserva.clinica.profile.nombre_clinica }}</td>
-                <td><span class="estado-reserva-{{ reserva.estado|lower }}">{{ reserva.estado|capfirst }}</span></td>
-              </tr>
-            {% endfor %}
-          </tbody>
-        </table>
-      {% else %}
-        <p class="no-data">No tienes reservas registradas.</p>
-      {% endif %}
-    </div>
-
-    <!-- Módulo: Pedidos -->
+        <!-- Módulo: Reservas -->
+        <div class="panel-section">
+          <h3>📅 Mis Reservas</h3>
+          {% if reservas %}
+            <table class="tabla-simple">
+              <thead>
+                <tr>
+                  <th>Fecha</th>
+                  <th>Hora</th>
+                  <th>Clínica</th>
+                  <th>Estado</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for reserva in reservas|slice:":3" %}
+                  <tr>
+                    <td>{{ reserva.fecha }}</td>
+                    <td>{{ reserva.hora }}</td>
+                    <td>{{ reserva.clinica.profile.nombre_clinica }}</td>
+                    <td><span class="estado-reserva-{{ reserva.estado|lower }}">{{ reserva.estado|capfirst }}</span></td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          {% else %}
+            <p class="no-data">No tienes reservas registradas.</p>
+          {% endif %}
+        </div>
+  </div>  
+  <!-- Módulo: Pedidos -->
     <div class="dashboard-module module-full-width">
       <h3>🛍️ Mis Pedidos</h3>
       {% if pedidos %}
@@ -105,7 +83,7 @@
             </tr>
           </thead>
           <tbody>
-            {% for pedido in pedidos %}
+            {% for pedido in pedidos|slice:":3" %}
               <tr>
                 <td>{{ pedido.id }}</td>
                 <td>{{ pedido.creado|date:"d/m/Y H:i" }}</td>
@@ -126,8 +104,5 @@
       {% endif %}
     </div>
 
-    
-
-  </div>
 </main>
 {% endblock %}
