@@ -5,13 +5,13 @@
     padding: 2.5rem 3rem;
     margin: 3rem auto;
     border-radius: 20px;
-    box-shadow: 0 12px 30px rgba(100, 80, 180, 0.12);
+    box-shadow: 0 12px 30px rgba(123, 192, 227, 0.25); /* sombra con color oficial */
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 /* Título */
 h2 {
-    color: #6a4bcf;
+    color: #7BC0E3; /* color oficial */
     font-weight: 700;
     font-size: 2.1rem;
     margin-bottom: 1.8rem;
@@ -23,7 +23,7 @@ form label {
     display: block;
     margin-bottom: 0.5rem;
     font-weight: 600;
-    color: #4b3f96;
+    color: #4b79a1; /* un azul más oscuro cercano al color oficial */
 }
 
 form input[type="text"],
@@ -34,7 +34,7 @@ form textarea {
     padding: 12px 14px;
     margin-bottom: 1.4rem;
     border-radius: 12px;
-    border: 1.7px solid #a59fe1;
+    border: 1.7px solid #7bc0e3; /* borde con color oficial */
     font-size: 1rem;
     color: #4b4b4b;
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
@@ -45,14 +45,14 @@ form input[type="text"]:focus,
 form input[type="number"]:focus,
 form select:focus,
 form textarea:focus {
-    border-color: #6a4bcf;
-    box-shadow: 0 0 8px #6a4bcf;
+    border-color: #5a9edc; /* un azul más oscuro para focus */
+    box-shadow: 0 0 8px #7BC0E3; /* sombra con color oficial */
     outline: none;
 }
 
 /* Botón guardar */
 button.btn-primary {
-    background-color: #8e72dc;
+    background-color: #7BC0E3; /* color oficial */
     border: none;
     border-radius: 16px;
     padding: 0.8rem 2rem;
@@ -66,7 +66,7 @@ button.btn-primary {
 }
 
 button.btn-primary:hover {
-    background-color: #6a4bcf;
+    background-color: #5ba1d0; /* tono más oscuro para hover */
 }
 
 /* Ajuste para los párrafos generados por form.as_p */
@@ -76,11 +76,44 @@ form p {
 
 /* Para mostrar placeholders (si usas en los widgets) */
 ::placeholder {
-    color: #b0a9e6;
+    color: #a3c4e8;
 }
 
 /* Textarea tamaño */
 textarea {
     resize: vertical;
     min-height: 80px;
+}
+
+/* Estilo para el botón volver */
+.back-link {
+  margin-bottom: 2rem;
+}
+
+.back-link a.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: #7BC0E3; /* Color oficial */
+  color: white;
+  padding: 0.6rem 1.2rem;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 1rem;
+  text-decoration: none;
+  box-shadow: 0 4px 8px rgba(123, 192, 227, 0.4);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  border: none;
+  cursor: pointer;
+}
+
+.back-link a.btn-secondary:hover,
+.back-link a.btn-secondary:focus {
+  background-color: #5ba1d0; /* Un tono más oscuro para hover */
+  box-shadow: 0 6px 12px rgba(91, 161, 208, 0.6);
+  outline: none;
+}
+
+.back-link a.btn-secondary i {
+  font-size: 1.1rem;
 }

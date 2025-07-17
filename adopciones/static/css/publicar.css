@@ -21,6 +21,11 @@
     position: relative;
     box-sizing: border-box;
 }
+.disabled-select {
+    pointer-events: none;
+    opacity: 0.6;
+    background-color: #e9ecef; /* color tipo campo deshabilitado */
+}
 
 /* --- Título Principal (Upload information) --- */
 .form-container h1 { /* Cambiado a h1 para el título principal "Upload information" */

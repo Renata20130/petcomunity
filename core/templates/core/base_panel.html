@@ -74,6 +74,11 @@
         </nav>
     </header>
 
+    
+    
+    <button id="sidebarToggle" class="sidebar-toggle" aria-label="Toggle sidebar">
+        <i class="fas fa-bars">☰</i>
+    </button>
     <div class="panel-clinica-container">
         <aside class="sidebar-menu">
             <div class="clinic-logo">
@@ -82,7 +87,6 @@
                     <span><strong>{{ request.user.username }}</strong></span>
                 </div>
             </div>
-
             <nav>
                 <ul>
                     {% if request.user.profile.tipo == "clinica" %}
@@ -94,6 +98,9 @@
                         </li>
                         <li {% if request.resolver_match.url_name == 'clinica:listado_servicios' %}class="active"{% endif %}>
                             <a href="{% url 'clinica:listado_servicios' %}"><i class="fas fa-user"></i> Servicios</a>
+                        </li>
+                        <li {% if request.resolver_match.url_name == 'lista_reportes_pendientes' %}class="active"{% endif %}>
+                            <a href="{% url 'adopciones:lista_reportes_pendientes' %}"><i class="fas fa-paw"></i> Reportes de Mascotas Abandonadas</a>
                         </li>
                         <li {% if request.resolver_match.url_name == 'panel_reservas_clinica' %}class="active"{% endif %}>
                             <a href="{% url 'panel_reservas_clinica' %}"><i class="fas fa-calendar-alt"></i> Citas y reservas</a>
@@ -121,14 +128,17 @@
                         <li {% if request.resolver_match.url_name == 'mis_pedidos' %}class="active"{% endif %}>
                             <a href="{% url 'pedidos:mis_pedidos' %}"><i class="fas fa-box"></i> Mis pedidos</a>
                         </li>
+                        <li {% if request.resolver_match.url_name == 'mis_reportes_mascota_abandonada' %}class="active"{% endif %}>
+                            <a href="{% url 'adopciones:mis_reportes_mascota_abandonada' %}"><i class="fas fa-box"></i> Mis reportes</a>
+                        </li>
                         <li {% if request.resolver_match.url_name == 'mis_postulaciones' %}class="active"{% endif %}>
                             <a href="{% url 'adopciones:mis_postulaciones' %}"><i class="fas fa-paw"></i> Mis adopciones</a>
                         </li>
                        
-                            <li {% if request.resolver_match.url_name == 'mis_mascotas_cliente' %}class="active"{% endif %}>
-                                <a href="{% url 'clinicas:mis_mascotas_cliente' %}" class="btn btn-outline-info">Mis mascotas</a>
+                        <li {% if request.resolver_match.url_name == 'mis_mascotas_cliente' %}class="active"{% endif %}>
+                            <a href="{% url 'clinicas:mis_mascotas_cliente' %}" class="btn btn-outline-info">Mis mascotas</a>
 
-                            </li>
+                        </li>
                         {# Aquí ya quité "mis_solicitudes" porque no existe la URL #}
                         
                     {% elif request.user.profile.tipo == "farmacia" %}

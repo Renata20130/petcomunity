@@ -18,4 +18,22 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
+    const sidebarToggle = document.getElementById('sidebarToggle');
+    const sidebarMenu = document.querySelector('.sidebar-menu');
+
+    sidebarToggle.addEventListener('click', function () {
+        sidebarMenu.classList.toggle('active');
+    });
+
+
+
+
+
+
+
+
+
+
+
+
 });

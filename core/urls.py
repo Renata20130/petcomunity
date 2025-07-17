@@ -6,7 +6,7 @@ from accounts import views as accounts_views
 from core.views import home
 
 from .views import productos_publicados
-
+from adopciones import views as adopciones_views
 
 app_name = 'core'  
 
@@ -15,7 +15,7 @@ urlpatterns = [
     path('adopciones/', views.adopciones, name='adopciones'),
     path('clinicas/', views.clinicas_view, name='clinicas'),
     path('contacto/', views.contacto_view, name='contacto'),
-    path('publicar-adopcion/', publicar_adopcion, name='publicar_adopcion'),
+    path('publicar-adopcion/', adopciones_views.publicar_adopcion, name='publicar_adopcion'),
     path('login/', accounts_views.login_view, name='login'),
     path('registro/', accounts_views.registro_view, name='registro'),
     path('adopciones/', views.lista_mascotas_publicas, name='adopciones'),

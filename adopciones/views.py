@@ -48,13 +48,13 @@ def publicar_adopcion(request):
             mascota = form.save(commit=False)
             mascota.publicada_por = request.user
             mascota.save()
+            messages.success(request, "Mascota publicada con éxito.")
             return redirect('panel_clinica')
+        else:
+            messages.error(request, "Corrige los errores del formulario.")
     else:
         form = MascotaEnAdopcionForm()
-    
-    # Esta línea es CLAVE para la depuración
-    print("Campos del form en la vista:", form.fields)
-    
+
     return render(request, 'adopciones/publicar_adopcion.html', {'form': form})
 
 @login_required
@@ -452,6 +452,9 @@ def lista_mascotas_adopcion(request):
         'mascotas': mascotas
     })
 
+
+
+
 @login_required
 def registrar_mascota_abandonada(request):
     if request.method == 'POST':
@@ -465,6 +468,76 @@ def registrar_mascota_abandonada(request):
         form = MascotaAbandonadaForm()
 
     return render(request, 'adopciones/registrar_mascota_abandonada.html', {'form': form})
+
+@login_required
+@tipo_requerido('cliente')
+def detalle_reporte_mascota(request, id):
+    mascota = get_object_or_404(MascotaAbandonada, id=id, registrada_por=request.user)
+    return render(request, 'adopciones/detalle_reporte_mascota_abandonada.html', {'mascota': mascota})
+
+@login_required
+@tipo_requerido('cliente')
+def editar_reporte_mascota(request, id):
+    mascota = get_object_or_404(MascotaAbandonada, id=id, registrada_por=request.user, estado='pendiente')
+    if request.method == 'POST':
+        form = MascotaAbandonadaForm(request.POST, request.FILES, instance=mascota)
+        if form.is_valid():
+            form.save()
+            return redirect('adopciones:detalle_reporte_mascota', id=mascota.id)
+    else:
+        form = MascotaAbandonadaForm(instance=mascota)
+    return render(request, 'adopciones/editar_reporte_mascota_abandonada.html', {'form': form, 'mascota': mascota})
+
+@login_required
+@tipo_requerido('cliente')
+def eliminar_reporte_mascota(request, id):
+    mascota = get_object_or_404(MascotaAbandonada, id=id, registrada_por=request.user, estado='pendiente')
+    if request.method == 'POST':
+        mascota.delete()
+        return redirect('cliente:panel_cliente')
+    return render(request, 'adopciones/confirmar_eliminacion_mascota_abandonada.html', {'mascota': mascota})
+
+@login_required
+def mis_reportes_mascota_abandonada(request):
+    reportes = MascotaAbandonada.objects.filter(registrada_por=request.user).order_by('-fecha_registro')
+    return render(request, 'adopciones/mis_reportes_mascota_abandonada.html', {'reportes': reportes})
+
+
+
+
+@login_required
+@tipo_requerido('clinica')  # si tienes decorador para tipo usuario
+def lista_reportes_pendientes(request):
+    reportes = MascotaAbandonada.objects.filter(estado='pendiente').order_by('fecha_registro')
+    return render(request, 'adopciones/reportes_pendientes.html', {'reportes': reportes})
+
+
+@login_required
+@tipo_requerido('clinica')
+def revisar_reporte(request, reporte_id):
+    reporte = get_object_or_404(MascotaAbandonada, id=reporte_id)
+    
+    if request.method == 'POST':
+        decision = request.POST.get('decision')
+        if decision in ['aprobada', 'rechazada']:
+            reporte.estado = decision
+            if decision == 'aprobada':
+                reporte.aprobada_por = request.user
+                reporte.fecha_aprobacion = timezone.now()
+            else:
+                reporte.aprobada_por = None
+                reporte.fecha_aprobacion = None
+            reporte.save()
+            messages.success(request, f'Reporte {decision} correctamente.')
+            return redirect('adopciones:lista_reportes_pendientes')
+    
+    return render(request, 'adopciones/revisar_reporte_clinica.html', {'reporte': reporte})
+
+
+
+
+
+
 
 
 

@@ -17,9 +17,9 @@
                     <strong>{{ solicitud.nombre_completo }}</strong> solicitó adoptar a <strong>{{ solicitud.mascota.nombre }}</strong> el {{ solicitud.fecha_envio|date:"d/m/Y H:i" }}.
                 </div>
                 <div class="acciones">
-                    <a href="{% url 'detalle_solicitud' solicitud.id %}">Ver detalles</a>
+                    <a href="{% url 'adopciones:detalle_solicitud' solicitud.id %}">Ver detalles</a>
 
-                    <form action="{% url 'actualizar_estado_solicitud' solicitud.id %}" method="POST">
+                    <form action="{% url 'adopciones:actualizar_estado_solicitud' solicitud.id %}" method="POST">
                         {% csrf_token %}
                         <select name="estado" onchange="this.form.submit()">
                             {% for key, label in solicitud.ESTADOS_SOLICITUD %}

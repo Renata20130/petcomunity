@@ -1,39 +1,43 @@
 /* Fuente y fondo */
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f7f9fc;
-    color: #333;
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--background-light);
+    margin: 0;
+    padding: 0;
+    color: var(--text-color-dark);
 }
-
+ 
 /* Contenedor principal */
 .container {
     background: #fff;
     padding: 2rem 2.5rem;
     border-radius: 15px;
-    max-width: 1100px;
+    max-width: 1700px;
     margin: 2.5rem auto;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 6px 20px rgba(123, 192, 227, 0.15); /* sombra con azul oficial semi-transparente */
 }
 
 /* Título */
 h2 {
-    color: #4b6cb7;
+    color: #7BC0E3; /* Azul oficial */
     font-weight: 700;
     font-size: 2.25rem;
 }
 
 /* Botón */
 .btn-primary {
-    background: linear-gradient(90deg, #4b6cb7 0%, #182848 100%);
+    background: linear-gradient(90deg, #7BC0E3 0%, #5BA7CD 100%); /* Degradado suave con tonos oficiales */
     border: none;
     border-radius: 12px;
     padding: 0.5rem 1.3rem;
     font-weight: 600;
     font-size: 1rem;
+    color: white;
+    cursor: pointer;
     transition: background 0.3s ease;
 }
 .btn-primary:hover {
-    background: linear-gradient(90deg, #182848 0%, #4b6cb7 100%);
+    background: linear-gradient(90deg, #5BA7CD 0%, #7BC0E3 100%);
 }
 
 /* Tabla */
@@ -48,7 +52,7 @@ h2 {
 
 /* Cabecera tabla */
 .table thead tr th {
-    background-color: #4b6cb7;
+    background-color: #7BC0E3; /* Azul oficial */
     color: white;
     font-weight: 700;
     padding: 1rem 1.25rem;
@@ -58,8 +62,8 @@ h2 {
 
 /* Filas */
 .table tbody tr {
-    background: #e9efff;
-    box-shadow: 0 4px 10px rgba(75, 108, 183, 0.15);
+    background: #DBEEF7; /* Azul muy claro para filas */
+    box-shadow: 0 4px 10px rgba(123, 192, 227, 0.15); /* sombra azul oficial */
     border-radius: 12px;
     transition: background 0.25s ease;
 }
@@ -73,13 +77,13 @@ h2 {
 
 /* Hover en fila */
 .table tbody tr:hover {
-    background: #c3d0ff;
+    background: #B0D3F0; /* Azul un poco más oscuro para hover */
 }
 
 /* Mensaje cuando no hay servicios */
 .alert-info {
-    background-color: #dbe7ff;
-    color: #324a9b;
+    background-color: #D6E8FF; /* Azul muy suave */
+    color: #3A7BC9; /* Azul medio */
     font-weight: 600;
     padding: 1rem;
     border-radius: 12px;

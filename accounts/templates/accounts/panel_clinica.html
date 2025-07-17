@@ -5,8 +5,7 @@
 {% block title %}Dashboard Clínica{% endblock %} {# Opcional: título específico #}
 
 {% block extra_css %}
-{# Si tienes CSS específicos adicionales SOLO para el dashboard, van aquí #}
-{# <link rel="stylesheet" href="{% static 'accounts/css/dashboard_especifico.css' %}"> #}
+<link rel="stylesheet" href="{% static 'accounts/css/panel_clinica.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -17,7 +16,7 @@
                 <a href="{% url 'publicar_adopcion' %}" class="btn-primary"><i class="fas fa-plus"></i> Publicar una mascota</a>
                 <a href="{% url 'panel_reservas_clinica' %}" class="btn-secondary"><i class="fas fa-calendar"></i> Ver Reservas</a>
                 <a href="{% url 'clinica:nueva_consulta' %}" class="btn-primary">Nueva Consulta</a>
-                <a href="{% url 'adopciones:panel_revision' %}" class="btn btn-outline-secondary">📋 Revisar Mascotas Abandonadas</a>
+                <a href="{% url 'adopciones:lista_reportes_pendientes' %}" class="btn-secondary">📋 Revisar Mascotas Abandonadas</a>
 
             </div>
         </header>
@@ -86,50 +85,60 @@
                         <div class="ver-mas-link">
                             <a href="{% url 'panel_solicitudes' %}">Ver todas las solicitudes <i class="fas fa-arrow-right"></i></a>
                         </div>
+                        
                     {% else %}
                         <p class="no-data">No tienes solicitudes nuevas.</p>
                     {% endif %}
                 </div>
             </div>
 
-            {# FILA 2: Reservas Recibidas y Mascotas Registradas (al lado) #}
-            <div class="dashboard-row">
-                <div class="dashboard-module module-reservas">
-                    <h3>Reservas Recibidas</h3>
-                    {% if reservas %}
-                        <div class="tabla-scroll">
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>Cliente</th>
-                                        <th>Mascota</th>
-                                        <th>Fecha</th>
-                                        <th>Hora</th>
-                                        {# Mantengo Motivo y Estado comentados para no sobrecargar el espacio, descomenta si los necesitas #}
-                                        {# <th>Motivo</th> #}
-                                        {# <th>Estado</th> #}
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {% for reserva in reservas %}
-                                        <tr>
-                                            <td>{{ reserva.nombre_cliente }}</td>
-                                            <td>{{ reserva.nombre_mascota }}</td>
-                                            <td>{{ reserva.fecha }}</td>
-                                            <td>{{ reserva.hora }}</td>
-                                            {# <td>{{ reserva.motivo }}</td> #}
-                                            {# <td><span class="estado-reserva-{{ reserva.estado|lower }}">{{ reserva.estado|capfirst }}</span></td> #}
-                                        </tr>
-                                    {% endfor %}
-                                </tbody>
-                            </table>
-                        </div>
-                    {% else %}
-                        <p class="no-data">No hay reservas aún.</p>
-                    {% endif %}
-                </div>
-
-                <div class="dashboard-module module-mascotas-registradas">
+            <div class="dashboard-module module-reportes-abandonadas">
+                <h3>🐕 Reportes de Mascotas Abandonadas</h3>
+                {% if reportes_pendientes %}
+                    <div class="tabla-scroll">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th>Descripción</th>
+                                    <th>Fecha Registro</th>
+                                    <th>Estado</th>
+                                    <th>Acción</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for reporte in reportes_pendientes|slice:":5" %}
+                                <tr>
+                                    <td>{{ reporte.nombre }}</td>
+                                    <td>{{ reporte.descripcion|truncatechars:40 }}</td>
+                                    <td>{{ reporte.fecha_registro|date:"d/m/Y H:i" }}</td>
+                                    <td>
+                                        {% if reporte.estado == 'pendiente' %}
+                                            <span class="badge bg-warning text-dark">Pendiente</span>
+                                        {% elif reporte.estado == 'aprobada' %}
+                                            <span class="badge bg-success">Aprobada</span>
+                                        {% elif reporte.estado == 'rechazada' %}
+                                            <span class="badge bg-danger">Rechazada</span>
+                                        {% else %}
+                                            {{ reporte.estado }}
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        <a href="{% url 'adopciones:revisar_reporte' reporte.id %}" class="btn btn-sm btn-primary">Revisar</a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="ver-mas-link">
+                        <a href="{% url 'adopciones:lista_reportes_pendientes' %}">Ver todos los reportes pendientes <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                {% else %}
+                    <p class="no-data">No hay reportes pendientes para revisar.</p>
+                {% endif %}
+            </div>
+            <div class="dashboard-module module-mascotas-registradas">
                     <h3>Mascotas Registradas en la Clínica</h3>
                     {% if mascotas_clinica %}
                         <div class="tabla-scroll">
@@ -168,6 +177,48 @@
                         <a href="{% url 'clinica:registrar_mascota' %}" class="btn-primary">Registrar nueva mascota</a>
                     </div>
                 </div>
+
+
+
+
+            {# FILA 2: Reservas Recibidas y Mascotas Registradas (al lado) #}
+            <div class="dashboard-row">
+                <div class="dashboard-module module-reservas">
+                    <h3>Reservas Recibidas</h3>
+                    {% if reservas %}
+                        <div class="tabla-scroll">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Cliente</th>
+                                        <th>Mascota</th>
+                                        <th>Fecha</th>
+                                        <th>Hora</th>
+                                        {# Mantengo Motivo y Estado comentados para no sobrecargar el espacio, descomenta si los necesitas #}
+                                        {# <th>Motivo</th> #}
+                                        {# <th>Estado</th> #}
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for reserva in reservas %}
+                                        <tr>
+                                            <td>{{ reserva.nombre_cliente }}</td>
+                                            <td>{{ reserva.nombre_mascota }}</td>
+                                            <td>{{ reserva.fecha }}</td>
+                                            <td>{{ reserva.hora }}</td>
+                                            {# <td>{{ reserva.motivo }}</td> #}
+                                            {# <td><span class="estado-reserva-{{ reserva.estado|lower }}">{{ reserva.estado|capfirst }}</span></td> #}
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% else %}
+                        <p class="no-data">No hay reservas aún.</p>
+                    {% endif %}
+                </div>
+                
+                
             </div>
         </div>
     </main>

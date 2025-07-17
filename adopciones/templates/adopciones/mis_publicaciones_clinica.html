@@ -14,7 +14,7 @@
         <header class="dashboard-header">
             <h1>Mis Mascotas en Adopción</h1>
             <div class="header-actions">
-                <a href="{% url 'publicar_adopcion' %}" class="btn-primary"><i class="fas fa-plus"></i> Nueva Publicación</a>
+                <a href="{% url 'adopciones:publicar_adopcion' %}" class="btn-primary"><i class="fas fa-plus"></i> Nueva Publicación</a>
             </div>
         </header>
 
@@ -24,7 +24,7 @@
                     <div class="grid-mascotas-panel">
                         {% for mascota in mascotas %}
                             <div class="tarjeta-mascota-panel" id="mascota-{{ mascota.id }}">
-                                <a href="{% url 'detalle_mascota' mascota.id %}">
+                                <a href="{% url 'adopciones:detalle_mascota' mascota.id %}">
                                     <img src="{{ mascota.imagen.url }}" alt="{{ mascota.nombre }}">
                                 </a>
                                 <div class="info">
@@ -38,7 +38,7 @@
                                             <span class="slider round"></span>
                                         </label>
                                     </div>
-                                    <form action="{% url 'eliminar_adopcion' mascota.pk %}" method="POST" class="form-eliminar-panel" onsubmit="return confirmarEliminacion();">
+                                    <form action="{% url 'adopciones:eliminar_adopcion' mascota.pk %}" method="POST" class="form-eliminar-panel" onsubmit="return confirmarEliminacion();">
                                         {% csrf_token %}
                                         <button type="submit" class="btn-eliminar-tarjeta" title="Eliminar publicación">
                                             <i class="fas fa-trash-alt"></i>

@@ -5,14 +5,15 @@ from .views import publicar_adopcion
 from .views import eliminar_adopcion
 from .views import mis_postulaciones
 from accounts import views as accounts_views
+from .views import detalle_reporte_mascota, editar_reporte_mascota, eliminar_reporte_mascota, mis_reportes_mascota_abandonada
+from adopciones.views import publicar_adopcion
 
 app_name = 'adopciones'
 
 urlpatterns = [
     path('panel-clinica/', accounts_views.panel_clinica, name='panel_clinica'),
     
-    path('publicar-adopcion/', views.publicar_adopcion, name='publicar_adopcion'),
-    path('publicar-adopcion/', publicar_adopcion, name='publicar_adopcion'),
+    path('publicar/', views.publicar_adopcion, name='publicar_adopcion'),
     path('editar/<int:mascota_id>/', views.editar_adopcion, name='editar_adopcion'),
     path('eliminar/<int:pk>/', eliminar_adopcion, name='eliminar_adopcion'),
    
@@ -43,5 +44,19 @@ urlpatterns = [
     path('', views.lista_mascotas_adopcion, name='lista_adopciones'),
 
     path('registrar/', views.registrar_mascota_abandonada, name='registrar_mascota'),
+
+    path('mis-reportes/', views.mis_reportes_mascota_abandonada, name='mis_reportes_mascota_abandonada'),
+    path('registrar/', views.registrar_mascota_abandonada, name='registrar_mascota_abandonada'),
+    path('reportes/<int:id>/', detalle_reporte_mascota, name='detalle_reporte_mascota'),
+    path('reportes/<int:id>/editar/', editar_reporte_mascota, name='editar_reporte_mascota'),
+    path('reportes/<int:id>/eliminar/', eliminar_reporte_mascota, name='eliminar_reporte_mascota'),
+
+
+    path('reportes/pendientes/', views.lista_reportes_pendientes, name='lista_reportes_pendientes'),
+    path('reportes/revisar/<int:reporte_id>/', views.revisar_reporte, name='revisar_reporte'),
+
+
+
+
 
 ]

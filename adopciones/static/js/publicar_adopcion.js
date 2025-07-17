@@ -99,13 +99,19 @@ document.addEventListener('DOMContentLoaded', function() {
     function updateRazas() {
         const especieValue = especieSelect.value;
         razaSelect.innerHTML = ''; // Limpiar opciones anteriores
-        razaSelect.setAttribute('disabled', 'disabled'); // Deshabilitar raza por defecto
+        razaSelect.classList.add('disabled-select');
+        razaSelect.setAttribute('aria-disabled', 'true');
+        razaSelect.removeAttribute('disabled');
 
         if (!especieValue) {
             const option = document.createElement('option');
             option.value = '';
             option.textContent = 'Primero selecciona una especie';
             razaSelect.appendChild(option);
+
+            razaSelect.classList.add('disabled-select');
+            razaSelect.setAttribute('aria-disabled', 'true');
+            razaSelect.removeAttribute('disabled');
             return;
         }
 

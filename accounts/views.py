@@ -38,7 +38,7 @@ from .forms import EditarPerfilFarmaciaForm
 
 from itertools import chain
 from clinicas.models import Mascota
-
+from adopciones.models import MascotaAbandonada
 from .forms import FiltroUbicacionForm
 
 from django.contrib.auth.views import LoginView
@@ -202,6 +202,8 @@ def panel_cliente(request):
 
     solicitudes_adopcion = SolicitudAdopcion.objects.filter(email=request.user.email).order_by('-fecha_envio')
 
+    mascotas_reportadas = MascotaAbandonada.objects.filter(registrada_por=usuario).order_by('-fecha_registro')
+
 
     return render(request, 'accounts/panel_cliente.html', {
         'productos': productos,
@@ -210,6 +212,7 @@ def panel_cliente(request):
         'reservas': reservas,
         'pedidos': pedidos,
         'solicitudes_adopcion': solicitudes_adopcion,  # 👈 Pasado al template
+        'mascotas_reportadas': mascotas_reportadas,
     })
 
 @require_POST

@@ -85,10 +85,11 @@ class MascotaEnAdopcionForm(forms.ModelForm):
             # Si es una nueva instancia de MascotaEnAdopcion
             # Y no se ha enviado una especie (o la especie enviada no es 'perro'/'gato')
             if not self.instance.pk and (not self.data.get('especie') or self.data.get('especie') == 'otro'):
-                 self.fields['raza'].widget.attrs['disabled'] = 'disabled'
+                # Mejor no deshabilitar aquí
+                # Solo asigna una clase CSS para que el JS controle el comportamiento
+                self.fields['raza'].widget.attrs['class'] += ' disabled-select'
             else:
-                 # Quita el atributo disabled si ya hay una instancia o una especie seleccionada
-                 self.fields['raza'].widget.attrs.pop('disabled', None)
+                self.fields['raza'].widget.attrs.pop('disabled', None)
 
 
     def clean(self):

@@ -1,0 +1,50 @@
+{% extends 'core/base_panel.html' %}
+{% load static %}
+
+{% block title %}Mis Reportes de Mascotas Abandonadas{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/mis_reportes_mascota_abandonada.css' %}">
+{% endblock %}
+
+{% block content %}
+  <div class="container">
+    <div class="header-container">
+        <h2>Mis reportes de mascotas abandonadas</h2>
+        <a href="{% url 'adopciones:registrar_mascota_abandonada' %}" class="btn btn-primary">
+            Registrar nueva mascota abandonada
+        </a>
+    </div>
+  
+  {% if reportes %}
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Estado</th>
+          <th>Fecha</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for reporte in reportes %}
+          <tr>
+            <td>{{ reporte.nombre_mascota }}</td>
+            <td>{{ reporte.estado }}</td>
+            <td>{{ reporte.fecha_reporte|date:"d/m/Y H:i" }}</td>
+            <td>
+              <a href="{% url 'adopciones:detalle_reporte' reporte.id %}" class="btn btn-sm btn-outline-info">Ver detalle</a>
+              {% if reporte.estado == 'pendiente' %}
+                <a href="{% url 'adopciones:editar_reporte' reporte.id %}" class="btn btn-sm btn-outline-warning">Editar</a>
+                <a href="{% url 'adopciones:eliminar_reporte' reporte.id %}" class="btn btn-sm btn-outline-danger">Eliminar</a>
+              {% endif %}
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p>No has realizado reportes aún.</p>
+  {% endif %}
+  </div>
+{% endblock %}

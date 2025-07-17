@@ -1,0 +1,43 @@
+{% extends 'core/base_panel.html' %}
+{% load static %}
+
+{% block title %}Reportes Pendientes{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/reportes_pendientes_clinica.css' %}">
+{% endblock %}
+
+
+{% block content %}
+    <div class="contenedor-reportes">
+            <h2 class="titulo-reportes">Reportes Pendientes de Revisión</h2>
+
+            {% if reportes %}
+
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Descripción</th>
+                        <th>Fecha Registro</th>
+                        <th>Acción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for reporte in reportes %}
+                    <tr>
+                        <td>{{ reporte.nombre }}</td>
+                        <td>{{ reporte.descripcion|truncatechars:50 }}</td>
+                        <td>{{ reporte.fecha_registro|date:"d/m/Y H:i" }}</td>
+                        <td>
+                            <a href="{% url 'clinica:revisar_reporte' reporte.id %}" class="btn btn-sm btn-primary">Revisar</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% else %}
+            <p class="sin-reportes">No hay reportes pendientes.</p>
+            {% endif %}
+    </div>
+{% endblock %}

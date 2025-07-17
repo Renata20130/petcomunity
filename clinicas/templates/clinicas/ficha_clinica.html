@@ -10,6 +10,11 @@
 
 {% block content %}
 <main class="main-content">
+    <div class="back-link">
+        <a href="{% url 'clinicas:listado_mascotas' %}" class="btn-secondary">
+            <i class="fas fa-arrow-left"></i> Volver al Panel
+        </a>
+    </div>
     <h1>Ficha clínica de {{ mascota.nombre_mascota }}</h1>
 
     <form method="POST">

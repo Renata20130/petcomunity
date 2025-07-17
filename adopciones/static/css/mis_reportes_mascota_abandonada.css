@@ -1,0 +1,125 @@
+/* Contenedor principal sin limitación de ancho */
+.container {
+  width: 100%;
+  margin-top: 60px;
+  margin-bottom: 40px;
+  padding: 20px 30px; /* padding lateral para que no quede pegado */
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+  box-sizing: border-box; /* para que padding no agrande el ancho */
+}
+
+/* Header: flexbox para separar título y botón */
+.header-container {
+  display: flex;
+  justify-content: space-between; /* título izquierda, botón derecha */
+  align-items: center;
+  margin-bottom: 30px;
+  gap: 20px; /* espacio entre elementos */
+}
+
+/* Título */
+.header-container h2 {
+  font-weight: 700;
+  font-size: 1.8rem;
+  margin: 0;
+  white-space: nowrap; /* evita que el título se corte en varias líneas */
+  color: #2c3e50; /* un gris oscuro para buen contraste */
+}
+
+/* Botón con color oficial */
+.header-container a.btn-primary {
+  padding: 10px 22px;
+  border-radius: 50px;
+  background: linear-gradient(135deg, #7BC0E3 0%, #4A90E2 100%);
+  color: #fff;
+  border: none;
+  font-weight: 600;
+  transition: background 0.3s ease;
+  text-decoration: none;
+  white-space: nowrap;
+  flex-shrink: 0; /* que no se achique */
+  box-shadow: 0 4px 10px rgba(123, 192, 227, 0.4);
+}
+
+.header-container a.btn-primary:hover {
+  background: linear-gradient(135deg, #4A90E2 0%, #7BC0E3 100%);
+  color: #fff;
+  box-shadow: 0 6px 15px rgba(74, 144, 226, 0.6);
+}
+
+/* Tabla: ocupar ancho completo */
+.table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 12px;
+  font-size: 0.95rem;
+}
+
+/* Encabezado tabla */
+.table thead tr th {
+  background-color: #E6F0FA; /* suave, claro relacionado al azul */
+  color: #34495e;
+  font-weight: 600;
+  padding: 12px 18px;
+  text-align: left;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+}
+
+/* Filas tabla */
+.table tbody tr {
+  background: #fafafa;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  transition: transform 0.15s ease-in-out;
+}
+
+.table tbody tr:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 15px rgba(0,0,0,0.12);
+}
+
+.table tbody tr td {
+  padding: 14px 18px;
+  vertical-align: middle;
+  color: #2c3e50;
+}
+
+/* Botones de acciones */
+.btn-outline-info {
+  border-color: #7BC0E3;
+  color: #7BC0E3;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.btn-outline-info:hover {
+  background-color: #7BC0E3;
+  color: white;
+  border-color: #7BC0E3;
+}
+
+/* Otros botones (dejan igual para no romper esquema) */
+.btn-outline-warning:hover {
+  background-color: #ffc107;
+  color: #212529;
+  border-color: #ffc107;
+}
+
+.btn-outline-danger:hover {
+  background-color: #dc3545;
+  color: white;
+  border-color: #dc3545;
+}
+
+/* Mensaje cuando no hay reportes */
+p {
+  text-align: center;
+  font-size: 1.1rem;
+  color: #7f8c8d;
+  margin-top: 40px;
+}

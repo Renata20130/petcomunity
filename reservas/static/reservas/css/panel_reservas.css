@@ -5,9 +5,9 @@
   max-width: 100%;
   margin: 40px auto;
   padding: 30px;
-  background-color: #ffffff; /* Fondo blanco para mayor elegancia */
+  background-color: #ffffff;
   border-radius: 12px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08); /* Sombra más pronunciada pero suave */
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
   font-family: 'Roboto', 'Arial', sans-serif;
   color: #333333;
 }
@@ -16,8 +16,8 @@
   text-align: center;
   margin-bottom: 35px;
   font-size: 2.5rem;
-  color: #1a1a1a;
-  border-bottom: 3px solid #007bff; /* Línea sutil bajo el título */
+  color: #2a2a2a;
+  border-bottom: 3px solid #7BC0E3;
   padding-bottom: 15px;
 }
 
@@ -27,12 +27,12 @@
   border-collapse: collapse;
   margin-top: 30px;
   border-radius: 10px;
-  overflow: hidden; /* Asegura que los bordes redondeados se apliquen correctamente */
+  overflow: hidden;
 }
 
 /* Encabezado de la tabla */
 .panel-reservas thead tr {
-  background-color: #007bff; /* Azul vibrante como color primario */
+  background-color: #7BC0E3;
   color: white;
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -51,8 +51,8 @@
 }
 
 .panel-reservas tbody tr:hover {
-  background-color: #f7f7f7;
-  transform: translateY(-3px); /* Efecto de elevación al pasar el mouse */
+  background-color: #f0fafd;
+  transform: translateY(-3px);
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
 }
 
@@ -60,21 +60,21 @@
   padding: 16px 20px;
   vertical-align: middle;
   color: #555555;
-  white-space: nowrap; /* Evita que la información se rompa en varias líneas si es corta */
+  white-space: nowrap;
 }
 
-/* Estilos de Estado (Aceptada/Rechazada) */
+/* Estilos de Estado */
 .fila-aceptada {
-  background-color: #e6f7e9; /* Verde claro */
-  color: #28a745;
+  background-color: #e2f7ee;
+  color: #2f9e6e;
 }
 
 .fila-rechazada {
-  background-color: #fcebeb; /* Rojo claro */
-  color: #dc3545;
+  background-color: #fde8e8;
+  color: #d9534f;
 }
 
-/* Celda de Acciones/Estado de Icono */
+/* Celda de Acciones / Estado */
 .estado-icono {
   display: flex;
   justify-content: center;
@@ -83,7 +83,7 @@
   min-width: 120px;
 }
 
-/* --- Estilos de Botones e Iconos de Acciones --- */
+/* --- Botones e Iconos --- */
 .btn-icon {
   display: inline-flex;
   align-items: center;
@@ -91,7 +91,7 @@
   width: 40px;
   height: 40px;
   font-size: 1.5rem;
-  border-radius: 8px; /* Bordes más redondeados */
+  border-radius: 8px;
   text-decoration: none;
   color: white;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
@@ -104,14 +104,14 @@
 }
 
 .aceptar-btn {
-  background-color: #28a745; /* Verde para Aceptar */
+  background-color: #2f9e6e;
 }
 
 .rechazar-btn {
-  background-color: #dc3545; /* Rojo para Rechazar */
+  background-color: #d9534f;
 }
 
-/* Iconos de estado (✔/✖) */
+/* Iconos de estado ✔ ✖ */
 .icono-estado {
   display: flex;
   align-items: center;
@@ -120,35 +120,34 @@
   height: 40px;
   font-size: 2rem;
   font-weight: bold;
-  border-radius: 50%; /* Iconos circulares */
+  border-radius: 50%;
 }
 
 .icono-estado.aceptada {
-  color: #28a745;
+  color: #2f9e6e;
 }
 
 .icono-estado.rechazada {
-  color: #dc3545;
+  color: #d9534f;
 }
 
-/* --- Estilos para la tabla vacía --- */
+/* Tabla vacía */
 .panel-reservas > p {
   text-align: center;
   padding: 40px 20px;
   font-size: 1.2rem;
-  color: #999999;
-  background-color: #f4f4f4;
+  color: #666;
+  background-color: #eef7fb;
   border-radius: 8px;
-  border: 1px dashed #cccccc;
+  border: 1px dashed #a9d6ec;
 }
 
-/* --- Responsive Design (Móvil) --- */
+/* --- Responsive para móviles --- */
 @media (max-width: 768px) {
   .panel-reservas {
     padding: 20px 15px;
   }
 
-  /* ... (Mantiene el comportamiento de tabla en móvil) ... */
   .panel-reservas table,
   .panel-reservas thead,
   .panel-reservas tbody,
@@ -193,9 +192,10 @@
   }
 }
 
+/* Badge tipo "pendiente" */
 .badge-warning {
-  background-color: #ffc107;
-  color: #212529;
+  background-color: #ffd666;
+  color: #5c4c00;
   font-weight: bold;
   padding: 3px 7px;
   border-radius: 5px;

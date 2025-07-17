@@ -5,6 +5,7 @@ from .views import panel_farmacia_pedidos
 from adopciones.views import panel_solicitudes
 from .views import editar_perfil_farmacia
 from .views import CustomLoginView
+from .views import publicar_adopcion
 
 urlpatterns = [
     
@@ -16,7 +17,7 @@ urlpatterns = [
     path('login/', views.login_view, name='login'),
     path('logout/', views.logout_view, name='logout'),
 
-    path('publicar-adopcion/', views.publicar_adopcion, name='publicar_adopcion'),
+    path('publicar-adopcion/', publicar_adopcion, name='publicar_adopcion'),
     path('cambiar-estado/', views.cambiar_estado_mascota, name='cambiar_estado_mascota'),
 
     path('adopciones/panel-clinica/', views.panel_clinica, name='panel_clinica'),
@@ -40,7 +41,7 @@ urlpatterns = [
 
     path('login/', CustomLoginView.as_view(), name='login'),
 
-
+    
 
 
 

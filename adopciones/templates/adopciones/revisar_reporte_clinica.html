@@ -1,0 +1,23 @@
+{% extends 'core/base_panel.html' %}
+
+{% block title %}Revisar Reporte{% endblock %}
+
+{% block content %}
+<h2>Revisar Reporte: {{ reporte.nombre }}</h2>
+
+<div>
+  <img src="{{ reporte.foto.url }}" alt="Foto de {{ reporte.nombre }}" style="max-width:300px; max-height:300px;">
+</div>
+
+<p><strong>Descripción:</strong> {{ reporte.descripcion }}</p>
+<p><strong>Registrado por:</strong> {{ reporte.registrada_por.username }}</p>
+<p><strong>Fecha de registro:</strong> {{ reporte.fecha_registro|date:"d/m/Y H:i" }}</p>
+
+<form method="post">
+  {% csrf_token %}
+  <button type="submit" name="decision" value="aprobada" class="btn btn-success">Aprobar</button>
+  <button type="submit" name="decision" value="rechazada" class="btn btn-danger">Rechazar</button>
+  <a href="{% url 'clinica:lista_reportes_pendientes' %}" class="btn btn-secondary">Volver</a>
+</form>
+
+{% endblock %}

@@ -68,6 +68,53 @@
             <p class="no-data">No tienes reservas registradas.</p>
           {% endif %}
         </div>
+        <!-- Módulo: Mascotas abandonadas -->
+        <div class="panel-section">
+          <div class="header-container">
+              <h2>Mis reportes de mascotas abandonadas</h2>
+              <a href="{% url 'adopciones:mis_reportes_mascota_abandonada' %}" class="btn btn-primary">
+                  Ver más
+              </a>
+          </div>
+          {% if reservas %} 
+
+          <table class="table table-hover table-bordered mt-3">
+            <thead class="table-light">
+              <tr>
+                <th>Fecha</th>
+                <th>Especie</th>
+                <th>Lugar encontrado</th>
+                <th>Estado</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for mascota in mascotas_reportadas %}
+                <tr>
+                  <td>{{ mascota.fecha_registro|date:"d/m/Y" }}</td>
+                  <td>{{ mascota.especie }}</td>
+                  <td>{{ mascota.lugar }}</td>
+                  <td>
+                    {% if mascota.estado == 'pendiente' %}
+                      <span class="badge bg-warning text-dark">Pendiente</span>
+                    {% elif mascota.estado == 'aceptado' %}
+                      <span class="badge bg-success">Publicado</span>
+                    {% elif mascota.estado == 'rechazado' %}
+                      <span class="badge bg-danger">Rechazado</span>
+                    {% else %}
+                      {{ mascota.estado }}
+                    {% endif %}
+                  </td>
+                </tr>
+              {% empty %}
+                <tr><td colspan="4" class="text-center">Aún no has reportado mascotas abandonadas.</td></tr>
+              {% endfor %}
+            </tbody>
+          </table>
+          
+          {% else %}
+            <p class="no-data">No tienes reservas registradas.</p>
+          {% endif %}
+        </div>
   </div>  
   <!-- Módulo: Pedidos -->
     <div class="dashboard-module module-full-width">

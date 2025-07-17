@@ -9,6 +9,11 @@
 
 {% block content %}
 <div class="container">
+    <div class="back-link">
+        <a href="{% url 'clinicas:listado_servicios' %}" class="btn-secondary">
+            <i class="fas fa-arrow-left"></i> Volver
+        </a>
+    </div>
     <h2 class="mb-4">Registrar Nuevo Servicio</h2>
     <form method="POST">
         {% csrf_token %}
