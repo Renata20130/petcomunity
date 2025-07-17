@@ -57,7 +57,8 @@
                     <td>{{ consulta.motivo }}</td>
                     <td>{{ consulta.diagnostico|default:"-" }}</td>
                     <td>
-                        <a href="{% url 'clinica:editar_consulta' consulta.id %}" class="btn btn-sm btn-warning">Editar</a>
+                        <a href="{% url 'clinicas:editar_consulta' consulta.id %}" class="btn btn-sm btn-warning">Editar</a>
+
                     </td>
                 </tr>
                 {% empty %}

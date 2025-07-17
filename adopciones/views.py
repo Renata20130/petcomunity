@@ -99,7 +99,6 @@ def lista_mascotas_publicas(request):
     mascotas = MascotaEnAdopcion.objects.filter(estado='publicada')
     return render(request, 'adopciones/lista_publica.html', {'mascotas': mascotas})
 
-
 def detalle_mascota(request, mascota_id):
     mascota = MascotaEnAdopcion.objects.get(id=mascota_id)
     es_duenio = request.user.is_authenticated and mascota.publicada_por == request.user
@@ -192,7 +191,9 @@ def formulario_adopcion_view(request, mascota_id):
                 nombre_completo=nombre_completo,
                 email=email,
                 telefono=telefono,
-                mascota=mascota  # si tienes un campo ForeignKey en SolicitudAdopcion
+                mascota=mascota,
+                usuario=request.user  # si tienes un campo ForeignKey en SolicitudAdopcion
+
             )
 
             # Cambiar el estado de la mascota a "en proceso" (si lo usas)
@@ -345,11 +346,10 @@ def actualizar_estado_solicitud(request, solicitud_id):
     
 @login_required
 def mis_postulaciones(request):
-    solicitudes_cliente = SolicitudAdopcion.objects.filter(cliente=request.user)
-    return render(request, 'adopciones/mis_solicitudes.html', {
+    solicitudes_cliente = SolicitudAdopcion.objects.filter(usuario=request.user)
+    return render(request, 'adopciones/mis_postulaciones.html', {
         'solicitudes': solicitudes_cliente
     })
-
 
 def lista_mascotas_adopcion(request):
     form = FiltroMascotaForm(request.GET or None)
@@ -390,7 +390,6 @@ def lista_mascotas_adopcion(request):
     }
     return render(request, 'adopciones/lista_mascotas.html', context)
 
-
 @login_required
 def registrar_mascota_abandonada(request):
     if request.user.profile.tipo != 'cliente':
@@ -430,7 +429,6 @@ def aprobar_mascota(request, mascota_id):
     mascota.fecha_aprobacion = timezone.now()
     mascota.save()
     return redirect('adopciones:panel_revision')
-
 
 @login_required
 def rechazar_mascota(request, mascota_id):

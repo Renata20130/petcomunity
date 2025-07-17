@@ -115,8 +115,8 @@
                         <li {% if request.resolver_match.url_name == 'editar_perfil_cliente' %}class="active"{% endif %}>
                             <a href="{% url 'editar_perfil_cliente' %}"><i class="fas fa-user"></i> Mi Perfil</a>
                         </li>
-                        <li {% if request.resolver_match.url_name == 'cliente_pedir_hora' %}class="active"{% endif %}>
-                            <a href="{% url 'reservas:cliente_pedir_hora' %}"><i class="fas fa-calendar-check"></i> Mis citas</a>
+                        <li {% if request.resolver_match.url_name == 'mis_reservas_cliente' %}class="active"{% endif %}>
+                            <a href="{% url 'reservas:mis_reservas_cliente' %}"><i class="fas fa-calendar-check"></i> Mis citas</a>
                         </li>
                         <li {% if request.resolver_match.url_name == 'mis_pedidos' %}class="active"{% endif %}>
                             <a href="{% url 'pedidos:mis_pedidos' %}"><i class="fas fa-box"></i> Mis pedidos</a>
@@ -124,8 +124,13 @@
                         <li {% if request.resolver_match.url_name == 'mis_postulaciones' %}class="active"{% endif %}>
                             <a href="{% url 'adopciones:mis_postulaciones' %}"><i class="fas fa-paw"></i> Mis adopciones</a>
                         </li>
+                       
+                            <li {% if request.resolver_match.url_name == 'mis_mascotas_cliente' %}class="active"{% endif %}>
+                                <a href="{% url 'clinicas:mis_mascotas_cliente' %}" class="btn btn-outline-info">Mis mascotas</a>
+
+                            </li>
                         {# Aquí ya quité "mis_solicitudes" porque no existe la URL #}
-                        <li><a href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i> Cerrar sesión</a></li>
+                        
                     {% elif request.user.profile.tipo == "farmacia" %}
                     
                         <li {% if request.resolver_match.url_name == 'panel_farmacia' %}class="active"{% endif %}>

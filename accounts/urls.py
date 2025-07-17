@@ -4,7 +4,7 @@ from . import views
 from .views import panel_farmacia_pedidos
 from adopciones.views import panel_solicitudes
 from .views import editar_perfil_farmacia
-
+from .views import CustomLoginView
 
 urlpatterns = [
     
@@ -38,7 +38,7 @@ urlpatterns = [
 
     path('farmacia/editar-perfil/', editar_perfil_farmacia, name='editar_perfil_farmacia'),
 
-    
+    path('login/', CustomLoginView.as_view(), name='login'),
 
 
 

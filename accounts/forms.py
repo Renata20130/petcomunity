@@ -4,6 +4,10 @@ from django.contrib.auth.models import User
 from .models import Profile
 from ubicacion.models import Ciudad
 from ubicacion.models import Region
+from django.contrib.auth import login
+from django.contrib.auth.views import LoginView
+from django.shortcuts import redirect, resolve_url
+
 
 class RegistroForm(UserCreationForm):
     email = forms.EmailField(required=True, help_text="Requerido. Ingresa un email válido.")
@@ -263,3 +267,28 @@ class EditarPerfilClinicaForm(forms.ModelForm):
             user.save()
             profile.save()
         return profile
+    
+class FiltroUbicacionForm(forms.Form):
+    region = forms.ModelChoiceField(queryset=Region.objects.all(), required=False, label='Región')
+    ciudad = forms.ModelChoiceField(queryset=Ciudad.objects.all(), required=False, label='Ciudad')
+
+class CustomLoginView(LoginView):
+    def form_valid(self, form):
+        """Redirige según tipo de usuario, ignorando 'next' si no es cliente."""
+        user = form.get_user()
+        login(self.request, user)
+
+        if hasattr(user, 'profile'):
+            tipo = user.profile.tipo
+            if tipo == 'cliente':
+                # Respetar el parámetro 'next' si viene de un cliente
+                return redirect(self.get_redirect_url() or resolve_url('reservas:pedir_cita'))
+            else:
+                # Si es clínica o farmacia, ir siempre al home
+                return redirect(resolve_url('home'))
+        # Si no tiene perfil (raro), redirigir al home igual
+        return redirect(resolve_url('home'))
+
+
+
+

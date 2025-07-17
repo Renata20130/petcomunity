@@ -1,0 +1,16 @@
+{% extends 'core/base_panel.html' %}
+
+{% block title %}Editar Consulta{% endblock %}
+
+{% block content %}
+<h2>Editar Consulta</h2>
+
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+
+    <button type="submit" class="btn btn-primary">Guardar cambios</button>
+    <a href="{% url 'clinicas:ficha_clinica' consulta.mascota.id %}" class="btn btn-secondary">Cancelar</a>
+</form>
+
+{% endblock %}

@@ -104,7 +104,8 @@ class SolicitudAdopcion(models.Model):
 
     fecha_contacto = models.DateTimeField(null=True, blank=True)
     fecha_rechazo = models.DateTimeField(null=True, blank=True)
-
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE, related_name='solicitudes_adopcion', null=True)
+    
     def __str__(self):
         return f"Solicitud para {self.mascota.nombre} por {self.nombre_completo}"
 

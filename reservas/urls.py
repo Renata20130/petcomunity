@@ -16,4 +16,10 @@ urlpatterns = [
     
     path('api/razas/', RazaListAPIView.as_view(), name='api_razas_list'),
 
+    path('mis-reservas/', views.mis_reservas, name='mis_reservas_cliente'),
+    path('cancelar/<int:reserva_id>/', views.cancelar_reserva_cliente, name='cancelar_reserva_cliente'),
+
+
+
+
 ]

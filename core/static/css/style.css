@@ -6,6 +6,7 @@ html, body {
     margin: 0;
     display: flex;
     flex-direction: column;
+    overflow-x: hidden;
 }
 
 body {
@@ -586,3 +587,137 @@ header nav {
         margin-top: 0.8rem;
     }
 }
+
+@media (max-width: 992px) {
+    .nav-links.active .btn-primary-header,
+    .nav-links.active .auth-links {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+        margin-top: 1rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .submenu li a {
+        padding: 10px 20px;
+        font-size: 1em;
+    }
+}
+
+.menu-toggle.active {
+    color: #a8e0f9;
+    transform: translateY(-50%) rotate(90deg);
+}
+
+@media (max-width: 480px) {
+    .search-input.active {
+        width: 100px;
+    }
+
+    .btn-perfil {
+        font-size: 0.95em;
+        padding: 8px 12px;
+    }
+
+    .cart-count {
+        font-size: 0.65em;
+        padding: 2px 5px;
+    }
+
+    .logo-img {
+        height: 45px;
+    }
+}
+
+
+.nav-links {
+    transition: max-height 0.3s ease;
+    overflow: hidden;
+    max-height: 0;
+}
+
+.nav-links.active {
+    max-height: 600px;
+}
+
+/* Menú oculto en móvil, visible en desktop */
+.nav-links {
+    display: flex;
+    gap: 1.8rem;
+    align-items: center;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+/* Botón hamburguesa oculto en desktop */
+.menu-toggle {
+    display: none;
+    font-size: 1.8rem;
+    color: white;
+    cursor: pointer;
+}
+
+/* Responsive - pantallas menores a 768px */
+@media (max-width: 768px) {
+    .menu-toggle {
+        display: block; /* Mostrar hamburguesa */
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        z-index: 1500;
+    }
+    
+    .nav-links {
+        display: none; /* Ocultar menú */
+        flex-direction: column;
+        background-color: #7bc0e3; /* mismo color del header para continuidad */
+        position: absolute;
+        top: 60px; /* Debajo del header */
+        right: 20px;
+        width: 200px;
+        border-radius: 8px;
+        padding: 1rem 0;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        z-index: 1400;
+    }
+
+    .nav-links.active {
+        display: flex; /* Mostrar menú al hacer toggle */
+    }
+
+    .nav-links li {
+        width: 100%;
+        text-align: center;
+        margin: 0;
+    }
+
+    .nav-links li a {
+        padding: 12px 0;
+        display: block;
+        color: white;
+        font-weight: 600;
+    }
+
+    .nav-links li a:hover {
+        background-color: rgba(255,255,255,0.2);
+    }
+}
+
+
+
+.site-header nav {
+    position: relative;
+}
+
+.submenu {
+    display: none;
+    /* ... otras reglas */
+}
+.submenu.active {
+    display: block;
+}
+
+

@@ -23,6 +23,13 @@ import locale
 
 from clinicas.views import listado_servicios, registrar_servicio
 
+from ubicacion.models import Region, Ciudad
+
+from django.db.models import Q
+
+from django.contrib.auth.views import LoginView
+from django.shortcuts import resolve_url
+
 
 def adopciones(request):
     form = FiltroMascotaForm(request.GET or None)
@@ -177,11 +184,66 @@ def productos_publicados(request):
 
     return render(request, 'core/productos_publicados.html', {'productos': productos_con_precio_formateado})
 
-
 def panel_listado_servicios(request):
     return listado_servicios(request)
 
 def panel_registrar_servicio(request):
     return registrar_servicio(request)
+
+def listar_clinicas(request):
+    region_id = request.GET.get('region')
+    ciudad_id = request.GET.get('ciudad')
+    query = request.GET.get('q')  # <- esto es para buscar por nombre
+
+    # Base queryset
+    perfiles = Profile.objects.filter(tipo='clinica', perfil_publicado=True)
+
+    # Filtro por nombre (buscador)
+    if query:
+        perfiles = perfiles.filter(nombre_clinica__icontains=query)
+
+    # Filtros por ubicación
+    if region_id:
+        perfiles = perfiles.filter(region_id=region_id)
+    if ciudad_id:
+        perfiles = perfiles.filter(ciudad_id=ciudad_id)
+
+    regiones = Region.objects.all()
+    ciudades = Ciudad.objects.all()
+
+    context = {
+        'clinicas': perfiles,  # OJO: estos son perfiles directamente
+        'regiones': regiones,
+        'ciudades': ciudades,
+        'filtro_region': region_id,
+        'filtro_ciudad': ciudad_id,
+        'query': query,
+    }
+
+    return render(request, 'core/clinicas.html', context)
+
+def listar_farmacias(request):
+    region_id = request.GET.get('region')
+    ciudad_id = request.GET.get('ciudad')
+
+    farmacias = Profile.objects.filter(tipo='farmacia', perfil_publicado=True)
+
+    if region_id:
+        farmacias = farmacias.filter(region_id=region_id)
+    if ciudad_id:
+        farmacias = farmacias.filter(ciudad_id=ciudad_id)
+
+    regiones = Region.objects.all()
+    ciudades = Ciudad.objects.all()
+
+    context = {
+        'farmacias': farmacias,
+        'regiones': regiones,
+        'ciudades': ciudades,
+        'filtro_region': region_id,
+        'filtro_ciudad': ciudad_id,
+    }
+    return render(request, 'core/farmacias.html', context)
+
 
 

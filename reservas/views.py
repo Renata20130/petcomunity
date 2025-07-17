@@ -45,10 +45,15 @@ def registrar_reserva(request):
 
 
 @login_required
+@tipo_requerido('cliente')
 def cliente_pedir_hora(request):
+    if not hasattr(request.user, 'profile') or request.user.profile.tipo != 'cliente':
+            return redirect('home')  # Redirige al home si no es cliente}
+    
     enviado = False
 
     if request.method == 'POST':
+    
         form = ReservaFormCliente(request.POST)
         if form.is_valid():
             reserva = form.save(commit=False)
@@ -154,3 +159,23 @@ class RazaListAPIView(generics.ListAPIView):
             queryset = queryset.filter(especie=especie)
             
         return queryset
+
+@login_required
+def mis_reservas(request):
+    reservas = Reserva.objects.filter(cliente=request.user).order_by('-fecha', '-hora')
+    return render(request, 'reservas/mis_reservas_cliente.html', {'reservas': reservas})
+
+@login_required
+def cancelar_reserva_cliente(request, reserva_id):
+    reserva = get_object_or_404(Reserva, id=reserva_id, cliente=request.user)
+
+    if reserva.estado in ['pendiente', 'aceptada']:
+        reserva.estado = 'rechazada'  # O si prefieres, crea un nuevo estado 'cancelada'
+        reserva.save()
+        messages.success(request, 'Tu reserva fue cancelada exitosamente.')
+    else:
+        messages.warning(request, 'No puedes cancelar una reserva que ya fue rechazada o no válida.')
+
+    return redirect('reservas:mis_reservas_cliente')
+
+

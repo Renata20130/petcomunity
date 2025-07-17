@@ -22,4 +22,14 @@ urlpatterns = [
 
     path('servicios/', views.listado_servicios, name='listado_servicios'),
 
+    path('mascota/<int:mascota_id>/historial/', views.historial_medico, name='historial_medico'),
+
+    path('consulta/<int:consulta_id>/editar/', views.editar_consulta, name='editar_consulta'),
+
+    path('mis-mascotas/', views.mis_mascotas_cliente, name='mis_mascotas_cliente'),
+
+    path('buscar-clinicas/', views.buscar_clinicas, name='buscar_clinicas'),
+
+
+
 ]

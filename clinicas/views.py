@@ -13,7 +13,7 @@ from clinicas.models import Tutor
 from django.db.models import Q
 from .forms import ServicioForm
 from clinicas.models import Servicio
-
+from ubicacion.models import Region, Ciudad
 
 @login_required
 @tipo_requerido('clinica')
@@ -230,8 +230,67 @@ def listado_servicios(request):
     servicios = Servicio.objects.all()
     return render(request, 'clinicas/listado_servicios.html', {'servicios': servicios})
 
+def historial_medico(request, mascota_id):
+    mascota = get_object_or_404(Mascota, id=mascota_id)
 
+    # Seguridad: el usuario debe ser el tutor o propietario
+    if mascota.propietario != request.user and mascota.tutor.usuario != request.user:
+        return render(request, 'core/no_autorizado.html')
 
+    consultas = mascota.consultas.all()  # Gracias al related_name='consultas'
 
+    return render(request, 'clinicas/historial_medico.html', {
+        'mascota': mascota,
+        'consultas': consultas
+    })
+
+@login_required
+@tipo_requerido('clinica')
+def editar_consulta(request, consulta_id):
+    consulta = get_object_or_404(Consulta, id=consulta_id)
+
+    if request.method == 'POST':
+        form = ConsultaForm(request.POST, instance=consulta)
+        if form.is_valid():
+            form.save()
+            return redirect('clinicas:ficha_clinica', mascota_id=consulta.mascota.id)
+    else:
+        form = ConsultaForm(instance=consulta)
+
+    return render(request, 'clinicas/editar_consulta.html', {
+        'form': form,
+        'consulta': consulta,
+    })
+
+@login_required
+def mis_mascotas_cliente(request):
+    mascotas = Mascota.objects.filter(propietario=request.user)
+    return render(request, 'clinicas/mis_mascotas_cliente.html', {'mascotas': mascotas})
+
+def buscar_clinicas(request):
+    regiones = Region.objects.all().order_by('nombre')
+    ciudades = Ciudad.objects.none()  # Por defecto vacío
+
+    region_id = request.GET.get('region')
+    ciudad_id = request.GET.get('ciudad')
+
+    clinicas = Profile.objects.filter(tipo='clinica', perfil_publicado=True)
+
+    if region_id:
+        clinicas = clinicas.filter(region_id=region_id)
+        ciudades = Ciudad.objects.filter(region_id=region_id).order_by('nombre')
+    
+    if ciudad_id:
+        clinicas = clinicas.filter(ciudad_id=ciudad_id)
+
+    context = {
+        'regiones': regiones,
+        'ciudades': ciudades,
+        'clinicas': clinicas,
+        'region_id': region_id,
+        'ciudad_id': ciudad_id,
+    }
+
+    return render(request, 'clinicas/buscar_clinicas.html', context)
 
 

@@ -24,15 +24,21 @@
             <ul class="nav-links">
                 <li><a href="{% url 'core:home' %}">Inicio</a></li>
                 <li><a href="{% url 'core:adopciones' %}">Adopciones</a></li> {# Mover Adopciones más adelante ya que es un pilar #}
-                <li><a href="{% url 'core:clinicas' %}">Clínicas</a></li>
-                <li><a href="{% url 'core:farmacias' %}">Farmacias</a></li>
+                <li><a href="{% url 'clinicas:buscar_clinicas' %}">Clínicas</a></li>
+                <li><a href="{% url 'farmacias:buscar_farmacias' %}">Farmacias</a></li>
                 <li><a href="{% url 'core:productos_publicados' %}">Tienda</a></li> {# Cambiar "Productos" por "Tienda" o "Farmacia" #}
                 <li><a href="{% url 'core:contacto' %}">Contacto</a></li>
             </ul>
 
             <div class="nav-icons-actions">
-                <a href="{% url 'reservas:cliente_pedir_hora' %}" class="btn-primary-header">Pedir Cita</a>
 
+                {% if user.is_authenticated %}
+                    {% if user.profile.tipo == 'cliente' %}
+                        <a href="{% url 'reservas:cliente_pedir_hora' %}" class="btn-primary-header">Pedir Cita</a>
+                    {% endif %}
+                {% else %}
+                    <a href="{% url 'login' %}?next={% url 'reservas:cliente_pedir_hora' %}" class="btn-primary-header">Pedir Cita</a>
+                {% endif %}
                 <div class="search-container">
                     <i class="fas fa-search search-icon"></i>
                     <input type="text" placeholder="Buscar..." class="search-input">
@@ -98,46 +104,19 @@
                 <ul>
                     <li><a href="{% url 'core:home' %}">Inicio</a></li>
                     <li><a href="{% url 'core:adopciones' %}">Adopciones</a></li>
-                    <li><a href="{% url 'core:clinicas' %}">Clínicas Veterinarias</a></li>
+                    <li><a href="{% url 'clinicas:buscar_clinicas' %}">Clínicas Veterinarias</a></li>
                     <li><a href="{% url 'core:productos_publicados' %}">Tienda / Farmacia</a></li>
                     <li><a href="{% url 'core:contacto' %}">Contacto</a></li>
                     <li><a href="{% url 'core:home' %}">Preguntas Frecuentes</a></li> {# Ejemplo de enlace adicional #}
                 </ul>
             </div>
 
-            <div class="footer-section contact">
-                <h3>Contáctanos</h3>
-                <p>Dirección: </p>
-                <p>Teléfono: </p>
-                <p>Email: <a href="mailto:info@petcommunity.cl">info@petcommunity.cl</a></p>
-                <p>Horario de Atención: Lun-Vie: 9:00 - 18:00</p>
-            </div>
 
-            <div class="footer-section social-newsletter">
-                <h3>Síguenos</h3>
-                <div class="social-icons">
-                    <a href="https://www.facebook.com/" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-                    <a href="https://www.instagram.com/" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                    <a href="https://x.com/?lang=en" target="_blank" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-                    <a href="https://youtube.com/" target="_blank" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
-                </div>
-                
-                <h3>Mantente Informado</h3>
-                <p>Suscríbete a nuestro boletín para recibir las últimas novedades sobre adopciones y ofertas.</p>
-                <form action="https://sendpulse.com/latam/support/glossary/subscription-form" method="post" class="newsletter-form">
-                    <input type="email" placeholder="Tu correo electrónico" required>
-                    <button type="submit">Suscribirme</button>
-                </form>
-            </div>
         </div>
 
         <div class="footer-bottom">
             <p>&copy; 2025 PetCommunity - Todos los derechos reservados.</p>
-            <ul class="legal-links">
-                <li><a href="{% url 'core:home' %}">Política de Privacidad</a></li> {# Asegúrate de tener estas páginas #}
-                <li><a href="{% url 'core:home' %}">Términos y Condiciones</a></li>
-                <li><a href="{% url 'core:home' %}">Política de Cookies</a></li>
-            </ul>
+            
         </div>
     </footer>
 
@@ -150,7 +129,8 @@
     {% endif %}
    <script src="{% static 'js/base.js' %}" defer></script>
 
-    {% block extra_js %}{% endblock %}
+    {% block extra_js %}
+    {% endblock %}
 
 </body>
 </html>

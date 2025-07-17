@@ -28,6 +28,7 @@ urlpatterns = [
 
     path('farmacias/', views.farmacias_view, name='farmacias'),
 
+    
 
 
 ]

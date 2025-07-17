@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% load static %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/buscar_clinicas.css' %}">
+{% endblock %}
+
+{% block content %}
+<h2>Buscar Clínicas por Ubicación</h2>
+
+<form method="get" id="form-ubicacion">
+    <label for="region">Región:</label>
+    <select name="region" id="region">
+        <option value="">-- Selecciona una región --</option>
+        {% for region in regiones %}
+            <option value="{{ region.id }}" {% if region.id|stringformat:"s" == region_id %}selected{% endif %}>
+                {{ region.nombre }}
+            </option>
+        {% endfor %}
+    </select>
+
+    <label for="ciudad">Ciudad:</label>
+    <select name="ciudad" id="ciudad">
+        <option value="">-- Selecciona una ciudad --</option>
+        {% for ciudad in ciudades %}
+            <option value="{{ ciudad.id }}" {% if ciudad.id|stringformat:"s" == ciudad_id %}selected{% endif %}>
+                {{ ciudad.nombre }}
+            </option>
+        {% endfor %}
+    </select>
+
+    <button type="submit">Buscar</button>
+</form>
+
+<hr>
+
+<h3>Clínicas encontradas:</h3>
+{% if clinicas %}
+    <ul>
+    {% for clinica in clinicas %}
+        <li>
+            <strong>{{ clinica.nombre_clinica }}</strong><br>
+            Dirección: {{ clinica.direccion }}<br>
+            Teléfono: {{ clinica.telefono }}<br>
+            Región: {{ clinica.region.nombre }} - Ciudad: {{ clinica.ciudad.nombre }}
+        </li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No se encontraron clínicas para la ubicación seleccionada.</p>
+{% endif %}
+
+<script>
+// Para hacer más dinámico el select de ciudades luego
+// podemos agregar AJAX para que cargue ciudades según región sin recargar la página.
+// Pero eso lo hacemos después, si quieres.
+</script>
+
+{% endblock %}

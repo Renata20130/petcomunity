@@ -39,7 +39,9 @@ from .forms import EditarPerfilFarmaciaForm
 from itertools import chain
 from clinicas.models import Mascota
 
+from .forms import FiltroUbicacionForm
 
+from django.contrib.auth.views import LoginView
 
 def registro_view(request):
     if request.method == 'POST':
@@ -47,7 +49,7 @@ def registro_view(request):
         if form.is_valid():
             user = form.save()
             login(request, user)
-            return redirect('home')
+            return redirect('core:home')
     else:
         form = RegistroForm()
     return render(request, 'accounts/registro.html', {'form': form})
@@ -62,7 +64,7 @@ def registro_cliente_view(request):
             user.profile.tipo = 'cliente'
             user.profile.save()
             login(request, user)
-            return redirect('home')
+            return redirect('core:home')
     else:
         form = RegistroForm()
     return render(request, 'accounts/registro_cliente.html', {'form': form})
@@ -76,7 +78,7 @@ def registro_clinica_view(request):
             user.profile.tipo = 'clinica'
             user.profile.save()
             login(request, user)
-            return redirect('home')
+            return redirect('core:home')
     else:
         form = RegistroClinicaForm()
     return render(request, 'accounts/registro_clinica.html', {'form': form})
@@ -322,9 +324,43 @@ def editar_perfil_farmacia(request):
         'form': form
     })
 
+def buscar_clinicas_farmacias(request):
+    form = FiltroUbicacionForm(request.GET or None)
 
+    clinicas = Profile.objects.filter(tipo='clinica', perfil_publicado=True)
+    farmacias = Profile.objects.filter(tipo='farmacia', perfil_publicado=True)
 
+    if form.is_valid():
+        region = form.cleaned_data.get('region')
+        ciudad = form.cleaned_data.get('ciudad')
 
+        if region:
+            clinicas = clinicas.filter(region=region)
+            farmacias = farmacias.filter(region=region)
+        if ciudad:
+            clinicas = clinicas.filter(ciudad=ciudad)
+            farmacias = farmacias.filter(ciudad=ciudad)
+
+    context = {
+        'form': form,
+        'clinicas': clinicas,
+        'farmacias': farmacias,
+    }
+    return render(request, 'buscar_ubicacion.html', context)
+
+class CustomLoginView(LoginView):
+    def get_success_url(self):
+        user = self.request.user
+        # Si tiene perfil
+        if hasattr(user, 'profile'):
+            if user.profile.tipo == 'cliente':
+                # Si es cliente, redirige a donde quería ir o a 'pedir_cita'
+                return self.get_redirect_url() or '/reservas/pedir-cita/'
+            else:
+                # Si es clínica o farmacia, redirige al home
+                return '/'
+        # Por si no tiene perfil
+        return '/'
 
 
 

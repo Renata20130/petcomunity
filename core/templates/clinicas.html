@@ -9,22 +9,32 @@
 
 {% block content %}
 <main>
-    {# Hero Section o Sección de Bienvenida para Clínicas #}
-    <section class="clinicas-hero">
-        <div class="hero-content">
-            <h1>Encuentra la Clínica Veterinaria Perfecta para Tu Compañero</h1>
-            <div class="search-bar-container">
-                <input type="text" id="search-clinic-input" placeholder="Buscar clínica por nombre o ubicación...">
-                <button type="button" class="search-button">Buscar</button>
-            </div>
-            {#<div class="filter-buttons"> #}
-                {# <button class="filter-btn active">Todas</button> #}
-                {# <button class="filter-btn">Urgencias</button> #}
-                {# <button class="filter-btn">Estética</button> #}
-                {# <button class="filter-btn">Consultas</button> #}
-                {# Puedes añadir más filtros dinámicamente o según tus categorías #}
-           {#  </div> #}
-        </div>
+    
+    {# --- FORMULARIO DE FILTRO POR UBICACIÓN --- #}
+    <section class="form-wrapper" style="margin-bottom: 2rem;">
+        <form method="get" id="form-ubicacion">
+        <label for="region">Región:</label>
+        <select name="region" id="region">
+            <option value="">-- Selecciona una región --</option>
+            {% for region in regiones %}
+                <option value="{{ region.id }}" {% if region.id|stringformat:"s" == region_id %}selected{% endif %}>
+                    {{ region.nombre }}
+                </option>
+            {% endfor %}
+        </select>
+
+        <label for="ciudad">Ciudad:</label>
+        <select name="ciudad" id="ciudad">
+            <option value="">-- Selecciona una ciudad --</option>
+            {% for ciudad in ciudades %}
+                <option value="{{ ciudad.id }}" {% if ciudad.id|stringformat:"s" == ciudad_id %}selected{% endif %}>
+                    {{ ciudad.nombre }}
+                </option>
+            {% endfor %}
+        </select>
+
+        <button type="submit">Buscar</button>
+    </form>
     </section>
 
     {% if messages %}

@@ -1,0 +1,30 @@
+{% extends 'core/base_panel.html' %}
+
+{% block title %}Historial Médico - {{ mascota.nombre_mascota }}{% endblock %}
+
+{% block content %}
+<h2>Historial Médico de {{ mascota.nombre_mascota }}</h2>
+
+{% if consultas %}
+    <ul class="list-group mt-3">
+    {% for consulta in consultas %}
+        <li class="list-group-item">
+            <strong>{{ consulta.fecha|date:"d/m/Y H:i" }}</strong><br>
+            <strong>Tipo:</strong> {{ consulta.get_tipo_consulta_display }}<br>
+            <strong>Motivo:</strong> {{ consulta.motivo }}<br>
+            <strong>Diagnóstico:</strong> {{ consulta.diagnostico|default:"-" }}<br>
+            <strong>Tratamiento:</strong> {{ consulta.tratamiento|default:"-" }}<br>
+            <strong>Veterinario:</strong> {{ consulta.veterinario.get_full_name|default:"No asignado" }}<br>
+            <strong>Peso:</strong> {{ consulta.peso_kg|default:"-" }} kg<br>
+            <strong>Temperatura:</strong> {{ consulta.temperatura|default:"-" }} °C<br>
+            <strong>Frecuencia Cardíaca:</strong> {{ consulta.frecuencia_cardiaca|default:"-" }}<br>
+            <strong>Frecuencia Respiratoria:</strong> {{ consulta.frecuencia_respiratoria|default:"-" }}<br>
+            <strong>Próxima cita:</strong> {{ consulta.proxima_cita|date:"d/m/Y H:i" if consulta.proxima_cita }}<br>
+            <strong>Estado:</strong> {{ consulta.get_estado_display }}
+        </li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No hay historial médico registrado para esta mascota.</p>
+{% endif %}
+{% endblock %}

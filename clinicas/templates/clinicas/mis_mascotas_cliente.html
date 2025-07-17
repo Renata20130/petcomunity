@@ -1,0 +1,21 @@
+{% extends 'core/base_panel.html' %}
+
+{% block title %}Mis Mascotas{% endblock %}
+
+{% block content %}
+<h2>Mis Mascotas</h2>
+
+{% if mascotas %}
+    <ul class="list-group">
+    {% for mascota in mascotas %}
+        <li class="list-group-item">
+            <strong>{{ mascota.nombre_mascota }}</strong> ({{ mascota.get_especie_display }}) - Tutor: {{ mascota.tutor.nombre_tutor }}
+            <!-- Opcional: link al historial médico -->
+            <a href="{% url 'clinicas:historial_medico' mascota.id %}" class="btn btn-sm btn-outline-primary float-right">Ver Historial Médico</a>
+        </li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No tienes mascotas registradas.</p>
+{% endif %}
+{% endblock %}

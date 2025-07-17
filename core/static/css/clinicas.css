@@ -319,6 +319,14 @@ p.descripcion {
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08); 
 }
 
+.search-bar-container select,
+.search-bar-container input {
+    padding: 0.5rem;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}
+
+
 /* --- Responsive (Ajustes Adicionales) --- */
 @media (max-width: 768px) {
     .clinicas-hero {

@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<h2>Buscar Farmacias por Ubicación</h2>
+
+<form method="get" id="form-ubicacion">
+    <label for="region">Región:</label>
+    <select name="region" id="region">
+        <option value="">-- Selecciona una región --</option>
+        {% for region in regiones %}
+            <option value="{{ region.id }}" {% if region.id|stringformat:"s" == region_id %}selected{% endif %}>
+                {{ region.nombre }}
+            </option>
+        {% endfor %}
+    </select>
+
+    <label for="ciudad">Ciudad:</label>
+    <select name="ciudad" id="ciudad">
+        <option value="">-- Selecciona una ciudad --</option>
+        {% for ciudad in ciudades %}
+            <option value="{{ ciudad.id }}" {% if ciudad.id|stringformat:"s" == ciudad_id %}selected{% endif %}>
+                {{ ciudad.nombre }}
+            </option>
+        {% endfor %}
+    </select>
+
+    <button type="submit">Buscar</button>
+</form>
+
+<hr>
+
+<h3>Farmacias encontradas:</h3>
+{% if farmacias %}
+    <ul>
+    {% for farmacia in farmacias %}
+        <li>
+            <strong>{{ farmacia.nombre_farmacia }}</strong><br>
+            Dirección: {{ farmacia.direccion }}<br>
+            Teléfono: {{ farmacia.telefono }}<br>
+            Región: {{ farmacia.region.nombre }} - Ciudad: {{ farmacia.ciudad.nombre }}
+        </li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No se encontraron farmacias para la ubicación seleccionada.</p>
+{% endif %}
+
+{% endblock %}
