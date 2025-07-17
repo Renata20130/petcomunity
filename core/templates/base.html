@@ -9,6 +9,7 @@
     <link rel="shortcut icon" href="{% static 'favicon.ico' %}" type="image/x-icon" />
     <link href="https://fonts.googleapis.com/css2?family=Anton&family=Roboto:wght@300;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     
 </head>
@@ -21,35 +22,26 @@
                 </a>
             </div>
 
-            <ul class="nav-links">
+            <div class="menu-toggle" id="menu-toggle">&#9776;</div>
+
+            <ul class="nav-links" id="nav-links">
                 <li><a href="{% url 'core:home' %}">Inicio</a></li>
                 <li><a href="{% url 'core:adopciones' %}">Adopciones</a></li> {# Mover Adopciones más adelante ya que es un pilar #}
                 <li><a href="{% url 'clinicas:buscar_clinicas' %}">Clínicas</a></li>
                 <li><a href="{% url 'farmacias:buscar_farmacias' %}">Farmacias</a></li>
                 <li><a href="{% url 'core:productos_publicados' %}">Tienda</a></li> {# Cambiar "Productos" por "Tienda" o "Farmacia" #}
-                <li><a href="{% url 'core:contacto' %}">Contacto</a></li>
-            </ul>
-
-            <div class="nav-icons-actions">
-
-                {% if user.is_authenticated %}
-                    {% if user.profile.tipo == 'cliente' %}
-                        <a href="{% url 'reservas:cliente_pedir_hora' %}" class="btn-primary-header">Pedir Cita</a>
+                
+                <li class="menu-btn">
+                    {% if user.is_authenticated %}
+                        {% if user.profile.tipo == 'cliente' %}
+                            <a href="{% url 'reservas:cliente_pedir_hora' %}" class="btn-cita">Pedir Cita</a>
+                        {% endif %}
+                    {% else %}
+                        <a href="{% url 'login' %}?next={% url 'reservas:cliente_pedir_hora' %}" class="btn-cita">Pedir Cita</a>
                     {% endif %}
-                {% else %}
-                    <a href="{% url 'login' %}?next={% url 'reservas:cliente_pedir_hora' %}" class="btn-primary-header">Pedir Cita</a>
-                {% endif %}
-                <div class="search-container">
-                    <i class="fas fa-search search-icon"></i>
-                    <input type="text" placeholder="Buscar..." class="search-input">
-                </div>
-
-                {% if request.user.is_authenticated and request.user.profile.tipo == "cliente" %}
-                    <a href="{% url 'pedidos:ver_carrito' %}" class="cart-icon-link">
-                        <i class="fas fa-shopping-cart"></i>
-                        {# <span class="cart-count">3</span> Opcional: para mostrar número de ítems #}
-                    </a>
-                {% endif %}
+                    </li>
+                
+                <div class="nav-icons-actions">
 
                 {% if request.user.is_authenticated %}
                     <ul class="user-menu-wrapper"> {# Nuevo UL para envolver el ítem de perfil #}
@@ -63,6 +55,7 @@
                                     <li><a href="{% url 'panel_cliente' %}">Mi perfil</a></li>
                                     <li><a href="{% url 'reservas:cliente_pedir_hora' %}">Mis citas</a></li>
                                     <li><a href="{% url 'pedidos:mis_pedidos' %}">Mis Pedidos</a></li>
+                                    <li><a href="{% url 'pedidos:ver_carrito' %}">Mi carrito</a></li>
                                     <li><a href="#">Mis Adopciones</a></li>
                                 {% elif request.user.profile.tipo == "farmacia" %}
                                     <li><a href="{% url 'productos:panel_farmacia' %}">Panel Farmacia</a></li>
@@ -79,10 +72,10 @@
                     </ul>
                 {% endif %}
             </div>
-            {# Si usas un menú hamburguesa para móviles, aquí iría el botón para toggle #}
-            <div class="menu-toggle">
-                <i class="fas fa-bars"></i>
-            </div>
+            </ul>
+
+            
+
         </nav>
     </header>
 
@@ -120,13 +113,7 @@
         </div>
     </footer>
 
-    {% if messages %}
-        <ul class="messages">
-            {% for message in messages %}
-                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-            {% endfor %}
-        </ul>
-    {% endif %}
+    
    <script src="{% static 'js/base.js' %}" defer></script>
 
     {% block extra_js %}

@@ -557,36 +557,28 @@ body {
 }
 
 
-/* --- Media Queries (ajustados para las nuevas dimensiones) --- */
+/* Asegurar viewport en HTML */
+/* <meta name="viewport" content="width=device-width, initial-scale=1.0" /> */
+
+/* --- Responsive --- */
 @media (max-width: 992px) {
     .hero-section {
         height: 500px;
     }
     .hero-content h1 {
-        font-size: 3.5rem;
+        margin-top: 23px;
+        font-size: 2.5rem;
     }
     .hero-subtitle {
         font-size: 1.3rem;
     }
-    .section-title {
-        font-size: 2.2rem;
+    .hero-content h1 .highlight {
+        font-size: 2rem !important;
     }
-    .service-cards-grid, .adoption-cards-grid, .testimonial-grid,
-    .cards-grid-clinicas, .cards-grid-productos {
+    .service-cards-grid,
+    .adoption-cards-grid {
         grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    }
-    .columna-flecha { 
-        right: 0; 
-        margin-top: 20px; 
-    }
-    .contenedor-clinicas, .contenedor-productos {
-        flex-direction: column; 
-        align-items: center;
-    }
-    .columna-flecha {
-        width: 100%;
-        height: 70px; 
-        border-radius: var(--border-radius-card);
+        
     }
 }
 
@@ -595,38 +587,35 @@ body {
         height: 450px;
     }
     .hero-content h1 {
-        font-size: 2.8rem;
+        font-size: 2rem;
+    }
+    .hero-content h1 .highlight {
+        font-size: 1.6rem !important;
     }
     .hero-subtitle {
         font-size: 1.1rem;
     }
     .hero-buttons {
         flex-direction: column;
-        align-items: center; 
+        align-items: center;
         gap: 15px;
+        margin-bottom: 20px;
     }
     .btn {
         width: 90%;
-        max-width: 300px; 
-    }
-    .section-title {
-        font-size: 2rem;
-        margin-bottom: 30px;
-    }
-    .service-card, .adoption-card, .testimonial-card, .card, .card-producto {
-        padding: 25px;
-    }
-    .testimonial-card::before {
-        font-size: 5rem;
+        max-width: 300px;
     }
 }
 
 @media (max-width: 576px) {
     .hero-section {
-        height: 400px;
+        height: 350px;
     }
     .hero-content h1 {
-        font-size: 2.2rem;
+        font-size: 1.2rem;
+    }
+    .hero-content h1 .highlight {
+        font-size: 1.5rem !important;
     }
     .hero-subtitle {
         font-size: 1rem;
@@ -638,16 +627,25 @@ body {
         padding: 10px 20px;
         font-size: 0.95rem;
     }
-    .section-title {
-        font-size: 1.8rem;
-    }
-    .service-cards-grid, .adoption-cards-grid, .testimonial-grid,
-    .cards-grid-clinicas, .cards-grid-productos {
-        grid-template-columns: 1fr; 
+    .service-cards-grid,
+    .adoption-cards-grid {
+        grid-template-columns: 1fr;
         gap: 20px;
     }
-    .service-card, .adoption-card, .testimonial-card, .card, .card-producto {
-        padding: 20px;
+
+}
+.highlight {
+    font-size: 4.5rem; /* tamaño normal */
+}
+
+@media (max-width: 768px) {
+    .highlight {
+        font-size: 3rem; /* más pequeño en tablet y móvil */
     }
 }
 
+@media (max-width: 576px) {
+    .highlight {
+        font-size: 2.2rem; /* aún más pequeño en móvil pequeño */
+    }
+}

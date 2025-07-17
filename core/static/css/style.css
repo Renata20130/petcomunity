@@ -6,7 +6,7 @@ html, body {
     margin: 0;
     display: flex;
     flex-direction: column;
-    overflow-x: hidden;
+    
 }
 
 body {
@@ -21,6 +21,16 @@ main {
     flex: 1; /* Permite que el contenido principal ocupe el espacio restante */
     width: 100%;
 }
+header {
+      background-color: #3498db;
+      color: white;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: relative;
+    }
+
 
 /* --- Header y Navegación Principal --- */
 .site-header {
@@ -30,39 +40,72 @@ main {
     box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Sombra sutil para profundidad */
 }
 
+
 /* Contenedor principal de la navegación dentro del header */
 header nav {
     display: flex;
     justify-content: space-between; /* Espacio entre el logo/nav-links y los iconos/acciones */
     align-items: center; /* Centra verticalmente los elementos */
     max-width: 1200px; /* Ancho máximo para el contenido del header */
-    margin: 0 auto; /* Centra el contenido del header */
+    margin: 10px 100px; /* Centra el contenido del header */
     flex-wrap: wrap; /* Permite que los elementos se envuelvan en pantallas pequeñas */
 }
+/* Estilos generales del nav */
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #7BC0E3;
+  padding: 10px 20px;
+  position: relative;
+}
+
+.site-header nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+    padding: 10px 20px;
+    position: relative;
+}
+
+
 
 /* --- Logo --- */
+.logo {
+    flex: 0 0 auto;
+    
+}
+
 .logo-img {
-    height: 70px; /* Altura fija para el logo */
+    margin: 0 200px;
+    height: 50px; /* Altura fija para el logo */
     width: auto; /* Ancho automático para mantener la proporción */
     display: block; /* Asegura que no haya espacio extra debajo */
 }
 
+
 /* --- Enlaces de Navegación Principal --- */
 .nav-links {
-    list-style: none; /* Remueve los puntos de la lista */
-    display: flex; /* Utiliza flexbox para los enlaces */
-    gap: 1.8rem; /* Espacio entre los elementos de la lista */
-    align-items: center; /* Alinea verticalmente los ítems */
-    margin: 0;
-    padding: 0;
-    margin-left: 2rem; /* Espacio a la izquierda para separar del logo */
+  display: flex;
+  list-style: none;
+  gap: 20px;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-links li a {
+  
+  
+  font-weight: bold;
+  padding: 10px;
 }
 
 .nav-links li a {
     text-decoration: none;
     color: white;
-    font-weight: 600;
-    padding: 10px 15px; /* Aumenta el padding para un área de clic más grande */
+    font-weight: bold;
+    padding: 15px; /* Aumenta el padding para un área de clic más grande */
     border-radius: 8px; /* Bordes más redondeados */
     transition: background-color 0.3s ease, color 0.3s ease; /* Transición suave al hover */
     font-size: 1.05em;
@@ -77,9 +120,13 @@ header nav {
 /* --- Contenedor de Íconos y Acciones (Buscador, Carrito, Perfil, CTA) --- */
 .nav-icons-actions {
     display: flex;
-    align-items: center;
-    gap: 1.5rem; /* Espacio entre los íconos y el botón */
-    margin-left: auto; /* Empuja este contenedor a la derecha */
+    justify-content: center;  /* Centra horizontalmente */
+    align-items: center;      /* Centra verticalmente */
+    gap: 15px;                /* Espacio entre íconos */
+    flex-wrap: wrap;          /* Permite que se envuelvan si no caben */
+    width: 100%;              /* Que ocupe todo el ancho disponible */
+    max-width: 300px;         /* Máximo ancho para no estirarse demasiado */
+    margin: 0 auto;           /* Centrar el contenedor en su bloque */
 }
 
 /* --- Buscador --- */
@@ -103,7 +150,7 @@ header nav {
 
 .search-input {
     border: none;
-    padding: 8px 12px;
+    padding: 5px 10px;
     border-radius: 20px; /* Bordes redondeados para un aspecto moderno */
     outline: none;
     width: 0; /* Oculto por defecto */
@@ -273,49 +320,57 @@ header nav {
 
 /* --- Menú Hamburguesa (para móvil) --- */
 .menu-toggle {
-    display: none; /* Oculto por defecto en desktop */
-    font-size: 2em; /* Tamaño grande para fácil interacción */
-    color: white;
+    display: block;
+    position: relative; /* o absolute si quieres que flote */
+    z-index: 1500;
     cursor: pointer;
-    order: 3; /* Asegura que aparezca en el lado derecho en móvil */
+    font-size: 1.6em;
 }
 
 /* --- Media Queries para Responsividad del Header --- */
 
 /* Tabletas y pantallas medianas (992px y abajo) */
-@media (max-width: 992px) {
+@media (max-width: 768px) {
     header nav {
-        flex-direction: column; /* Apila los elementos verticalmente */
-        align-items: center; /* Centra los elementos horizontalmente */
-        gap: 1.5rem; /* Espacio entre bloques principales */
+        flex-direction: row; /* para que los hijos estén en fila */
+        align-items: center; /* para centrar verticalmente logo y botón */
+        justify-content: space-between; /* logo izquierda, menú derecha */
+        width: 100%;
+        margin: 0 10px; /* opcional, para no pegar al borde *//* Alinea horizontalmente todo a la izquierda */
     }
+
 
     .site-header {
         padding: 15px; /* Reduce el padding en pantallas más pequeñas */
     }
 
+    .logo {
+        margin: 0; /* Elimina márgenes laterales */
+        flex: 0 0 auto; /* Que no crezca ni se encoja */
+    }
+
     .logo-img {
-        height: 60px; /* Reduce el tamaño del logo */
-        margin-bottom: 10px; /* Espacio debajo del logo */
+        margin: 0; /* Elimina márgenes que separan logo */
+        height: 60px; /* Ajusta tamaño si quieres */
+        display: block; /* Asegura que no tenga espacio extra */
     }
 
     .nav-links {
-        /* Oculto por defecto, se mostrará con JS al activar el menú hamburguesa */
         display: none;
-        flex-direction: column; /* Los enlaces de navegación se apilan */
-        width: 100%; /* Ocupa todo el ancho disponible */
-        text-align: center;
-        background-color: #6fbbe0; /* Color de fondo para el menú móvil desplegado */
+        flex-direction: column;
         position: absolute;
-        top: 100%; /* Debajo del header */
-        left: 0;
-        z-index: 998;
+        top: 100%;
+        right: 0;
+        background-color: #7bc0e3;
+        width: 200px;
         padding: 1rem 0;
-        box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        border-top: 1px solid rgba(255,255,255,0.3);
+        border-left: 1px solid #ccc;
     }
-    .nav-links.active { /* Clase para mostrar el menú con JS */
-        display: flex;
+    .nav-links.active {
+    display: flex;
     }
+
     .nav-links li {
         width: 100%; /* Cada ítem de la lista ocupa todo el ancho */
     }
@@ -329,12 +384,11 @@ header nav {
     }
 
     .nav-icons-actions {
-        width: 100%; /* Ocupa todo el ancho */
-        justify-content: center; /* Centra los íconos */
-        gap: 1.5rem;
-        margin-left: 0;
-        margin-top: 10px; /* Espacio superior */
-        position: relative; /* Necesario para posicionar el menú hamburguesa */
+        flex-direction: row;  /* En fila */
+        justify-content: center;
+        gap: 10px;
+        max-width: 100%;      /* Que ocupe todo el ancho */
+        margin-top: 10px;
     }
 
     /* Mueve el botón CTA y los enlaces de autenticación dentro del menú desplegable */
@@ -344,11 +398,30 @@ header nav {
     }
 
     .menu-toggle {
-        display: block; /* Muestra el ícono de hamburguesa */
-        position: absolute;
-        top: 50%;
-        right: 15px; /* Posiciona a la derecha del header */
-        transform: translateY(-50%);
+        display: block;
+        font-size: 1.6em;
+        cursor: pointer;
+        z-index: 1500;
+    }
+
+    .nav-links,
+    .nav-icons-actions {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        background-color: #7bc0e3;
+        padding: 10px 0;
+    }
+
+    .nav-links.active,
+    .nav-icons-actions.active {
+        display: flex;
+    }
+
+    .nav-links li,
+    .nav-icons-actions a {
+        text-align: center;
+        width: 100%;
     }
 
     /* Estilos para el submenú de perfil en móvil */
@@ -367,11 +440,34 @@ header nav {
         border-radius: 0;
         padding-top: 0;
         margin-top: 5px; /* Espacio debajo del botón de perfil */
-        background-color: #e0f2f7; /* Un color de fondo diferente para el submenú móvil */
+        background-color: #055970; /* Un color de fondo diferente para el submenú móvil */
     }
     .submenu li a {
         padding-left: 30px; /* Indenta los ítems del submenú */
     }
+    .nav-icons-actions {
+    flex-direction: column;
+    width: 100%;
+    margin-top: 10px;
+  }
+
+  .nav-icons-actions > * {
+    margin: 5px 0;
+  }
+
+  .menu-btn {
+    width: 100%;
+  }
+
+  btn-cita {
+    display: block;
+    width: 100%;
+    text-align: center;
+    margin: 10px 0;
+  }
+
+  
+  
 }
 
 /* Teléfonos móviles (768px y abajo) */
@@ -380,17 +476,27 @@ header nav {
         padding: 10px; /* Reduce aún más el padding */
     }
     .logo-img {
-        height: 55px; /* Logo más pequeño */
+        height: 60px;
+        border-right: 100px;/* Logo más pequeño */
     }
     .search-input.active {
         width: 120px; /* Ancho más pequeño para el input de búsqueda */
     }
     .menu-toggle {
         font-size: 1.6em; /* Hamburguesa más pequeña */
-        right: 10px;
+        
     }
 }
 
+@media (max-width: 320px) {
+    .nav-icons-actions {
+        flex-direction: column;  /* Apilar verticalmente */
+        align-items: center;
+        gap: 12px;
+        max-width: 150px;
+        margin: 10px auto 0;
+    }
+}
 /* --- Base.css - Adaptaciones para el Footer (sin cambios mayores) --- */
 
 .site-footer {
@@ -634,7 +740,7 @@ header nav {
 
 .nav-links {
     transition: max-height 0.3s ease;
-    overflow: hidden;
+    
     max-height: 0;
 }
 
@@ -719,5 +825,42 @@ header nav {
 .submenu.active {
     display: block;
 }
+
+
+.user-menu-wrapper,
+.auth-links {
+    display: flex;
+    align-items: center;
+    list-style: none;
+    gap: 10px;
+    margin: 0;
+    padding: 0;
+}
+
+.menu-toggle {
+    display: none; /* oculto en desktop */
+}
+
+@media (max-width: 768px) {
+    .site-header nav {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .nav-links,
+    .nav-icons-actions {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+        width: 100%;
+    }
+
+    .menu-toggle {
+        display: block;
+    }
+}
+
+
+
 
 
