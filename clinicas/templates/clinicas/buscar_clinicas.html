@@ -1,58 +1,95 @@
 {% extends "base.html" %}
 {% load static %}
+
 {% block extra_css %}
-<link rel="stylesheet" href="{% static 'css/buscar_clinicas.css' %}">
+<link rel="stylesheet" href="{% static 'clinicas/css/buscar_clinicas.css' %}">
 {% endblock %}
 
 {% block content %}
-<h2>Buscar Clínicas por Ubicación</h2>
+<div class="buscar-clinicas-wrapper">
+    <section class="hero-section">
+        <div class="hero-content">
+            <h1><span class="highlight">Tu Compañero Ideal, Cuidado Integral y Productos de Confianza.</span></h1>
+            <p class="hero-subtitle">Conecta con perros y gatos que buscan un hogar, agenda fácilmente tu consulta veterinaria y accede a la farmacia online con todo lo que necesitan.</p>
+            
+        </div> 
+        {# La imagen de fondo del hero se manejará con CSS #}
+    </section>
+    <h2>Buscar Clínicas por Ubicación</h2>
 
-<form method="get" id="form-ubicacion">
-    <label for="region">Región:</label>
-    <select name="region" id="region">
-        <option value="">-- Selecciona una región --</option>
-        {% for region in regiones %}
-            <option value="{{ region.id }}" {% if region.id|stringformat:"s" == region_id %}selected{% endif %}>
-                {{ region.nombre }}
-            </option>
-        {% endfor %}
-    </select>
+    <form method="get" id="form-ubicacion">
+        <div class="ubicacion-fila">
+            <div class="campo">
+                <label for="region">Región:</label>
+                <select name="region" id="region">
+                    <option value="">-- Selecciona una región --</option>
+                    {% for region in regiones %}
+                        <option value="{{ region.id }}" {% if region.id|stringformat:"s" == region_id %}selected{% endif %}>
+                            {{ region.nombre }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
 
-    <label for="ciudad">Ciudad:</label>
-    <select name="ciudad" id="ciudad">
-        <option value="">-- Selecciona una ciudad --</option>
-        {% for ciudad in ciudades %}
-            <option value="{{ ciudad.id }}" {% if ciudad.id|stringformat:"s" == ciudad_id %}selected{% endif %}>
-                {{ ciudad.nombre }}
-            </option>
-        {% endfor %}
-    </select>
+            <div class="campo">
+                <label for="ciudad">Ciudad:</label>
+                <select name="ciudad" id="ciudad">
+                    <option value="">-- Selecciona una ciudad --</option>
+                    {% for ciudad in ciudades %}
+                        <option value="{{ ciudad.id }}" {% if ciudad.id|stringformat:"s" == ciudad_id %}selected{% endif %}>
+                            {{ ciudad.nombre }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
 
-    <button type="submit">Buscar</button>
-</form>
+        <div class="botones-busqueda">
+            <button type="submit">Buscar</button>
+            <button type="button" id="btn-limpiar">Limpiar</button>
+        </div>
+    </form>
 
-<hr>
 
-<h3>Clínicas encontradas:</h3>
-{% if clinicas %}
-    <ul>
-    {% for clinica in clinicas %}
-        <li>
-            <strong>{{ clinica.nombre_clinica }}</strong><br>
-            Dirección: {{ clinica.direccion }}<br>
-            Teléfono: {{ clinica.telefono }}<br>
-            Región: {{ clinica.region.nombre }} - Ciudad: {{ clinica.ciudad.nombre }}
-        </li>
-    {% endfor %}
-    </ul>
-{% else %}
-    <p>No se encontraron clínicas para la ubicación seleccionada.</p>
-{% endif %}
-
+    <hr>
+    <section class="clinicas-listado">
+        <h3>Clínicas encontradas:</h3>
+        <div class="grid-clinicas">
+            {% if clinicas %}
+                {% for clinica in clinicas %}
+                    <div class="card-clinica">
+                        <div class="card-clinica-img">
+                            {% if clinica.imagen %}
+                                <img src="{{ clinica.imagen.url }}" alt="Imagen de {{ clinica.username }}">
+                            {% else %}
+                                <img src="{% static 'img/default.png' %}" alt="Imagen genérica de clínica">
+                            {% endif %}
+                        </div>
+                        <div class="card-clinica-info">
+                            <h3>{{ clinica.nombre_clinica }}</h3>
+                            <p class="direccion">{{ clinica.direccion }}</p>
+                            <p class="telefono">{{ clinica.telefono }}</p>
+                            <p class="region">{{ clinica.region.nombre }}</p>
+                            <p class="region">{{ clinica.ciudad.nombre }}</p>
+                            <div class="rating">
+                                <span class="star">&#9733;</span><span class="star">&#9733;</span><span class="star">&#9733;</span><span class="star">&#9733;</span><span class="star-empty">&#9734;</span>
+                                <span class="rating-text">(4.0)</span>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p>No se encontraron clínicas para la ubicación seleccionada.</p>
+            {% endif %}
+        </div>
+    </section>
+</div>
 <script>
-// Para hacer más dinámico el select de ciudades luego
-// podemos agregar AJAX para que cargue ciudades según región sin recargar la página.
-// Pero eso lo hacemos después, si quieres.
+    document.getElementById('btn-limpiar').addEventListener('click', function () {
+        document.getElementById('region').selectedIndex = 0;
+        document.getElementById('ciudad').selectedIndex = 0;
+        document.getElementById('form-ubicacion').submit(); // Opcional: recarga la página sin filtros
+    });
 </script>
 
 {% endblock %}

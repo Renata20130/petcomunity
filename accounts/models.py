@@ -23,6 +23,8 @@ class Profile(models.Model):
         null=True
     )
     
+
+    nombre_farmacia = models.CharField(max_length=100, null=True, blank=True)
     # Campos adicionales para clínica
     nombre_clinica = models.CharField(max_length=100, blank=True, null=True)
     direccion = models.CharField(max_length=200, blank=True, null=True)

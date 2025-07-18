@@ -56,10 +56,10 @@ body {
     border-radius: 2px;
 }
 
-
+ 
 /* --- Sección Hero --- */
 .hero-section {
-    background-image: url('../img/fondo_home.jpeg'); 
+    background-image: url('/media/hero/home.png');
     background-size: cover;
     background-position: center;
     background-attachment: scroll; 

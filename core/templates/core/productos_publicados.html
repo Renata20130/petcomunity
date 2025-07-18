@@ -1,12 +1,22 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load humanize %} 
-
+ 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/productos_publicados.css' %}">
 {% endblock %}
 
 {% block content %}
+<div class="buscar-clinicas-wrapper">
+    <section class="hero-section">
+        <div class="hero-content">
+            <h1><span class="highlight">Tu Compañero Ideal, Cuidado Integral y Productos de Confianza.</span></h1>
+            <p class="hero-subtitle">Conecta con perros y gatos que buscan un hogar, agenda fácilmente tu consulta veterinaria y accede a la farmacia online con todo lo que necesitan.</p>
+            
+        </div> 
+        {# La imagen de fondo del hero se manejará con CSS #}
+    </section>
+
    <h1>Catálogo de productos</h1>
 
     <div class="top-controls">
@@ -47,4 +57,5 @@
    {% else %}
      <p>No hay productos publicados.</p>
   {% endif %}
+</div>
 {% endblock %}

@@ -1,10 +1,82 @@
-body {
- font-family : 'Roboto', sans-serif; 
- background-color: #f0f2f5; /* Fondo más suave */
- margin: 0; /* Elimina el margen predeterminado del body */
-  font-size: 16px;
- color: #333;
+/* --- Sección Hero --- */
+.hero-section {
+    margin-top: 0px;
+    background-image: url('/media/hero/tienda.png');
+    background-size: cover;
+    background-position: center;
+    background-attachment: scroll;
+    width: 100vw;
+    height: 600px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    box-shadow: none;
+    border: none;
+    margin-left: calc(-50vw + 50%); /* Esto lo saca de cualquier contenedor con max-width */
+    overflow: hidden;
 }
+
+
+
+
+
+
+.hero-section::before { 
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.45); 
+    z-index: 0;
+}
+
+.hero-content { 
+    position: relative;
+    z-index: 1; 
+    max-width: 900px; 
+    padding: 20px;
+}
+
+.hero-content h1 {
+    color: var(--white);
+    font-family: var(--font-heading);  
+    font-size: 4.5rem; 
+    line-height: 1.1; 
+    margin-bottom: 20px;
+    font-weight: 700;
+}
+
+.hero-content .highlight { 
+    font-family: var(--font-hero-accent); 
+    font-size: 5rem; 
+    color: #A7EBDA; 
+    font-weight: normal;
+    display: block; 
+}
+
+.hero-subtitle {
+    font-family: var(--font-body); 
+    font-weight: 400; 
+    font-size: 1.5rem; 
+    color: #E0E0E0; 
+    margin-top: 20px; 
+    margin-bottom: 40px; 
+    line-height: 1.4;
+}
+
+.hero-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px; 
+    justify-content: center;
+}
+
 
 h1 {
  color: #2c3e50;

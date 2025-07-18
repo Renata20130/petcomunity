@@ -1,8 +1,20 @@
+/* Ajuste para el grid de tarjetas */
+.grid-clinicas {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    justify-content: center; /* Centra las tarjetas si hay espacio extra */
+    max-width: 900px; /* Opcional: limita el ancho máximo total */
+    margin: 0 auto;
+}
+
+/* Ajuste para las tarjetas */
+.card-clinica {
+    max-width: 320px; /* Limita el ancho máximo de cada tarjeta */
+    width: 100%; /* Para que ocupe todo el ancho asignado por el grid */
+    box-sizing: border-box;
+}
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
-
-
-
-
 
 /* Título principal */
 .buscar-clinicas-wrapper h2 {
@@ -61,7 +73,7 @@
 /* --- Sección Hero --- */
 .hero-section {
     margin-top: 0px;
-    background-image: url('/media/hero/clinicas.png');
+    background-image: url('/media/hero/farmacia.png');
     background-size: cover;
     background-position: center;
     background-attachment: scroll;

@@ -11,6 +11,7 @@ html, body {
 
 body {
     margin: 0;
+    padding: 0;
     font-family: 'Roboto', sans-serif;
     background-color: #f8f9fa;
     color: #333;
@@ -24,7 +25,8 @@ main {
 header {
       background-color: #3498db;
       color: white;
-      padding: 1rem 2rem;
+      margin: 0;
+        padding: 0;
       display: flex;
       justify-content: space-between;
       align-items: center;
