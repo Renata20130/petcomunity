@@ -38,3 +38,4 @@ def buscar_farmacias(request):
         'ciudad_id': ciudad_id,
     }
     return render(request, 'farmacias/buscar_farmacias.html', context)
+

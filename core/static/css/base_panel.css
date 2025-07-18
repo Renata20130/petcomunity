@@ -1,5 +1,9 @@
 
-
+.base-panel {
+  all: initial; /* Resetea estilos heredados */
+  all: unset; /* o unset, depende */
+  /* luego defines solo lo necesario */
+}
 /* --- Estilos Generales de Navegación --- */
 .main-nav {
     display: flex;
@@ -138,7 +142,7 @@ header nav {
 
 .sidebar-menu nav {
   flex-grow: 1;
-  margin-top: 10px;
+  margin-top: 10px!important;
 }
 
 .sidebar-menu a {
@@ -164,12 +168,12 @@ header nav {
 
 /* Links en el menú */
 .sidebar-menu nav ul li a {
-  display: block;
-  color: white;
-  text-decoration: none;
-  padding: 10px 0;
-  font-weight: 500;
-  transition: color 0.3s ease;
+  display: block !important;
+  color: white !important;
+  text-decoration: none !important;
+  padding: 10px 0 !important;
+  font-weight: 500 !important;
+  transition: color 0.3s ease !important;
 }
 
 .sidebar-menu nav ul li a:hover {
@@ -219,7 +223,7 @@ header nav {
 /* Ocultar el sidebar por defecto en móvil */
 @media (max-width: 768px) {
   .sidebar-menu {
-    transform: translateX(-100%);
+    transform: translateX(-100%)!important;
   }
   .sidebar-menu.active {
     transform: translateX(0);

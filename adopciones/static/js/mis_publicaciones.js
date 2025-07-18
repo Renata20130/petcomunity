@@ -1,7 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
     const switches = document.querySelectorAll('.estado-switch-container input[type="checkbox"]');
 
-    // Asegúrate de que el token CSRF esté disponible
     function getCookie(name) {
         let cookieValue = null;
         if (document.cookie && document.cookie !== '') {
@@ -19,10 +18,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
     switches.forEach(function(s) {
         s.addEventListener('change', function() {
-            const mascotaId = this.dataset.id;
-            const nuevoEstado = this.checked ? 'publicada' : 'pendiente';
+            const checkbox = this;
+            const mascotaId = checkbox.dataset.id;
+            const nuevoEstado = checkbox.checked ? 'publicada' : 'pendiente';
             const csrftoken = getCookie('csrftoken');
-            const tarjetaMascota = document.getElementById(`mascota-${mascotaId}`); // <-- Obtiene la referencia a la tarjeta
+            const tarjetaMascota = document.getElementById(`mascota-${mascotaId}`);
 
             fetch(`/mascotas/${mascotaId}/actualizar_estado/`, {
                 method: 'POST',
@@ -33,7 +33,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 body: JSON.stringify({ estado: nuevoEstado })
             })
             .then(response => {
-                // Verifica si la respuesta es válida antes de parsearla
                 if (!response.ok) {
                     return response.json().then(errorData => {
                         throw new Error(errorData.error || `Error del servidor: ${response.status}`);
@@ -45,33 +44,33 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (data.success) {
                     console.log('Estado actualizado exitosamente:', data.estado_actual);
 
-                    // Lógica para OCULTAR o MOSTRAR la tarjeta completa
                     if (data.estado_actual === 'pendiente' || data.estado_actual === 'adoptada') {
                         if (tarjetaMascota) {
-                            tarjetaMascota.style.display = 'none'; // ¡Aquí se oculta!
+                            tarjetaMascota.style.display = 'none';
                             console.log(`Mascota ${mascotaId} oculta (estado: ${data.estado_actual}).`);
                         }
-                    } else { // Si el estado es 'publicada'
+                    } else if (data.estado_actual === 'publicada') {
                         if (tarjetaMascota) {
-                            tarjetaMascota.style.display = 'block'; // O 'flex', 'grid', etc., según tu CSS original
+                            // Ajusta según el display original, ej: 'flex'
+                            tarjetaMascota.style.display = 'block';
                             console.log(`Mascota ${mascotaId} visible (estado: ${data.estado_actual}).`);
                         }
                     }
 
-                    // Actualiza el texto del estado en la tarjeta (esto ya lo tienes)
-                    const estadoTextElement = this.closest('.estado-switch-container').querySelector('p strong');
+                    // Actualizar texto del estado (asegúrate que el selector coincida con tu HTML)
+                    const estadoTextElement = tarjetaMascota.querySelector('.estado-switch-container p strong');
                     if (estadoTextElement) {
                         estadoTextElement.textContent = 'Estado: ' + data.estado_actual.charAt(0).toUpperCase() + data.estado_actual.slice(1);
                     }
                 } else {
                     alert('Error: ' + data.error);
-                    this.checked = !this.checked; // Revertir el switch
+                    checkbox.checked = !checkbox.checked;
                 }
             })
             .catch(error => {
-                console.error('Hubo un error con la solicitud fetch:', error);
+                console.error('Error en fetch:', error);
                 alert('No se pudo actualizar el estado. Por favor, intenta de nuevo.');
-                this.checked = !this.checked; // Revertir el switch
+                checkbox.checked = !checkbox.checked;
             });
         });
     });

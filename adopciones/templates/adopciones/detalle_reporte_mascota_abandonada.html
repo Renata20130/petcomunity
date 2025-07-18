@@ -1,21 +1,28 @@
 {% extends 'core/base_panel.html' %}
+{% load static %}
 
 {% block title %}Detalle del Reporte{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/detalle_reporte.css' %}">
+{% endblock %}
 
 {% block content %}
 <div class="container mt-4">
   <h2>🐾 Detalle del Reporte</h2>
 
-  <img src="{{ mascota.imagen.url }}" width="300" class="img-thumbnail mb-3">
-
-  <p><strong>Especie:</strong> {{ mascota.especie }}</p>
-  <p><strong>Lugar encontrado:</strong> {{ mascota.lugar }}</p>
+  <img src="{{ mascota.foto.url }}" width="300" class="img-thumbnail mb-3">
+  <p><strong>Nombre:</strong> {{ mascota.nombre }}</p>
+  <p><strong>Especie:</strong> {{ mascota.get_especie_display }}</p>
+  <p><strong>Lugar encontrado:</strong> {{ mascota.lugar_encontrado }}</p>
+  <p><strong>Región:</strong> {{ mascota.region }}</p>
+  <p><strong>Ciudad:</strong> {{ mascota.ciudad }}</p>
   <p><strong>Descripción:</strong> {{ mascota.descripcion }}</p>
   <p><strong>Estado:</strong> {{ mascota.get_estado_display }}</p>
   <p><strong>Fecha:</strong> {{ mascota.fecha_registro|date:"d/m/Y H:i" }}</p>
 
   <a href="{% url 'adopciones:editar_reporte_mascota' mascota.id %}" class="btn btn-warning">Editar</a>
   <a href="{% url 'adopciones:eliminar_reporte_mascota' mascota.id %}" class="btn btn-danger">Eliminar</a>
-  <a href="{% url 'cliente:panel_cliente' %}" class="btn btn-secondary">Volver</a>
+  <a href="{% url 'panel_cliente' %}" class="btn btn-secondary">Volver</a>
 </div>
 {% endblock %}

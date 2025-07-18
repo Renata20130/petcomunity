@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.conf import settings
-
+from ubicacion.models import Region, Ciudad
 
 class MascotaEnAdopcion(models.Model):
     ESPECIE_CHOICES = [
@@ -81,7 +81,7 @@ class SolicitudAdopcion(models.Model):
     situacion_vivienda = models.CharField(max_length=20)
     permiso_arrendador = models.CharField(max_length=10, blank=True, null=True)
     num_adultos = models.IntegerField()
-    num_ninos = models.IntegerField()
+    num_ninos = models.IntegerField(null=True, blank=True)
     edades_ninos = models.TextField(blank=True, null=True)
     otras_mascotas = models.CharField(max_length=100, blank=True, null=True)
     tiempo_solo = models.CharField(max_length=20)
@@ -117,17 +117,26 @@ class MascotaAbandonada(models.Model):
         ('rechazada', 'Rechazada'),
     ]
 
+    ESPECIES = [
+        ('perro', 'Perro'),
+        ('gato', 'Gato'),
+    ]
+
     nombre = models.CharField(max_length=100)
     descripcion = models.TextField()
     foto = models.ImageField(upload_to='mascotas_abandonadas/')
+    
+    especie = models.CharField(max_length=20, choices=ESPECIES, default='perro')
+    lugar_encontrado = models.CharField(max_length=200, blank=True)
+    region = models.ForeignKey(Region, on_delete=models.SET_NULL, null=True, blank=True)
+    ciudad = models.ForeignKey(Ciudad, on_delete=models.SET_NULL, null=True, blank=True)
+
     estado = models.CharField(max_length=10, choices=ESTADO_REVISION, default='pendiente')
     fecha_registro = models.DateTimeField(auto_now_add=True)
     adoptada = models.BooleanField(default=False)
 
-    # Usuario que reporta la mascota (cliente)
     registrada_por = models.ForeignKey(User, on_delete=models.CASCADE, related_name='mascotas_reportadas')
 
-    # Clínica que revisa y aprueba
     aprobada_por = models.ForeignKey(
         User,
         on_delete=models.SET_NULL,

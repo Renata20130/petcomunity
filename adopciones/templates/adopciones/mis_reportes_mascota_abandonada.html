@@ -29,14 +29,14 @@
       <tbody>
         {% for reporte in reportes %}
           <tr>
-            <td>{{ reporte.nombre_mascota }}</td>
-            <td>{{ reporte.estado }}</td>
-            <td>{{ reporte.fecha_reporte|date:"d/m/Y H:i" }}</td>
+            <td>{{ reporte.nombre }}</td>
+            <td>{{ reporte.get_estado_display }}</td>
+            <td>{{ reporte.fecha_registro|date:"d/m/Y H:i" }}</td>
             <td>
-              <a href="{% url 'adopciones:detalle_reporte' reporte.id %}" class="btn btn-sm btn-outline-info">Ver detalle</a>
+              <a href="{% url 'adopciones:detalle_reporte_mascota' reporte.id %}" class="btn btn-sm btn-outline-info">Ver detalle</a>
               {% if reporte.estado == 'pendiente' %}
-                <a href="{% url 'adopciones:editar_reporte' reporte.id %}" class="btn btn-sm btn-outline-warning">Editar</a>
-                <a href="{% url 'adopciones:eliminar_reporte' reporte.id %}" class="btn btn-sm btn-outline-danger">Eliminar</a>
+                <a href="{% url 'adopciones:editar_reporte_mascota' reporte.id %}" class="btn btn-sm btn-outline-warning">Editar</a>
+                <a href="{% url 'adopciones:eliminar_reporte_mascota' reporte.id %}" class="btn btn-sm btn-outline-danger">Eliminar</a>
               {% endif %}
             </td>
           </tr>

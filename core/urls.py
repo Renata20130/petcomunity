@@ -24,7 +24,7 @@ urlpatterns = [
     path('pedidos/', include('pedidos.urls', namespace='pedidos')),
     path('productos/', productos_publicados, name='productos_publicados'),
     path('productos/', include('productos.urls', namespace='productos')),
-    path('productos/', include('productos.urls')),
+    
 
     path('farmacias/', views.farmacias_view, name='farmacias'),
 

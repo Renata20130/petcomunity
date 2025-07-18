@@ -19,25 +19,25 @@
         <div class="panel-section">
           <h3>📄 Mis Solicitudes de Adopción</h3>
           {% if solicitudes_adopcion %}
-            <ul class="lista-solicitudes-adopcion">
-              {% for solicitud in solicitudes_adopcion|slice:":3" %}
-                <li>
-                  <strong>Mascota:</strong> {{ solicitud.mascota.nombre }}<br>
-                  <strong>Estado:</strong> 
-                  <span class="estado-{{ solicitud.estado }}">{{ solicitud.get_estado_display }}</span><br>
-                  <strong>Enviada el:</strong> {{ solicitud.fecha_envio|date:"d/m/Y" }}
-                  {% if solicitud.estado == 'rechazada' and solicitud.fecha_rechazo %}
-                    <br><small>(Rechazada el {{ solicitud.fecha_rechazo|date:"d/m/Y H:i" }})</small>
-                  {% elif solicitud.estado == 'contactado' and solicitud.fecha_contacto %}
-                    <br><small>(Contactado el {{ solicitud.fecha_contacto|date:"d/m/Y H:i" }})</small>
-                  {% endif %}
-                </li>
-                <hr>
-              {% endfor %}
-            </ul>
-          {% else %}
-            <p class="no-data">No has enviado ninguna solicitud aún.</p>
-          {% endif %}
+                <ul class="lista-solicitudes-adopcion">
+                    {% for solicitud in solicitudes_adopcion|slice:":4" %}
+                        <li>
+                            <strong>Mascota:</strong> {{ solicitud.mascota.nombre }}<br>
+                            <strong>Estado:</strong> 
+                            <span class="estado-{{ solicitud.estado }}">{{ solicitud.get_estado_display }}</span><br>
+                            <strong>Enviada el:</strong> {{ solicitud.fecha_envio|date:"d/m/Y" }}
+                            {% if solicitud.estado == 'rechazada' and solicitud.fecha_rechazo %}
+                                <br><small>(Rechazada el {{ solicitud.fecha_rechazo|date:"d/m/Y H:i" }})</small>
+                            {% elif solicitud.estado == 'contactado' and solicitud.fecha_contacto %}
+                                <br><small>(Contactado el {{ solicitud.fecha_contacto|date:"d/m/Y H:i" }})</small>
+                            {% endif %}
+                        </li>
+                        <hr>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p class="no-data">No has enviado ninguna solicitud aún.</p>
+            {% endif %}
         </div>
 
         <!-- Módulo: Reservas -->

@@ -22,7 +22,7 @@ from django.conf import settings
 from django.contrib import messages
 from django.utils import timezone
 
-
+from .forms import FormularioAdopcion
 from .forms import FiltroMascotaForm
 from .forms import MascotaAbandonadaForm
 from .models import MascotaAbandonada
@@ -38,7 +38,7 @@ def adopciones(request):
         'mascotas': mascotas,
         'filtro_especie': especie
     })
- 
+  
 @login_required
 @tipo_requerido('clinica')
 def publicar_adopcion(request):
@@ -49,9 +49,11 @@ def publicar_adopcion(request):
             mascota.publicada_por = request.user
             mascota.save()
             messages.success(request, "Mascota publicada con éxito.")
-            return redirect('panel_clinica')
+            return redirect('panel_clinica') 
+        
         else:
             messages.error(request, "Corrige los errores del formulario.")
+            print("Errores del formulario:", form.errors)
     else:
         form = MascotaEnAdopcionForm()
 
@@ -89,15 +91,30 @@ def editar_adopcion(request, mascota_id):
 @tipo_requerido('clinica')
 def eliminar_adopcion(request, pk):
     mascota = get_object_or_404(MascotaEnAdopcion, pk=pk)
+    
+    # Verifica que el usuario sea quien publicó la mascota
     if mascota.publicada_por != request.user:
         return HttpResponseForbidden("No tienes permiso para eliminar esta publicación.")
+    
     if request.method == 'POST':
         mascota.delete()
-        return redirect('panel_clinica')
+        messages.success(request, "Publicación eliminada correctamente.")
+        return redirect('adopciones:mis_publicaciones_clinica')  # Cambia 'panel_clinica' por el nombre real de la vista destino
+    
+    # Si quieres mostrar un confirm dialog, puedes renderizar una plantilla aquí
+    # Por ejemplo:
+    # return render(request, 'adopciones/confirmar_eliminacion.html', {'mascota': mascota})
+    
+    # Pero si solo manejas eliminación vía POST (botón), podrías redirigir o mostrar error:
+    return redirect('adopciones:mis_publicaciones_clinica')
 
 def lista_mascotas_publicas(request):
     mascotas = MascotaEnAdopcion.objects.filter(estado='publicada')
     return render(request, 'adopciones/lista_publica.html', {'mascotas': mascotas})
+
+
+
+
 
 def detalle_mascota(request, mascota_id):
     mascota = MascotaEnAdopcion.objects.get(id=mascota_id)
@@ -114,6 +131,10 @@ def detalle_mascota(request, mascota_id):
         'form': form,
         'mascota': mascota
     })
+
+
+
+
 
 @login_required
 @tipo_requerido('clinica')
@@ -175,58 +196,62 @@ def formulario_adopcion_view(request, mascota_id):
     mascota = get_object_or_404(MascotaEnAdopcion, id=mascota_id)
 
     if request.method == 'POST':
-        nombre_completo = request.POST.get('nombre_completo')
-        email = request.POST.get('email')
-        telefono = request.POST.get('telefono')
-        # Agrega todos los demás campos aquí...
-        
-        if not nombre_completo or not email or not telefono:
-            return render(request, 'adopciones/formulario_adopcion.html', {
-                'mascota': mascota,
-                'error_message': 'Por favor, completa todos los campos obligatorios.'
-            })
+        form = FormularioAdopcion(request.POST)
+        if form.is_valid():
+            if form.is_valid():
+                datos = form.cleaned_data
+                solicitud = SolicitudAdopcion.objects.create(
+                    nombre_completo=datos['nombre'],
+                    email=datos['email'],
+                    telefono=datos['telefono'],
+                    num_ninos=datos.get('num_ninos'),  # aquí ya puede ser None o un entero válido
+                    mascota=mascota,
+                    usuario=request.user,
+                    # otros campos...
+                )
 
-        try:
-            solicitud = SolicitudAdopcion.objects.create(
-                nombre_completo=nombre_completo,
-                email=email,
-                telefono=telefono,
-                mascota=mascota,
-                usuario=request.user  # si tienes un campo ForeignKey en SolicitudAdopcion
+            try:
+                solicitud = SolicitudAdopcion.objects.create(
+                    nombre_completo=datos['nombre'],
+                    email=datos['email'],
+                    telefono=datos['telefono'],
+                    num_ninos=datos.get('num_ninos'),  # puede ser None si no viene
+                    mascota=mascota,
+                    usuario=request.user,
+                    # Aquí puedes agregar otros campos del formulario cuando los tengas
+                )
 
-            )
+                mascota.estado = 'en_proceso'  # Asegúrate de que este estado exista en tu modelo
+                mascota.save()
 
-            # Cambiar el estado de la mascota a "en proceso" (si lo usas)
-            mascota.estado = 'en_proceso'  # Asegúrate de que esté en tus choices si usas eso
-            mascota.save()
+                send_mail(
+                    subject=f"Solicitud de adopción para {mascota.nombre}",
+                    message=(
+                        f"Se ha recibido una solicitud de adopción:\n\n"
+                        f"Nombre: {datos['nombre']}\n"
+                        f"Email: {datos['email']}\n"
+                        f"Teléfono: {datos['telefono']}\n\n"
+                        f"Revisa los detalles en el panel de administración o en el sistema."
+                    ),
+                    from_email='no-responder@tusitio.com',
+                    recipient_list=[mascota.publicada_por.email],
+                    fail_silently=False,
+                )
+                return redirect('adopcion_solicitud_exitosa')
 
-            # Enviar correo a la clínica que publicó la mascota
-            send_mail(
-                subject=f"Solicitud de adopción para {mascota.nombre}",
-                message=(
-                    f"Se ha recibido una solicitud de adopción:\n\n"
-                    f"Nombre: {nombre_completo}\n"
-                    f"Email: {email}\n"
-                    f"Teléfono: {telefono}\n\n"
-                    f"Revisa los detalles en el panel de administración o en el sistema."
-                ),
-                from_email='no-responder@tusitio.com',
-                recipient_list=[mascota.publicada_por.email],
-                fail_silently=False
-            )
+            except Exception as e:
+                print(f"Error al guardar solicitud o enviar correo: {e}")
+                error_message = 'Hubo un error al procesar tu solicitud. Inténtalo de nuevo.'
+        else:
+            error_message = 'Por favor, corrige los errores en el formulario.'
+    else:
+        form = FormularioAdopcion()
+        error_message = None
 
-        except Exception as e:
-            print(f"Error al guardar solicitud o enviar correo: {e}")
-            return render(request, 'adopciones/formulario_adopcion.html', {
-                'mascota': mascota,
-                'error_message': 'Hubo un error al procesar tu solicitud. Inténtalo de nuevo.'
-            })
-
-        return redirect('adopcion_solicitud_exitosa')
-
-    # GET (cuando se carga el formulario)
     return render(request, 'adopciones/formulario_adopcion.html', {
-        'mascota': mascota
+        'mascota': mascota,
+        'form': form,
+        'error_message': error_message,
     })
 
 @login_required
@@ -235,6 +260,20 @@ def procesar_solicitud(request):
 
         mascota_id = request.POST.get("mascota_id")
         mascota = MascotaEnAdopcion.objects.get(id=mascota_id)
+
+        # Convertir valores numéricos
+        def parse_int(value):
+            try:
+                return int(value)
+            except (TypeError, ValueError):
+                return None
+
+        num_adultos = parse_int(request.POST.get("num_adultos"))
+        num_ninos = parse_int(request.POST.get("num_ninos"))
+
+        # Para campos booleanos, también conviene chequear si están en POST
+        declaracion_verdadera = request.POST.get("declaracion_verdadera") == 'on'  # o 'true' según tu formulario
+        acepto_terminos = request.POST.get("acepto_terminos") == 'on'
 
         solicitud = SolicitudAdopcion(
             mascota=mascota,
@@ -247,8 +286,8 @@ def procesar_solicitud(request):
             tipo_vivienda = request.POST.get("tipo_vivienda"),
             situacion_vivienda = request.POST.get("situacion_vivienda"),
             permiso_arrendador = request.POST.get("permiso_arrendador"),
-            num_adultos = request.POST.get("num_adultos"),
-            num_ninos = request.POST.get("num_ninos"),
+            num_adultos = num_adultos,
+            num_ninos = num_ninos,
             edades_ninos = request.POST.get("edades_ninos"),
             otras_mascotas = request.POST.get("otras_mascotas"),
             tiempo_solo = request.POST.get("tiempo_solo"),
@@ -256,9 +295,9 @@ def procesar_solicitud(request):
             gastos_compromiso = request.POST.get("gastos_compromiso"),
             esterilizacion_compromiso = request.POST.get("esterilizacion_compromiso"),
             planes_futuro = request.POST.get("planes_futuro"),
-            declaracion_verdadera = bool(request.POST.get("declaracion_verdadera")),
-            acepto_terminos = bool(request.POST.get("acepto_terminos")),
-            
+            declaracion_verdadera = declaracion_verdadera,
+            acepto_terminos = acepto_terminos,
+            usuario = request.user, 
         )
         solicitud.save()
 
@@ -278,7 +317,7 @@ def procesar_solicitud(request):
 
  
         messages.success(request, "Haz enviado correctamente la solicitud.")
-        return redirect('solicitud_exitosa') # redirige correctamente con el id # Cambia por el nombre real si usas `name=`
+        return redirect('adopciones:solicitud_exitosa') # redirige correctamente con el id # Cambia por el nombre real si usas `name=`
     else:
         return redirect('inicio') 
 
@@ -348,8 +387,22 @@ def actualizar_estado_solicitud(request, solicitud_id):
 def mis_postulaciones(request):
     solicitudes_cliente = SolicitudAdopcion.objects.filter(usuario=request.user)
     return render(request, 'adopciones/mis_postulaciones.html', {
-        'solicitudes': solicitudes_cliente
+        'solicitudes_adopcion': solicitudes_cliente
     })
+
+@login_required
+def cancelar_solicitud(request, solicitud_id):
+    solicitud = get_object_or_404(SolicitudAdopcion, id=solicitud_id, usuario=request.user)
+
+    if request.method == "POST":
+        solicitud.delete()
+        messages.success(request, "Solicitud cancelada correctamente.")
+        return redirect('adopciones:mis_postulaciones')  # o la URL donde quieras redirigir
+
+    # Si quieres puedes mostrar una confirmación antes de borrar, o redirigir directamente
+    return redirect('adopciones:mis_postulaciones')
+
+
 
 def lista_mascotas_adopcion(request):
     form = FiltroMascotaForm(request.GET or None)
@@ -463,7 +516,7 @@ def registrar_mascota_abandonada(request):
             mascota = form.save(commit=False)
             mascota.registrada_por = request.user
             mascota.save()
-            return redirect('cliente:panel_cliente')  # o donde desees llevarlo después
+            return redirect('panel_cliente')  # o donde desees llevarlo después
     else:
         form = MascotaAbandonadaForm()
 
@@ -494,7 +547,7 @@ def eliminar_reporte_mascota(request, id):
     mascota = get_object_or_404(MascotaAbandonada, id=id, registrada_por=request.user, estado='pendiente')
     if request.method == 'POST':
         mascota.delete()
-        return redirect('cliente:panel_cliente')
+        return redirect('panel_cliente')
     return render(request, 'adopciones/confirmar_eliminacion_mascota_abandonada.html', {'mascota': mascota})
 
 @login_required
@@ -509,7 +562,7 @@ def mis_reportes_mascota_abandonada(request):
 @tipo_requerido('clinica')  # si tienes decorador para tipo usuario
 def lista_reportes_pendientes(request):
     reportes = MascotaAbandonada.objects.filter(estado='pendiente').order_by('fecha_registro')
-    return render(request, 'adopciones/reportes_pendientes.html', {'reportes': reportes})
+    return render(request, 'adopciones/reportes_pendientes_clinica.html', {'reportes': reportes})
 
 
 @login_required
@@ -535,7 +588,13 @@ def revisar_reporte(request, reporte_id):
 
 
 
+from django.http import JsonResponse
+from ubicacion.models import Ciudad
 
+def cargar_ciudades(request):
+    region_id = request.GET.get('region')
+    ciudades = Ciudad.objects.filter(region_id=region_id).order_by('nombre').values('id', 'nombre')
+    return JsonResponse(list(ciudades), safe=False)
 
 
 

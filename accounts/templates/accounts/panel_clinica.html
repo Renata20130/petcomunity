@@ -13,7 +13,7 @@
         <header class="dashboard-header">
             <h1>Página principal</h1>
             <div class="header-actions">
-                <a href="{% url 'publicar_adopcion' %}" class="btn-primary"><i class="fas fa-plus"></i> Publicar una mascota</a>
+                <a href="{% url 'adopciones:publicar_adopcion' %}" class="btn-primary"><i class="fas fa-plus"></i> Publicar una mascota</a>
                 <a href="{% url 'panel_reservas_clinica' %}" class="btn-secondary"><i class="fas fa-calendar"></i> Ver Reservas</a>
                 <a href="{% url 'clinica:nueva_consulta' %}" class="btn-primary">Nueva Consulta</a>
                 <a href="{% url 'adopciones:lista_reportes_pendientes' %}" class="btn-secondary">📋 Revisar Mascotas Abandonadas</a>

@@ -1,0 +1,91 @@
+.container {
+  max-width: 600px;
+  background-color: #f0f8ff; /* azul clarito */
+  padding: 30px 40px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(123, 192, 227, 0.3);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
+  margin-top: 40px;
+}
+
+h2 {
+  text-align: center;
+  color: #1a73e8;
+  font-weight: 700;
+  margin-bottom: 30px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+form p {
+  margin-bottom: 18px;
+  font-size: 1rem;
+}
+
+form label {
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: #3178c6;
+  display: block;
+}
+
+form input[type="text"],
+form textarea,
+form select,
+form input[type="file"] {
+  padding: 10px 12px;
+  border: 2px solid #7BC0E3;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+form input[type="text"]:focus,
+form textarea:focus,
+form select:focus,
+form input[type="file"]:focus {
+  border-color: #5a9cca;
+  outline: none;
+}
+
+button.btn-primary {
+  background-color: #7BC0E3;
+  color: white;
+  border: none;
+  padding: 12px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  border-radius: 10px;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: background-color 0.3s ease;
+}
+
+button.btn-primary:hover {
+  background-color: #5a9cca;
+}
+
+a.btn-secondary {
+  background-color: #a0aec0;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  font-weight: 700;
+  border-radius: 10px;
+  margin-top: 15px;
+  text-align: center;
+  display: inline-block;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+  margin-left: 10px;
+}
+
+a.btn-secondary:hover {
+  background-color: #8a99a7;
+}

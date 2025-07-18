@@ -29,7 +29,8 @@ urlpatterns = [
 
     path('adopciones/', include('adopciones.urls')),
 
-    path('api/', include('reservas.urls')),
+    path('reservas/', include('reservas.urls', namespace='reservas')),
+
     path('productos/', include('productos.urls', namespace='productos')),
 
     path('farmacias/', include('farmacias.urls')),

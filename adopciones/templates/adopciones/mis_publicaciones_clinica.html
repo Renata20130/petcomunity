@@ -25,7 +25,11 @@
                         {% for mascota in mascotas %}
                             <div class="tarjeta-mascota-panel" id="mascota-{{ mascota.id }}">
                                 <a href="{% url 'adopciones:detalle_mascota' mascota.id %}">
-                                    <img src="{{ mascota.imagen.url }}" alt="{{ mascota.nombre }}">
+                                    {% if mascota.imagen %}
+                                        <img src="{{ mascota.imagen.url }}" alt="{{ mascota.nombre }}">
+                                    {% else %}
+                                        <img src="{% static 'media/perfiles/default.png' %}" alt="Imagen no disponible">
+                                    {% endif %}
                                 </a>
                                 <div class="info">
                                     <h4>{{ mascota.nombre }}</h4>
@@ -38,12 +42,11 @@
                                             <span class="slider round"></span>
                                         </label>
                                     </div>
-                                    <form action="{% url 'adopciones:eliminar_adopcion' mascota.pk %}" method="POST" class="form-eliminar-panel" onsubmit="return confirmarEliminacion();">
+                                    <form action="{% url 'adopciones:eliminar_adopcion' mascota.id %}" method="post" style="display:inline;">
                                         {% csrf_token %}
-                                        <button type="submit" class="btn-eliminar-tarjeta" title="Eliminar publicación">
-                                            <i class="fas fa-trash-alt"></i>
-                                        </button>
+                                        <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
                                     </form>
+
                                 </div>
                             </div>
                         {% endfor %}

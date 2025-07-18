@@ -21,7 +21,7 @@ def subir_producto(request):
             producto = form.save(commit=False)
             producto.farmacia = request.user
             producto.save()
-            return redirect('panel_farmacia')  # o a una vista de lista de productos
+            return redirect('productos:panel_farmacia')  # o a una vista de lista de productos
     else:
         form = ProductoForm()
     
@@ -82,9 +82,9 @@ def lista_productos(request):
     productos = Producto.objects.all()
     return render(request, 'productos/lista_productos.html', {'productos': productos})
 
-def stock_farmacia(request):
-    # Lógica para mostrar el stock (puedes adaptarla)
-    return render(request, 'productos/stock_farmacia.html')
+def stock_productos(request):
+    productos = Producto.objects.all()  # o filtrar si quieres
+    return render(request, 'productos/stock.html', {'productos': productos})
 
 def nuevo_pedido_view(request):
     return render(request, 'productos/nuevo_pedido.html')

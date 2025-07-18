@@ -44,7 +44,8 @@
 
 <script>
   document.addEventListener("DOMContentLoaded", function () {
-    const input = document.querySelector('#id_imagen');
+    // Vista previa imagen (tu código)
+    const input = document.querySelector('#id_foto');  // Asegúrate que el id coincide con tu campo
     const preview = document.querySelector('#preview-imagen');
 
     input.addEventListener('change', function () {
@@ -57,6 +58,29 @@
         reader.readAsDataURL(file);
       }
     });
+
+    // Cargar ciudades según región seleccionada
+    const regionSelect = document.getElementById('id_region');
+    const ciudadSelect = document.getElementById('id_ciudad');
+
+    regionSelect.addEventListener('change', () => {
+      const regionId = regionSelect.value;
+
+      fetch(`/ajax/cargar-ciudades/?region_id=${regionId}`)
+        .then(response => response.json())
+        .then(data => {
+          ciudadSelect.innerHTML = '<option value="">Seleccione ciudad</option>';
+          data.ciudades.forEach(ciudad => {
+            const option = document.createElement('option');
+            option.value = ciudad.id;
+            option.textContent = ciudad.nombre;
+            ciudadSelect.appendChild(option);
+          });
+        })
+        .catch(error => console.error('Error cargando ciudades:', error));
+    
+    });
   });
 </script>
+
 {% endblock %}

@@ -1,5 +1,6 @@
 {% extends "core/base_panel.html" %}
 {% load static %}
+{% load moneda %}
 
 {% block title %}Panel Farmacia | PetComunity{% endblock %}
 
@@ -10,43 +11,7 @@
 {% block content %}
 <div class="dashboard">
 
-  <!-- Módulo Perfil -->
-  <div class="dashboard-module profile-details-module">
-    <h3>📋 Mi Perfil</h3>
-    <div class="profile-summary">
-      <div class="profile-image-wrapper">
-        {% if user.profile.imagen %}
-          <img src="{{ user.profile.imagen.url }}" alt="Foto de perfil" class="profile-dashboard-image">
-        {% else %}
-          <img src="{% static 'img/default-profile.png' %}" alt="Foto por defecto" class="profile-dashboard-image">
-        {% endif %}
-      </div>
-
-      <div class="profile-info">
-        <p><strong>Nombre:</strong> {{ user.profile.nombre_clinica|default:user.username }}</p>
-        <p><strong>Email:</strong> {{ user.email }}</p>
-        <p><strong>Teléfono:</strong> {{ user.profile.telefono|default:"No especificado" }}</p>
-        <p><strong>Dirección:</strong> {{ user.profile.direccion|default:"No especificada" }}</p>
-
-        <form id="form-estado-perfil" method="post" action="{% url 'editar_perfil_farmacia' %}" style="margin-top: 1rem;">
-          {% csrf_token %}
-          <div class="estado-switch-container">
-            <p><strong>Perfil público:</strong></p>
-            <label class="switch">
-              <input type="checkbox" name="perfil_publicado" {% if user.profile.perfil_publicado %}checked{% endif %} onchange="document.getElementById('form-estado-perfil').submit();">
-              <span class="slider"></span>
-            </label>
-            <span style="margin-left: 10px;">
-              {% if user.profile.perfil_publicado %}✅ Sí{% else %}❌ No{% endif %}
-            </span>
-          </div>
-        </form>
-
-        <a href="{% url 'editar_perfil_farmacia' %}" class="btn" style="margin-top: 1rem;">✏️ Editar Perfil</a>
-      </div>
-    </div>
-  </div>
-
+  
   <!-- Módulo Productos -->
   <div class="dashboard-module">
     <h3>🛍️ Productos publicados</h3>
@@ -78,7 +43,7 @@
             {% endif %}
           </td>
           <td>{{ producto.nombre }}</td>
-          <td>${{ producto.precio }}</td>
+          <td>{{ producto.precio|clp }}</td>
           <td>{{ producto.stock }}</td>
           <td>{{ producto.estado }}</td>
         </tr>

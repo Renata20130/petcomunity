@@ -47,7 +47,7 @@ def ver_carrito(request):
     }
     return render(request, 'pedidos/carrito.html', context)
 
-@login_required
+@login_required(login_url='login') 
 def agregar_al_carrito(request, producto_id):
     producto = get_object_or_404(Producto, id=producto_id)
     carrito = request.session.get('carrito', {})
@@ -89,7 +89,7 @@ def panel_farmacia_pedidos(request):
 
     return render(request, 'farmacias/panel_pedidos.html', {'pedidos': pedidos})
 
-@login_required
+@login_required(login_url='login') 
 def finalizar_pedido(request):
     if request.method == 'POST':
         carrito = request.session.get('carrito', {})

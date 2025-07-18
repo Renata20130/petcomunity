@@ -1,10 +1,43 @@
 /* adopciones.css */
+:root {
+    --primary-brand-color: #7BC0E3; 
+    --secondary-brand-color: #54869e; 
+    --accent-warm-color: #FF7F50; 
+    --neutral-dark: #343A40; 
+    --neutral-medium: #6C757D; 
+    --neutral-light: #F8F9FA; 
+    --white: #FFFFFF; 
+
+    --font-heading: 'Montserrat', sans-serif; 
+    --font-body: 'Roboto', sans-serif; 
+    --font-hero-accent: 'Anton', sans-serif; 
+
+    --border-radius-card: 12px;
+    --shadow-soft: 0 4px 15px rgba(0, 0, 0, 0.356); 
+    --shadow-hover: 0 8px 25px rgba(0, 0, 0, 0.575); 
+}
+
+body {
+    font-family : 'Roboto', sans-serif; 
+    background-color: var(--neutral-light);
+    color: var(--neutral-dark);
+    margin: 0;
+    line-height: 1.6; 
+}
+
+.hero-content .highlight { 
+    font-family: var(--font-hero-accent); 
+    font-size: 5rem; 
+    color: #A7EBDA; 
+    font-weight: normal;
+    display: block; 
+}
 
 
-h2 {
+h1, h2 {
     text-align: center;
-    margin-bottom: 1.5rem;
-    color: #2c3e50;
+    color: #7BC0E3; 
+    margin-bottom: 1rem;
 }
 
 /* --- Nuevos Estilos para el Contenedor Principal (main-content-wrapper) --- */
@@ -47,6 +80,93 @@ h2 {
     margin-left: calc(-50vw + 50%); /* Esto lo saca de cualquier contenedor con max-width */
     overflow: hidden;
 }
+
+
+
+
+
+.form-wrapper {
+    background-color: #f7f9fb;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    max-width: 1000px;
+    margin: 0 auto 30px;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.filtro-form {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+}
+
+.filter-item {
+    display: flex;
+    flex-direction: column;
+}
+
+.filter-item label {
+    margin-bottom: 6px;
+    font-weight: 600;
+    color: #333;
+}
+
+.filter-item select,
+.filter-item input {
+    padding: 8px 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+    background-color: #fff;
+}
+
+.filter-buttons {
+    grid-column: 1 / -1; /* Ocupa todo el ancho del grid */
+    display: flex;
+    justify-content: flex-start;
+    gap: 12px;
+    margin-top: 10px;
+}
+
+/* Estilos solo para los botones del filtro */
+.btn-filtrar-filtro,
+.btn-reset-filtro {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 15px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Botón "Filtrar" con color oficial */
+.btn-filtrar-filtro {
+    background: linear-gradient(135deg, #7BC0E3, #5aa8d3);
+    color: white;
+}
+
+.btn-filtrar-filtro:hover {
+    background: linear-gradient(135deg, #5aa8d3, #4796c0);
+    transform: scale(1.03);
+}
+
+/* Botón "Mostrar todas" en gris */
+.btn-reset-filtro {
+    background: linear-gradient(135deg, #e0e0e0, #cfcfcf);
+    color: #333;
+}
+
+.btn-reset-filtro:hover {
+    background: linear-gradient(135deg, #cfcfcf, #bfbfbf);
+    transform: scale(1.03);
+}
+
 
 
 
@@ -330,6 +450,7 @@ form {
 
 .filter-buttons {
   display: flex;
+  grid-column: 1 / -1;
   gap: 10px;
   align-items: center;
   /* margin-left: auto;  <-- comentar o eliminar */
@@ -339,7 +460,7 @@ form {
 
 .btn-filtrar,
 .btn-reset {
-  background-color: #007BFF;
+  background-color: #7BC0E3;
   color: white;
   border: none;
   padding: 8px 16px;
@@ -358,7 +479,7 @@ form {
 }
 
 .btn-filtrar:hover {
-  background-color: #0056b3;
+  background-color: #3e96c2;
 }
 
 .btn-reset:hover {
@@ -370,7 +491,7 @@ form {
 .btn-reset {
     display: inline-block;
     padding: 10px 20px;
-    background-color: #e74c3c; /* rojo */
+    background-color: #2f779b; 
     color: white;
     border-radius: 7px;
     text-decoration: none;
@@ -380,7 +501,7 @@ form {
 }
 
 .btn-reset:hover {
-    background-color: #c0392b;
+    background-color: #2f779b;
 }
 
 

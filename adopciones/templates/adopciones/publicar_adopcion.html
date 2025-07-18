@@ -11,7 +11,7 @@
         <a href="{% url 'panel_clinica' %}" class="btn-back"><span class="icon">←</span> Volver al panel</a>
         <h1>Publicar mascota en adopción</h1>
 
-        <form action="{% url 'publicar_adopcion' %}" method="POST" enctype="multipart/form-data" novalidate>
+        <form action="{% url 'adopciones:publicar_adopcion' %}" method="POST" enctype="multipart/form-data" novalidate>
             {% csrf_token %}
             
             <div class="form-grid">
@@ -71,15 +71,10 @@
                     </div>
 
                     <div class="form-group image-upload-group">
-                        <div class="main-image-preview-container">
-                            <img id="mainImagePreview" src="{% static 'img/placeholder_image.png' %}" alt="Image Preview" class="main-preview-image">
-                        </div>
+                        
                         {{ form.imagen }} 
                         {% if form.imagen.errors %}<ul class="errorlist">{% for error in form.imagen.errors %}<li>{{ error }}</li>{% endfor %}</ul>{% endif %}
-                        <div class="upload-stats">
-                            <button type="button" class="upload-main-button" id="triggerAdditionalUpload">Subir Imagen</button>
-                            <span class="upload-count" id="uploadCount">0 archivos</span> 
-                        </div>
+                        
                     </div>
                 </div>
             </div>
@@ -88,5 +83,9 @@
         </form> 
     </div> 
 </div>
+<script>
+  const API_RAZAS_URL = "{% url 'reservas:api_razas_por_especie' %}";
+</script>
 <script src="{% static 'js/publicar_adopcion.js' %}" defer></script>
+
 {% endblock %}

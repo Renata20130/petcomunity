@@ -10,12 +10,7 @@
   --button-bg: #7BC0E3;
   --button-hover: #5BA7CD;
 }
- 
-body {
-  font-family: 'Inter', sans-serif;
-  background-color: var(--background);
-  color: var(--text-dark);
-}
+
 
 /* Contenedor general */
 .perfil-content {

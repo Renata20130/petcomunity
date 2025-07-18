@@ -1,6 +1,12 @@
 {% extends 'core/base_panel.html' %}
-
+{% load static %}
 {% block title %}Editar Reporte{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/editar_reporte.css' %}">
+{% endblock %}
+
+
 
 {% block content %}
 <div class="container mt-4">

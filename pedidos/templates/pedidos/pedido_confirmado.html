@@ -1,4 +1,16 @@
-<h2>¡Gracias por tu compra!</h2>
-<p>Tu pedido ha sido registrado correctamente. Te contactaremos pronto.</p>
-<a href="{% url 'core:productos_publicados' %}">Seguir comprando</a>
-  
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'css/pedido_confirmado.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="thank-you-container">
+  <h2>¡Gracias por tu compra!</h2>
+  <p>Tu pedido ha sido registrado correctamente. Te contactaremos pronto.</p>
+  <a href="{% url 'core:productos_publicados' %}">Seguir comprando</a>
+</div>
+
+{% endblock %}

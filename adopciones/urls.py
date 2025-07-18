@@ -5,8 +5,9 @@ from .views import publicar_adopcion
 from .views import eliminar_adopcion
 from .views import mis_postulaciones
 from accounts import views as accounts_views
-from .views import detalle_reporte_mascota, editar_reporte_mascota, eliminar_reporte_mascota, mis_reportes_mascota_abandonada
+from .views import detalle_reporte_mascota, editar_reporte_mascota, eliminar_reporte_mascota, mis_reportes_mascota_abandonada,cancelar_solicitud
 from adopciones.views import publicar_adopcion
+from ubicacion import views as ubicacion_views
 
 app_name = 'adopciones'
 
@@ -15,7 +16,8 @@ urlpatterns = [
     
     path('publicar/', views.publicar_adopcion, name='publicar_adopcion'),
     path('editar/<int:mascota_id>/', views.editar_adopcion, name='editar_adopcion'),
-    path('eliminar/<int:pk>/', eliminar_adopcion, name='eliminar_adopcion'),
+    path('eliminar-adopcion/<int:pk>/', views.eliminar_adopcion, name='eliminar_adopcion'),
+
    
     path('publicas/', views.lista_mascotas_publicas, name='adopciones_publicas'),
     path('mascota/<int:mascota_id>/', views.detalle_mascota, name='detalle_mascota'),
@@ -28,6 +30,10 @@ urlpatterns = [
     path('solicitar/<int:mascota_id>/', views.formulario_adopcion_view, name='formulario_adopcion_mascota'),
     path("procesar-solicitud/", views.procesar_solicitud, name="procesar_solicitud"),
     path('solicitud-exitosa/', views.solicitud_exitosa, name='solicitud_exitosa'),
+    path('cancelar-solicitud/<int:solicitud_id>/', views.cancelar_solicitud, name='cancelar_solicitud'),
+
+
+
 
     path("solicitud/<int:solicitud_id>/", views.detalle_solicitud, name="detalle_solicitud"),
 
@@ -55,8 +61,8 @@ urlpatterns = [
     path('reportes/pendientes/', views.lista_reportes_pendientes, name='lista_reportes_pendientes'),
     path('reportes/revisar/<int:reporte_id>/', views.revisar_reporte, name='revisar_reporte'),
 
+    path('ajax/ciudades/', ubicacion_views.cargar_ciudades, name='ajax_cargar_ciudades'),
 
-
-
+ 
 
 ]

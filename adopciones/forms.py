@@ -53,7 +53,7 @@ class MascotaEnAdopcionForm(forms.ModelForm):
         choices=[('', 'Cargando razas...')],
         label="Raza de la Mascota",
         required=False,
-        widget=forms.Select(attrs={'id': 'razaSelect', 'disabled': 'disabled', 'class': 'form-control'})
+        widget=forms.Select(attrs={'id': 'razaSelect', 'class': 'form-control disabled-select'})
     )
 
     class Meta:
@@ -78,7 +78,7 @@ class MascotaEnAdopcionForm(forms.ModelForm):
 
         # Establece las opciones del ChoiceField para la validación
         # La primera opción será el placeholder, las demás serán las razas reales
-        self.fields['raza'].choices = [('', 'Selecciona una raza')] + all_possible_breeds
+        self.fields['raza'].choices = [('id', '-------')] + all_possible_breeds
 
         # Control del estado 'disabled' del campo raza
         if 'raza' in self.fields:
@@ -109,7 +109,15 @@ class FormularioAdopcion(forms.Form):
     nombre = forms.CharField(max_length=100)
     email = forms.EmailField()
     telefono = forms.CharField(max_length=20, required=False)
-    # Agrega aquí los campos que necesites para tu formulario
+    num_ninos = forms.IntegerField(required=False)
+
+    def clean_num_ninos(self):
+        data = self.cleaned_data.get('num_ninos')
+        if data in (None, ''):
+            return None  # o 0 si quieres
+        if data < 0:
+            raise forms.ValidationError("El número de niños no puede ser negativo.")
+        return data
 
 class FiltroMascotaForm(forms.Form):
     especie = forms.ChoiceField(
@@ -154,14 +162,26 @@ class FiltroMascotaForm(forms.Form):
 class MascotaAbandonadaForm(forms.ModelForm):
     class Meta:
         model = MascotaAbandonada
-        fields = ['nombre', 'descripcion', 'foto']
+        fields = ['nombre', 'descripcion', 'foto', 'especie', 'lugar_encontrado', 'region', 'ciudad']
         widgets = {
             'nombre': forms.TextInput(attrs={'class': 'form-control'}),
             'descripcion': forms.Textarea(attrs={'class': 'form-control', 'rows': 3}),
             'foto': forms.ClearableFileInput(attrs={'class': 'form-control'}),
+            'especie': forms.Select(attrs={'class': 'form-control'}),
+            'lugar_encontrado': forms.TextInput(attrs={'class': 'form-control'}),
+            'region': forms.Select(attrs={'class': 'form-control'}),
+            'ciudad': forms.Select(attrs={'class': 'form-control'}),
         }
 
-
-
-
-
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Por defecto, ciudad sin opciones hasta que el usuario seleccione región
+        self.fields['ciudad'].queryset = self.fields['ciudad'].queryset.none()
+        if 'region' in self.data:
+            try:
+                region_id = int(self.data.get('region'))
+                self.fields['ciudad'].queryset = Ciudad.objects.filter(region_id=region_id).order_by('nombre')
+            except (ValueError, TypeError):
+                pass  # valor inválido
+        elif self.instance.pk and self.instance.region:
+            self.fields['ciudad'].queryset = Ciudad.objects.filter(region=self.instance.region).order_by('nombre')

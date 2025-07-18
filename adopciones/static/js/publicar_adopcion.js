@@ -83,8 +83,9 @@ document.addEventListener('DOMContentLoaded', function() {
     // Accede a las variables globales: Ya están definidas arriba con sus IDs correctos
     const especieSelect = document.getElementById('id_especie'); // ID por defecto de Django para el campo 'especie'
     const razaSelect = document.getElementById('razaSelect'); // ID que le diste en forms.py
-    const API_RAZAS_URL = '/api/api/razas/'; // La URL a tu API de razas en Django REST
+    
     const otrosEspecieValue = 'otro'; // Valor para "otros" en MascotaEnAdopcion.ESPECIE_CHOICES
+    const API_RAZAS_URL = '/reservas/razas_por_especie/';
 
     // Verificaciones para depurar (mantenlas por ahora si quieres)
     if (!especieSelect) {
@@ -101,7 +102,7 @@ document.addEventListener('DOMContentLoaded', function() {
         razaSelect.innerHTML = ''; // Limpiar opciones anteriores
         razaSelect.classList.add('disabled-select');
         razaSelect.setAttribute('aria-disabled', 'true');
-        razaSelect.removeAttribute('disabled');
+        razaSelect.setAttribute('disabled', 'disabled'); 
 
         if (!especieValue) {
             const option = document.createElement('option');
@@ -126,6 +127,7 @@ document.addEventListener('DOMContentLoaded', function() {
             // Usa la URL de la API
             // El nombre del parámetro 'especie' DEBE coincidir con el que espera tu API en reservas/views.py
             fetch(`${API_RAZAS_URL}?especie=${especieValue}`)
+
                 .then(response => {
                     if (!response.ok) {
                         throw new Error(`HTTP error! status: ${response.status}`);
@@ -141,19 +143,23 @@ document.addEventListener('DOMContentLoaded', function() {
 
                         data.forEach(raza => {
                             const option = document.createElement('option');
-                            // ¡IMPORTANTE! Aquí asignamos el NOMBRE de la raza al valor de la opción
-                            // porque tu campo 'raza' en MascotaEnAdopcion es un CharField.
                             option.value = raza.nombre; 
                             option.textContent = raza.nombre;
                             razaSelect.appendChild(option);
                         });
+
+                        // ✅ Aquí habilitamos el campo
                         razaSelect.removeAttribute('disabled');
+                        razaSelect.classList.remove('disabled-select');
                     } else {
                         const option = document.createElement('option');
                         option.value = '';
                         option.textContent = 'No hay razas disponibles';
                         razaSelect.appendChild(option);
+
+                        // 🔒 Si no hay razas, deshabilita el campo
                         razaSelect.setAttribute('disabled', 'disabled');
+                        razaSelect.classList.add('disabled-select');
                     }
                 })
                 .catch(error => {

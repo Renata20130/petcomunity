@@ -1,3 +1,40 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+:root {
+    --primary-brand-color: #7BC0E3; 
+    --secondary-brand-color: #54869e; 
+    --accent-warm-color: #FF7F50; 
+    --neutral-dark: #343A40; 
+    --neutral-medium: #6C757D; 
+    --neutral-light: #F8F9FA; 
+    --white: #FFFFFF; 
+
+    --font-heading: 'Montserrat', sans-serif; 
+    --font-body: 'Roboto', sans-serif; 
+    --font-hero-accent: 'Anton', sans-serif; 
+
+    --border-radius-card: 12px;
+    --shadow-soft: 0 4px 15px rgba(0, 0, 0, 0.356); 
+    --shadow-hover: 0 8px 25px rgba(0, 0, 0, 0.575); 
+}
+
+body {
+    font-family : 'Roboto', sans-serif; 
+    background-color: var(--neutral-light);
+    color: var(--neutral-dark);
+    margin: 0;
+    line-height: 1.6; 
+}
+
+.hero-content .highlight { 
+    font-family: var(--font-hero-accent); 
+    font-size: 5rem; 
+    color: #A7EBDA; 
+    font-weight: normal;
+    display: block; 
+}
+
+
 /* Ajuste para el grid de tarjetas */
 .grid-clinicas {
     display: grid;
@@ -134,7 +171,7 @@
 
 .hero-subtitle {
     font-family: var(--font-body); 
-    font-weight: 400; 
+    font-weight: 400;
     font-size: 1.5rem; 
     color: #E0E0E0; 
     margin-top: 20px; 
@@ -246,8 +283,8 @@
 /* Mensaje si no hay clínicas */
 .buscar-clinicas-wrapper p {
     text-align: center;
-    color: #777;
-    font-size: 1rem;
+    color: #e7e5e5;
+    
     margin-top: 1rem;
 }
 

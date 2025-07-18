@@ -77,38 +77,6 @@
                       </div> {# /form-grid-compact #}
                   </div> {# /perfil-card #}
 
-                  <div class="perfil-card">
-                      <h2>Horarios de Atención</h2>
-
-                      <div class="horarios-formset-compact" id="formset-container">
-                          {{ formset.management_form }}
-                          <div class="horario-header-compact">
-                              <span>Día</span>
-                              <span>Inicio</span>
-                              <span>Fin</span>
-                              <span>Eliminar</span>
-                          </div>
-                          {% for horario in formset %}
-                              <div class="horario-item-compact formset-form">
-                                  {{ horario.id }}
-                                  <div class="campo-horario-compact">
-                                      {{ horario.dia }}
-                                  </div>
-                                  <div class="campo-horario-compact">
-                                      {{ horario.hora_inicio }}
-                                  </div>
-                                  <div class="campo-horario-compact">
-                                      {{ horario.hora_fin }}
-                                  </div>
-                                  <div class="campo-horario-compact delete-checkbox-compact">
-                                      {{ horario.DELETE }} <label for="{{ horario.DELETE.id_for_label }}"></label>
-                                  </div>
-                              </div>
-                          {% endfor %}
-                      </div>
-
-                      <button type="button" id="agregar-dia" class="boton-agregar-dia-compact">➕ Agregar día</button>
-                  </div> {# /perfil-card #}
               </div> <div class="form-actions-compact">
                   <button type="submit" class="boton-guardar-compact"> Guardar cambios</button>
               </div>

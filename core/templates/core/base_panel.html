@@ -54,20 +54,31 @@
                 <ul class="submenu profile-dropdown">
                     {% if request.user.profile.tipo == "clinica" %}
                         <li><a href="{% url 'core:home' %}">Inicio</a></li>
-                        <li><a href="{% url 'panel_clinica' %}">Panel de Clínica</a></li>
-                        <li><a href="{% url 'publicar_adopcion' %}">Publicar mascota</a></li>
+                        <li><a href="{% url 'panel_clinica' %}"><i class="fas fa-home"></i> Página principal</a></li>
+                        <li><a href="{% url 'editar_perfil_clinica' %}"><i class="fas fa-user"></i> Mi Perfil</a></li>
+                        <li><a href="{% url 'clinica:listado_servicios' %}"><i class="fas fa-user"></i> Servicios</a></li>
+                        <li><a href="{% url 'adopciones:lista_reportes_pendientes' %}"><i class="fas fa-paw"></i> Reportes de Mascotas Abandonadas</a></li>
+                        <li><a href="{% url 'panel_reservas_clinica' %}"><i class="fas fa-calendar-alt"></i> Citas y reservas</a></li>
+                        <li><a href="{% url 'clinicas:listado_mascotas' %}"><i class="fas fa-calendar-alt"></i> Pacientes</a></li>
+                        <li><a href="{% url 'adopciones:mis_publicaciones_clinica' %}"><i class="fas fa-paw"></i> Mascotas en Adopción</a></li>
+                        <li><a href="{% url 'panel_solicitudes' %}"><i class="fas fa-paw"></i> Solicitudes de adopción</a></li>
                     {% elif request.user.profile.tipo == "cliente" %}
                         <li><a href="{% url 'core:home' %}">Inicio</a></li>
-                        <li><a href="{% url 'panel_cliente' %}">Panel de Cliente</a></li>
-                        <li><a href="{% url 'reservas:cliente_pedir_hora' %}">Mis citas</a></li>
-                        <li><a href="{% url 'pedidos:mis_pedidos' %}">Mis Pedidos</a></li>
-                        <li><a href="#">Mis Adopciones</a></li>
+                        <li><a href="{% url 'panel_cliente' %}"><i class="fas fa-user"></i> Panel Cliente</a></li>
+                        <li><a href="{% url 'editar_perfil_cliente' %}"><i class="fas fa-user"></i> Mi Perfil</a></li>
+                        <li><a href="{% url 'reservas:mis_reservas_cliente' %}"><i class="fas fa-calendar-check"></i> Mis citas</a></li>
+                        <li><a href="{% url 'pedidos:mis_pedidos' %}"><i class="fas fa-box"></i> Mis pedidos</a></li>
+                        <li><a href="{% url 'adopciones:mis_reportes_mascota_abandonada' %}"><i class="fas fa-box"></i> Mis reportes</a></li>
+                        <li><a href="{% url 'adopciones:mis_postulaciones' %}"><i class="fas fa-paw"></i> Mis adopciones</a></li>
+                        <li><a href="{% url 'clinicas:mis_mascotas_cliente' %}" class="btn btn-outline-info">Mis mascotas</a></li>
                     {% elif request.user.profile.tipo == "farmacia" %}
                         <li><a href="{% url 'core:home' %}">Inicio</a></li>
-                        <li><a href="{% url 'productos:panel_farmacia' %}">Panel Farmacia</a></li>
-                        <li><a href="{% url 'panel_farmacia' %}">Panel Pedidos Farmacia</a></li>
+                        <li><a href="{% url 'productos:panel_farmacia' %}"><i class="fas fa-prescription-bottle-alt"></i> Panel Farmacia</a></li>
+                        <li><a href="{% url 'editar_perfil_farmacia' %}"><i class="fas fa-box"></i> Mi perfil</a></li>
+                        <li><a href="{% url 'productos:mis_productos' %}"><i class="fas fa-box"></i> Productos</a></li>
+                        <li><a href="{% url 'productos:pedidos_farmacia' %}"><i class="fas fa-box"></i> Pedidos</a></li>
                     {% endif %}
-                    <li><a href="{% url 'logout' %}">Cerrar sesión</a></li>
+                    <li><a href="{% url 'logout' %}">Cerrar sesión</a></li> 
                 </ul>
             </div>
             {% endif %}
@@ -76,9 +87,7 @@
 
     
     
-    <button id="sidebarToggle" class="sidebar-toggle" aria-label="Toggle sidebar">
-        <i class="fas fa-bars">☰</i>
-    </button>
+    
     <div class="panel-clinica-container">
         <aside class="sidebar-menu">
             <div class="clinic-logo">
@@ -155,9 +164,7 @@
                         <li {% if request.resolver_match.url_name == 'pedidos_farmacia' %}class="active"{% endif %}>
                             <a href="{% url 'productos:pedidos_farmacia' %}"><i class="fas fa-box"></i> Pedidos</a>
                         </li>
-                        <li {% if request.resolver_match.url_name == 'stock_farmacia' %}class="active"{% endif %}>
-                            <a href="{% url 'productos:stock_farmacia' %}"><i class="fas fa-warehouse"></i> Stock</a>
-                        </li>
+                        
                     {% endif %}
                     <li><a href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a></li>
                 </ul>

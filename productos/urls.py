@@ -13,7 +13,7 @@ urlpatterns = [
     path('farmacia/', views.pedidos_farmacia_view, name='pedidos_farmacia'),
 
 
-    path('stock/', views.stock_farmacia, name='stock_farmacia'),
+    path('stock/', views.stock_productos, name='stock_productos'),
 
     path('farmacia/nuevo/', views.nuevo_pedido_view, name='nuevo_pedido'),
 

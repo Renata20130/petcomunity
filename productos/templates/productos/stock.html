@@ -1,0 +1,32 @@
+{% extends "core/base_panel.html" %}  <!-- o la base que uses -->
+
+{% block title %}Stock de Productos{% endblock %}
+
+{% block content %}
+<h2>Stock de Productos</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Nombre</th>
+      <th>Código</th>
+      <th>Stock</th>
+      <th>Precio</th> <!-- si quieres mostrar -->
+    </tr>
+  </thead>
+  <tbody>
+    {% for producto in productos %}
+    <tr>
+      <td>{{ producto.nombre }}</td>
+      <td>{{ producto.codigo }}</td>
+      <td>{{ producto.stock }}</td>
+      <td>{{ producto.precio }}</td>
+    </tr>
+    {% empty %}
+    <tr>
+      <td colspan="4">No hay productos disponibles</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

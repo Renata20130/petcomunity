@@ -1,5 +1,6 @@
 {% extends "core/base_panel.html" %}
 {% load static %}
+{% load moneda %}
 
 {% block title %}Panel Farmacia | PetComunity{% endblock %}
 
@@ -40,7 +41,7 @@
             {% endif %}
             </td>
             <td>{{ producto.nombre }}</td>
-            <td>${{ producto.precio }}</td>
+            <td>{{ producto.precio|clp }}</td>
             <td>{{ producto.stock }}</td>
             <td>{{ producto.estado }}</td>
             <td>
