@@ -121,20 +121,21 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
 
+import locale
+
 LANGUAGE_CODE = 'es'
 
 TIME_ZONE = "America/Santiago"
 
-USE_I18N = True
 
+USE_I18N = True
+USE_L10N = True
 USE_TZ = True
 
-import locale
 try:
     locale.setlocale(locale.LC_ALL, 'C.UTF-8')  # Compatible con Render
 except locale.Error:
-    pass 
-
+    pass
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
