@@ -59,7 +59,7 @@ body {
  
 /* --- Sección Hero --- */
 .hero-section {
-    background-image: url('/media/hero/home.png');
+    background-image: url('../img/fondo_home.jpeg');
     background-size: cover;
     background-position: center;
     background-attachment: scroll; 
