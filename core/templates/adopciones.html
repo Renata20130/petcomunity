@@ -130,7 +130,7 @@
  </div>
 <script>
   const urlLogin = "{% url 'login' %}";
-  const usuarioEstaLogueado = {{ user.is_authenticated|yesno:"true,false" }};
+  const usuarioEstaLogueado = JSON.parse("{{ user.is_authenticated|yesno:'true,false' }}");
 </script>
 
 <script src="{% static 'js/adopciones.js' %}" defer></script>
